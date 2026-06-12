@@ -628,6 +628,12 @@ code {
   font-size: 15.5px;
   margin: 0 0 8px;
 }
+.mini__link {
+  color: var(--text);
+  text-decoration: none;
+}
+.mini__link:hover { color: var(--accent); }
+.mini__link span { color: var(--accent); font-size: 0.85em; }
 .mini p {
   font-size: 13.8px;
   color: var(--text-dim);
