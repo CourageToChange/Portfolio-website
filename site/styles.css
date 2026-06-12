@@ -74,6 +74,13 @@ code {
 }
 .skip-link:focus { left: 0; }
 
+/* Keyboard focus — visible, on-brand */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 /* Scroll progress bar */
 .progress {
   position: fixed;
@@ -581,6 +588,13 @@ code {
   margin-top: 12px;
   padding-top: 24px;
 }
+.project__details[open] .project__case {
+  animation: caseIn 0.4s ease both;
+}
+@keyframes caseIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
 .case-block { margin-bottom: 22px; }
 .case-block h4 {
   font-size: 13px;
@@ -813,6 +827,13 @@ code {
   color: var(--text-dim);
 }
 .footer__hosted { font-family: var(--font-mono); font-size: 12.5px; }
+.footer__links { display: flex; gap: 18px; }
+.footer__links a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 13.5px;
+}
+.footer__links a:hover { color: var(--accent); }
 
 /* ============ Reveal animations ============ */
 /* Hidden states only apply under html.js, so the page is fully

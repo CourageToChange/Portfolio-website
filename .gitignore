@@ -9,3 +9,6 @@ Thumbs.db
 .DS_Store
 *.log
 Noorun_Nobi_CV_SouthernHousing_Cyber.pdf
+
+# Personal files - never publish
+/*.pdf
