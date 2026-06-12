@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noorun Nobi — Cybersecurity &amp; IT Support | CompTIA Security+</title>
+  <meta name="description" content="Noorun Nobi — security professional moving into IT Support &amp; Cybersecurity. CompTIA Security+ certified, Computer Science background, based in London. Builder of a self-hosted, hardened home server &amp; security lab.">
+  <meta name="author" content="Noorun Nobi">
+  <link rel="canonical" href="https://noor.noorfamily.uk/">
+
+  <!-- Open Graph (LinkedIn / social sharing) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Noorun Nobi — Cybersecurity &amp; IT Support">
+  <meta property="og:description" content="Security professional moving into IT Support &amp; Cybersecurity · CompTIA Security+ certified · London. This site is hosted on a server I built and secured myself.">
+  <meta property="og:url" content="https://noor.noorfamily.uk/">
+  <meta property="og:image" content="https://noor.noorfamily.uk/assets/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured data for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Noorun Nobi",
+    "jobTitle": "Security Professional — Cybersecurity & IT Support",
+    "description": "Security professional with a Computer Science background and CompTIA Security+ certification, transitioning into IT support and cybersecurity.",
+    "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" },
+    "knowsLanguage": ["English", "Bengali"],
+    "email": "mailto:nnobi.inbox@hotmail.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/noorun-nobi-6b76a3217",
+      "https://github.com/CourageToChange"
+    ],
+    "url": "https://noor.noorfamily.uk/"
+  }
+  </script>
+</head>
+<body>
+
+  <a class="skip-link" href="#about">Skip to content</a>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <nav class="nav__inner" aria-label="Primary">
+      <a class="nav__brand" href="#top">
+        <span class="nav__brand-mark" aria-hidden="true">&gt;_</span> noorun&nbsp;nobi
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle menu">
+        <span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#credentials">Credentials</a></li>
+        <li><a class="nav__cta" href="#contact">Get in touch</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <canvas class="hero__net" id="netCanvas" aria-hidden="true"></canvas>
+      <div class="hero__inner container">
+        <div class="hero__copy">
+          <p class="hero__eyebrow reveal-up" style="--d:0">
+            <span class="status-dot" aria-hidden="true"></span> London · open to cyber/IT apprenticeships &amp; junior roles
+          </p>
+          <h1 class="hero__title reveal-up" style="--d:1">Noorun Nobi</h1>
+          <p class="hero__subtitle reveal-up" style="--d:2">
+            Security professional moving into <strong>IT&nbsp;Support &amp; Cybersecurity</strong><br>
+            CompTIA Security+ certified · Computer Science background
+          </p>
+          <div class="hero__actions reveal-up" style="--d:3">
+            <a class="btn btn--primary" href="#contact">Get in touch</a>
+            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf" download>Download CV</a>
+          </div>
+          <p class="hero__hosted reveal-up" style="--d:4">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            This site is served from a home server I built, hardened and operate myself.
+          </p>
+        </div>
+
+        <div class="hero__terminal reveal-up" style="--d:3" aria-hidden="true">
+          <div class="terminal">
+            <div class="terminal__bar">
+              <span class="terminal__dot"></span><span class="terminal__dot"></span><span class="terminal__dot"></span>
+              <span class="terminal__title">noor@homelab:~</span>
+            </div>
+            <div class="terminal__body" id="terminalBody"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section__title reveal"><span class="section__num">01</span> About</h2>
+        <div class="about reveal">
+          <p>
+            I work as a Security Officer at the British Museum, one of the most visited cultural
+            institutions in the world. Day to day, I'm the link between the floor and the technical
+            teams — logging and tracking faults with the CBRE service desk, escalating issues, and
+            coordinating contractor access into restricted and high-security areas.
+          </p>
+          <p>
+            My background is in technology: I completed two of three years of a BSc in Computer
+            Science at London South Bank University, I program in Python, Java, C and Bash, and I'm
+            CompTIA Security+ certified (October 2025). I'm now focused on breaking into cybersecurity
+            and IT support, building practical skills every day in a self-hosted home lab that I
+            designed, hardened and operate myself — working toward a Security Operations Centre
+            (SOC) Tier&nbsp;1 or IT support role, including via an apprenticeship.
+          </p>
+          <p>
+            I'm reliable, detail-focused, and comfortable working under pressure — qualities I've
+            sharpened across security operations and customer-facing roles. I'm looking for an
+            opportunity where I can apply my security mindset and technical foundation, and grow
+            into a cyber or IT career.
+          </p>
+          <p class="about__langs">
+            <span class="pill pill--quiet">English — fluent</span>
+            <span class="pill pill--quiet">Bengali — fluent</span>
+            <span class="pill pill--quiet">Eligible to work in the UK — no sponsorship required</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section" id="skills">
+      <div class="container">
+        <h2 class="section__title reveal"><span class="section__num">02</span> Skills</h2>
+        <div class="cards-3 cards-3--skills">
+          <article class="card reveal">
+            <div class="card__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Cybersecurity &amp; IT</h3>
+            <ul class="pills">
+              <li class="pill">Security+ fundamentals</li>
+              <li class="pill">Threats &amp; vulnerabilities</li>
+              <li class="pill">Access control</li>
+              <li class="pill">Network security</li>
+              <li class="pill">Incident response &amp; reporting</li>
+              <li class="pill">CCTV &amp; access-control systems</li>
+              <li class="pill">Service-desk / ticketing workflows</li>
+              <li class="pill">System hardening</li>
+              <li class="pill">Governance &amp; compliance principles</li>
+            </ul>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 6l-5 6 5 6M16 6l5 6-5 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Programming &amp; Data</h3>
+            <ul class="pills">
+              <li class="pill">Python</li>
+              <li class="pill">Java</li>
+              <li class="pill">C</li>
+              <li class="pill">JavaScript</li>
+              <li class="pill">Bash scripting</li>
+              <li class="pill">Git / GitHub</li>
+              <li class="pill">Linux command line</li>
+              <li class="pill">Windows 10/11</li>
+              <li class="pill">TCP/IP · DNS · DHCP</li>
+              <li class="pill">Data cleaning (Python)</li>
+              <li class="pill">Excel / Microsoft 365</li>
+            </ul>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Operations &amp; Facilities</h3>
+            <ul class="pills">
+              <li class="pill">Fault logging &amp; tracking</li>
+              <li class="pill">Escalation to resolution</li>
+              <li class="pill">Contractor access coordination</li>
+              <li class="pill">Service-provider liaison (CBRE)</li>
+              <li class="pill">Shift logs &amp; incident records</li>
+            </ul>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Professional</h3>
+            <ul class="pills">
+              <li class="pill">Attention to detail</li>
+              <li class="pill">Calm under pressure</li>
+              <li class="pill">Clear communication</li>
+              <li class="pill">Reliability &amp; discipline</li>
+              <li class="pill">Customer service</li>
+              <li class="pill">Stakeholder handling</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="section" id="projects">
+      <div class="container">
+        <h2 class="section__title reveal"><span class="section__num">03</span> Projects &amp; Home Lab</h2>
+        <p class="section__lede reveal">
+          Self-directed, hands-on work — where the theory behind my Security+ becomes daily, practical experience.
+        </p>
+
+        <!-- PROJECT 1 — FLAGSHIP -->
+        <article class="project project--flagship reveal">
+          <div class="project__head">
+            <span class="project__badge">Flagship</span>
+            <h3>Self-Hosted Home Server &amp; Security Lab</h3>
+            <p class="project__oneliner">
+              Designed, hardened and operate a self-hosted Linux server running 6+ containerised
+              services — applying real-world security practices: key-only SSH, firewalling, intrusion
+              prevention, 2FA, network segmentation, TLS, and a 3-2-1 backup strategy.
+            </p>
+          </div>
+          <div class="project__summary">
+            <p>
+              I designed and built a private Linux server (Proxmox) running six isolated, containerised
+              services, and I secure and maintain it as an ongoing home lab. I hardened it the way you'd
+              protect a real environment: key-only SSH, a default-deny firewall, fail2ban intrusion
+              prevention, two-factor authentication, network segmentation, TLS everywhere, and a
+              Cloudflare WAF with rate-limiting on logins. I also built a 3-2-1 backup and
+              disaster-recovery strategy with automated, scripted backups — and, fittingly,
+              <strong>this very website is served from it.</strong>
+            </p>
+          </div>
+
+          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running six isolated containers including Plex, AdGuard Home, Immich, Kavita and a media stack — plus this website.">
+            <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- flow lines -->
+              <path class="dia-flow" d="M118 52 H 200"/>
+              <path class="dia-flow" d="M332 52 H 414"/>
+              <path class="dia-flow" d="M546 52 H 628"/>
+              <path class="dia-flow" d="M684 76 V 118"/>
+              <!-- top chain -->
+              <g class="dia-node">
+                <rect x="20" y="28" width="98" height="48" rx="10"/>
+                <text x="69" y="49" text-anchor="middle">internet</text>
+                <text x="69" y="65" text-anchor="middle" class="dia-sub">untrusted</text>
+              </g>
+              <g class="dia-node">
+                <rect x="200" y="28" width="132" height="48" rx="10"/>
+                <text x="266" y="49" text-anchor="middle">cloudflare</text>
+                <text x="266" y="65" text-anchor="middle" class="dia-sub">WAF · CDN · rate-limit</text>
+              </g>
+              <g class="dia-node">
+                <rect x="414" y="28" width="132" height="48" rx="10"/>
+                <text x="480" y="49" text-anchor="middle">firewall</text>
+                <text x="480" y="65" text-anchor="middle" class="dia-sub">default-deny</text>
+              </g>
+              <g class="dia-node dia-node--accent">
+                <rect x="628" y="28" width="112" height="48" rx="10"/>
+                <text x="684" y="49" text-anchor="middle">nginx proxy</text>
+                <text x="684" y="65" text-anchor="middle" class="dia-sub">TLS termination</text>
+              </g>
+              <!-- proxmox host box -->
+              <g class="dia-host">
+                <rect x="20" y="118" width="720" height="162" rx="14"/>
+                <text x="40" y="146" class="dia-host-label">proxmox ve — hardened host</text>
+                <text x="40" y="164" class="dia-sub">key-only SSH · fail2ban · TOTP 2FA · LXC isolation · 3-2-1 backups</text>
+              </g>
+              <!-- service chips -->
+              <g class="dia-chip"><rect x="40" y="186" width="100" height="36" rx="8"/><text x="90" y="208" text-anchor="middle">plex</text></g>
+              <g class="dia-chip"><rect x="152" y="186" width="128" height="36" rx="8"/><text x="216" y="208" text-anchor="middle">adguard home</text></g>
+              <g class="dia-chip"><rect x="292" y="186" width="148" height="36" rx="8"/><text x="366" y="208" text-anchor="middle">immich · LAN-only</text></g>
+              <g class="dia-chip"><rect x="452" y="186" width="100" height="36" rx="8"/><text x="502" y="208" text-anchor="middle">kavita</text></g>
+              <g class="dia-chip"><rect x="564" y="186" width="124" height="36" rx="8"/><text x="626" y="208" text-anchor="middle">media stack</text></g>
+              <g class="dia-chip dia-chip--accent"><rect x="40" y="232" width="148" height="36" rx="8"/><text x="114" y="254" text-anchor="middle">this website ✓</text></g>
+              <text x="208" y="254" class="dia-sub">← you are being served from here, through every layer above</text>
+            </svg>
+            <figcaption class="dia-caption">Live architecture — every layer above is real and currently protecting this page.</figcaption>
+          </figure>
+
+          <details class="project__details">
+            <summary><span>Full case study</span></summary>
+            <div class="project__case">
+              <div class="case-block">
+                <h4>The goal</h4>
+                <p>Replace third-party cloud services (media, photos, files) with a private, self-owned,
+                secure home server — and use it as a live environment to build practical cybersecurity
+                and Linux administration skills.</p>
+              </div>
+              <div class="case-block">
+                <h4>What I built</h4>
+                <ul>
+                  <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex — Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
+                  <li><strong>Architecture:</strong> 6 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
+                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private, LAN-only photo backup), Kavita (e-book library), Nginx Proxy Manager (reverse proxy with TLS termination), and a media-automation stack.</li>
+                </ul>
+              </div>
+              <div class="case-block">
+                <h4>Security hardening</h4>
+                <ul>
+                  <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
+                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, minimal audited port-forwarding, unnecessary services disabled.</li>
+                  <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts — and I review the logs.</li>
+                  <li><strong>Perimeter:</strong> Cloudflare proxy hides the home IP, with WAF managed rules, Bot Fight Mode and rate-limiting on login endpoints; Let's Encrypt TLS with automated renewal; custom domain with dynamic DNS.</li>
+                  <li><strong>Data &amp; endpoint:</strong> full-disk encryption on the admin workstation, secure credential handling, and a data-segregation policy for the most sensitive documents.</li>
+                  <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container.</li>
+                </ul>
+              </div>
+              <div class="case-block">
+                <h4>Data protection &amp; recovery</h4>
+                <ul>
+                  <li><strong>3-2-1 backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, an off-site cloud copy, and deletion-protection archives.</li>
+                  <li><strong>Reliability:</strong> SMART disk-health monitoring, UUID-based mounts, storage quotas, and cron-driven scripted automation.</li>
+                </ul>
+              </div>
+              <ul class="pills pills--tags">
+                <li class="pill">Linux administration</li><li class="pill">System hardening</li>
+                <li class="pill">Network security &amp; firewalls</li><li class="pill">Virtualisation / containers</li>
+                <li class="pill">Intrusion prevention</li><li class="pill">TLS / PKI</li>
+                <li class="pill">DNS filtering</li><li class="pill">Reverse proxy</li>
+                <li class="pill">2FA / access control</li><li class="pill">Backup &amp; DR (3-2-1)</li>
+                <li class="pill">Defence-in-depth</li><li class="pill">Bash &amp; automation</li>
+                <li class="pill">Log review</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
+        <!-- PROJECT 2 -->
+        <article class="project reveal">
+          <div class="project__head">
+            <h3>Retro Snake Arena — Multiplayer Web Game + Security Review</h3>
+            <p class="project__oneliner">
+              Built and security-reviewed a real-time multiplayer browser game (Node.js + WebSockets),
+              implementing secure authentication, anti-cheat and input validation — and produced a
+              written vulnerability assessment with a remediation plan.
+            </p>
+          </div>
+          <div class="project__summary">
+            <p>
+              A real-time multiplayer browser game with server-authoritative logic so clients can't
+              cheat. Built from fundamentals — Node.js, Express, WebSockets, vanilla JavaScript and
+              HTML5 Canvas, no framework — with user accounts, multiplayer rooms, moderated in-game
+              chat and leaderboards. An AI-assisted personal project: I directed the work, did the
+              security review, and managed the project end to end.
+            </p>
+          </div>
+          <details class="project__details">
+            <summary><span>Full case study</span></summary>
+            <div class="project__case">
+              <div class="case-block">
+                <h4>Security engineering</h4>
+                <ul>
+                  <li><strong>Authentication done right:</strong> passwords hashed with scrypt + per-user salt and timing-safe comparison; session tokens stored only as SHA-256 hashes; HttpOnly / SameSite cookies.</li>
+                  <li><strong>Web-vuln defences:</strong> parameterised SQL (injection prevention), input sanitisation and XSS output-escaping, allowlists for user input, and rate-limiting on authentication and actions.</li>
+                  <li><strong>Security review:</strong> I reviewed the codebase and found real issues — an unauthenticated score-submission endpoint, a missing WebSocket payload cap (DoS risk), and a rate-limit that would be evaded behind a CDN — then wrote a prioritised remediation plan.</li>
+                </ul>
+              </div>
+              <div class="case-block">
+                <h4>Extras</h4>
+                <ul>
+                  <li>Automated smoke tests, an installable Progressive Web App, and an Android wrapper.</li>
+                  <li>Version-controlled on GitHub with incremental, documented commits.</li>
+                </ul>
+              </div>
+              <ul class="pills pills--tags">
+                <li class="pill">Full-stack web development</li><li class="pill">Secure coding (OWASP-aligned)</li>
+                <li class="pill">Security code review</li><li class="pill">Vulnerability assessment</li>
+                <li class="pill">Git / GitHub</li><li class="pill">Project management</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
+        <!-- PROJECT 3 -->
+        <article class="project project--small reveal">
+          <div class="project__head">
+            <h3>Private Photo &amp; File Migration</h3>
+            <p class="project__oneliner">
+              Migrated thousands of photos off iCloud and Google into a self-hosted, private library
+              using command-line tooling with automatic de-duplication and metadata preservation —
+              plus a synced, backed-up document store with read-only, least-privilege access.
+            </p>
+          </div>
+          <ul class="pills pills--tags">
+            <li class="pill">Data migration</li><li class="pill">CLI tooling</li>
+            <li class="pill">De-duplication &amp; integrity</li><li class="pill">Automation</li>
+            <li class="pill">Privacy engineering</li>
+          </ul>
+        </article>
+
+        <!-- Smaller builds -->
+        <h3 class="minis__title reveal">Smaller builds &amp; experiments</h3>
+        <div class="minis">
+          <article class="mini reveal">
+            <h4>Raspberry Pi Music Controller</h4>
+            <p>Python program on a Raspberry Pi that controls a music player through a sound sensor — physical input triggering software actions via GPIO.</p>
+            <ul class="pills"><li class="pill">Python</li><li class="pill">Raspberry Pi</li><li class="pill">Sensors / GPIO</li></ul>
+          </article>
+          <article class="mini reveal">
+            <h4>Exam Timetable Website</h4>
+            <p>A website presenting exam timetables in a clear, usable format — front-end fundamentals applied to a real scheduling problem.</p>
+            <ul class="pills"><li class="pill">Web</li><li class="pill">HTML / CSS / JS</li></ul>
+          </article>
+          <article class="mini reveal">
+            <h4>Data Cleaning &amp; Processing</h4>
+            <p>Python scripts for cleaning and processing datasets — de-duplication, consistency checks and shaping data for accurate reporting.</p>
+            <ul class="pills"><li class="pill">Python</li><li class="pill">Data wrangling</li></ul>
+          </article>
+          <article class="mini reveal">
+            <h4>Password Strength Checker</h4>
+            <p>A C program that evaluates password strength against complexity rules — security thinking applied at the code level.</p>
+            <ul class="pills"><li class="pill">C</li><li class="pill">Security</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section" id="experience">
+      <div class="container">
+        <h2 class="section__title reveal"><span class="section__num">04</span> Experience</h2>
+        <div class="timeline">
+          <article class="timeline__item reveal">
+            <p class="timeline__date">August 2024 — Present</p>
+            <h3>Security Officer — The British Museum, London</h3>
+            <ul>
+              <li>Provide front-line physical security at a major, high-footfall cultural institution.</li>
+              <li>Act as the primary point of contact with the CBRE service desk — report and track facilities faults and escalate issues to resolution.</li>
+              <li>Coordinate contractor access into restricted and high-security areas.</li>
+              <li>Monitor CCTV and access-control systems and respond to incidents following established protocols.</li>
+              <li>Compile accurate incident reports, daily logs and structured handovers; handle sensitive information with discretion and integrity.</li>
+            </ul>
+          </article>
+          <article class="timeline__item reveal">
+            <p class="timeline__date">November 2022 — August 2024</p>
+            <h3>Door Supervisor — Regency Security Services UK Ltd, London</h3>
+            <ul>
+              <li>Monitored sites, enforced procedures and produced accurate incident records under pressure.</li>
+              <li>Made sound, defensible decisions and communicated calmly with the public.</li>
+            </ul>
+          </article>
+          <article class="timeline__item reveal">
+            <p class="timeline__date">January 2024 — March 2024</p>
+            <h3>Sales Assistant — Charles Tyrwhitt, London</h3>
+            <ul>
+              <li>Delivered professional customer service in a premium retail environment; handled customer queries, sales and records accurately.</li>
+            </ul>
+          </article>
+          <article class="timeline__item reveal">
+            <p class="timeline__date">October 2021 — December 2023</p>
+            <h3>Barista — Starbucks, London</h3>
+            <ul>
+              <li>Worked accurately at pace in a high-volume environment; supported colleagues.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CREDENTIALS ============ -->
+    <section class="section" id="credentials">
+      <div class="container">
+        <h2 class="section__title reveal"><span class="section__num">05</span> Certifications &amp; Education</h2>
+        <div class="cards-3 cards-3--creds">
+          <article class="card card--cred reveal">
+            <span class="cred__status cred__status--done">Certified · Oct 2025</span>
+            <h3>CompTIA Security+</h3>
+            <p>Globally recognised cybersecurity certification — threats &amp; attacks, security architecture, identity &amp; access management, risk &amp; compliance, incident response. Valid until October 2028.</p>
+          </article>
+          <article class="card card--cred reveal">
+            <span class="cred__status cred__status--done">Licensed</span>
+            <h3>SIA &amp; CCTV Licences</h3>
+            <p>SIA Door Supervisor licence, CCTV (Public Space Surveillance) licence and First Aid certificate — professional monitoring and incident-response credentials.</p>
+          </article>
+          <article class="card card--cred reveal">
+            <span class="cred__status cred__status--edu">Education</span>
+            <h3>BSc Computer Science — LSBU</h3>
+            <p>Two of three years completed at London South Bank University — programming, networking and computing foundations.</p>
+          </article>
+          <article class="card card--cred reveal">
+            <span class="cred__status">Ongoing</span>
+            <h3>Hands-On Learning</h3>
+            <p>Daily practice administering and defending my self-hosted security lab; structured SOC training (TryHackMe SOC Level&nbsp;1) is next on my roadmap.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section--contact" id="contact">
+      <div class="container">
+        <h2 class="section__title reveal"><span class="section__num">06</span> Contact</h2>
+        <div class="contact reveal">
+          <p class="contact__lede">
+            I'm looking for an entry point into cybersecurity or IT — an
+            <strong>apprenticeship</strong>, a <strong>SOC Tier&nbsp;1 / Security Analyst</strong> role,
+            or an <strong>IT Service Desk</strong> position where I can apply my Security+
+            foundation and security operations experience.
+            If that sounds like your team, I'd love to hear from you.
+          </p>
+          <div class="contact__actions">
+            <a class="btn btn--primary btn--lg" href="mailto:nnobi.inbox@hotmail.com">Email me</a>
+            <a class="btn btn--ghost btn--lg" href="https://www.linkedin.com/in/noorun-nobi-6b76a3217" rel="me noopener" target="_blank">LinkedIn</a>
+            <a class="btn btn--ghost btn--lg" href="https://github.com/CourageToChange" rel="me noopener" target="_blank">GitHub</a>
+          </div>
+          <p class="contact__note">Based in London · Eligible to work in the UK (no sponsorship required)</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year">2026</span> Noorun Nobi</p>
+      <p class="footer__hosted">Designed, built and served from my own hardened home server.</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Internal working notes — not part of the published project
+docs/
+CLAUDE.md
+portfolio-brief-noorun-nobi.md
+projects-and-website-brief.md
+
+# OS / editor noise
+Thumbs.db
+.DS_Store
+*.log
+Noorun_Nobi_CV_SouthernHousing_Cyber.pdf

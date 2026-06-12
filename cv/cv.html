@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<title>Noorun Nobi — CV</title>
+<style>
+  /* CV print source — regenerate the PDF after edits (see docs/TODO.md).
+     Deliberately single-column, system fonts, real text: ATS-parser friendly. */
+  :root {
+    --ink: #1a2330;
+    --dim: #4a5868;
+    --accent: #0e7d68;
+    --line: #d7dee6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: var(--ink);
+    font-size: 10.3pt;
+    line-height: 1.45;
+  }
+  .page {
+    max-width: 186mm;
+    margin: 0 auto;
+    padding: 10mm 0 6mm;
+  }
+  @page { size: A4; margin: 9mm 12mm; }
+  @media print {
+    .page { max-width: none; padding: 0; }
+  }
+
+  h1 {
+    font-size: 21pt;
+    letter-spacing: 0.01em;
+    margin: 0 0 2pt;
+  }
+  .headline {
+    font-size: 11pt;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 5pt;
+  }
+  .contact {
+    font-size: 9.3pt;
+    color: var(--dim);
+    margin: 0 0 4pt;
+  }
+  .contact a { color: var(--dim); text-decoration: none; }
+  .contact span + span::before { content: "  ·  "; color: var(--line); }
+
+  h2 {
+    font-size: 10.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--accent);
+    border-bottom: 1.2pt solid var(--line);
+    padding-bottom: 2.5pt;
+    margin: 13pt 0 6pt;
+  }
+  h3 {
+    font-size: 10.8pt;
+    margin: 8pt 0 1pt;
+  }
+  h3 .where { font-weight: 400; color: var(--dim); }
+  .sub {
+    font-size: 9.2pt;
+    color: var(--dim);
+    font-style: italic;
+    margin: 0 0 3pt;
+  }
+  p { margin: 0 0 5pt; }
+  ul { margin: 2pt 0 6pt; padding-left: 14pt; }
+  li { margin-bottom: 2.2pt; }
+  strong { font-weight: 600; }
+  .skillrow { margin: 0 0 4pt; }
+  .skillrow b { color: var(--ink); }
+  .quiet { color: var(--dim); }
+  .nobreak { break-inside: avoid; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Noorun Nobi</h1>
+  <p class="headline">Aspiring Cybersecurity &amp; IT Support Professional · CompTIA Security+ Certified</p>
+  <p class="contact">
+    <span>London</span>
+    <span><a href="mailto:nnobi.inbox@hotmail.com">nnobi.inbox@hotmail.com</a></span>
+    <span><a href="https://www.linkedin.com/in/noorun-nobi-6b76a3217">linkedin.com/in/noorun-nobi-6b76a3217</a></span>
+    <span><a href="https://github.com/CourageToChange">github.com/CourageToChange</a></span>
+  </p>
+  <p class="contact"><span>Portfolio: <a href="https://noor.noorfamily.uk">noor.noorfamily.uk</a></span><span>Eligible to work in the UK — no sponsorship required</span></p>
+
+  <h2>Profile</h2>
+  <p>
+    Security professional with a Computer Science background and CompTIA Security+
+    certification, seeking a <strong>cybersecurity or IT apprenticeship</strong> or an
+    <strong>entry-level IT support role</strong>. I currently work in front-line security at
+    the British Museum, where I coordinate technical and facilities issues daily, and I'm
+    building hands-on skills in a self-hosted home security lab that I designed, hardened
+    and operate myself. Reliable, detail-focused
+    and calm under pressure — looking for a team where I can apply my security mindset and
+    grow into a cyber or IT career.
+  </p>
+
+  <h2>Key Skills</h2>
+  <p class="skillrow"><b>Cybersecurity:</b> Security+ fundamentals (threats &amp; vulnerabilities, access control, network security, security operations) · incident identification, response &amp; reporting · system hardening · intrusion prevention (fail2ban) · CCTV &amp; access-control systems</p>
+  <p class="skillrow"><b>IT &amp; infrastructure:</b> Linux administration · virtualisation &amp; containers (Proxmox / LXC / Docker) · networking (TCP/IP, DNS, DHCP, subnetting) · TLS / reverse proxy · backup &amp; disaster recovery (3-2-1) · Windows 10/11 · service-desk / ticketing workflows</p>
+  <p class="skillrow"><b>Programming &amp; data:</b> Python · Java · C · JavaScript · Bash scripting &amp; automation · Git / GitHub · data cleaning &amp; processing (Python) · Microsoft 365 / Excel</p>
+  <p class="skillrow"><b>Professional:</b> attention to detail · calm under pressure · clear written &amp; verbal communication · reliability and discipline (sustained night-shift work) · customer service &amp; stakeholder handling</p>
+
+  <h2>Technical Projects <span class="quiet" style="text-transform:none;letter-spacing:0;">(personal, self-directed)</span></h2>
+
+  <div class="nobreak">
+    <h3>Self-Hosted Home Server &amp; Security Lab</h3>
+    <ul>
+      <li>Built and administer a 6-service self-hosted Linux server (Proxmox / LXC) as a personal security lab — this is also where my portfolio website is hosted.</li>
+      <li>Hardened the environment: key-only SSH, default-deny firewall, fail2ban intrusion prevention, TOTP two-factor authentication, network segmentation, least-privilege access.</li>
+      <li>Deployed a reverse proxy with automated TLS (Let's Encrypt) and a Cloudflare WAF — managed rules, bot protection and rate-limiting on login endpoints.</li>
+      <li>Implemented a 3-2-1 backup and disaster-recovery strategy with scripted automation and deletion-protection.</li>
+      <li>Run network-wide DNS filtering to block ad, tracker and malware domains across all devices.</li>
+    </ul>
+  </div>
+
+  <div class="nobreak">
+    <h3>Retro Snake Arena <span class="where">— multiplayer web game with security review (AI-assisted project)</span></h3>
+    <ul>
+      <li>Directed and managed an AI-assisted build of a real-time multiplayer browser game (Node.js, Express, WebSockets, SQLite) with server-authoritative logic to prevent cheating.</li>
+      <li>Implemented secure authentication (scrypt-hashed passwords, hashed session tokens, HttpOnly cookies), parameterised SQL, input validation, XSS escaping and rate-limiting.</li>
+      <li>Performed a security review of the codebase — found an unauthenticated endpoint, a WebSocket denial-of-service risk and a CDN-evading rate-limit — and wrote a prioritised remediation plan.</li>
+    </ul>
+  </div>
+
+  <div class="nobreak">
+    <h3>Private Photo &amp; File Migration</h3>
+    <ul>
+      <li>Migrated thousands of photos from iCloud and Google to a self-hosted private library using CLI tooling with de-duplication and metadata preservation; built a synced, backed-up document store with read-only, least-privilege access.</li>
+    </ul>
+  </div>
+
+  <h2>Experience</h2>
+
+  <div class="nobreak">
+    <h3>Security Officer <span class="where">— The British Museum, London</span></h3>
+    <p class="sub">August 2024 — Present</p>
+    <ul>
+      <li>Provide front-line physical security at a major, high-footfall cultural institution.</li>
+      <li>Primary point of contact with the CBRE service desk — report and track facilities faults and escalate issues to resolution.</li>
+      <li>Coordinate contractor access into restricted and high-security areas.</li>
+      <li>Monitor CCTV and access-control systems and respond to incidents following established protocols; maintain accurate shift logs and incident records.</li>
+    </ul>
+  </div>
+
+  <div class="nobreak">
+    <h3>Door Supervisor <span class="where">— Regency Security Services UK Ltd, London</span></h3>
+    <p class="sub">November 2022 — August 2024</p>
+    <ul>
+      <li>Monitored sites, enforced procedures and produced accurate incident records under pressure; made sound, defensible decisions and communicated calmly with the public.</li>
+    </ul>
+  </div>
+
+  <div class="nobreak">
+    <h3>Sales Assistant <span class="where">— Charles Tyrwhitt, London</span></h3>
+    <p class="sub">January 2024 — March 2024</p>
+    <ul>
+      <li>Delivered professional customer service in a premium retail environment; handled customer queries, sales and records accurately.</li>
+    </ul>
+  </div>
+
+  <div class="nobreak">
+    <h3>Barista <span class="where">— Starbucks, London</span></h3>
+    <p class="sub">October 2021 — December 2023</p>
+    <ul>
+      <li>Worked accurately at pace in a high-volume environment; supported colleagues.</li>
+    </ul>
+  </div>
+
+  <h2>Certifications &amp; Education</h2>
+  <ul>
+    <li><strong>CompTIA Security+</strong> — certified October 2025 (valid until October 2028)</li>
+    <li><strong>SIA Door Supervisor Licence · CCTV Licence · First Aid Certificate</strong></li>
+    <li><strong>BSc Computer Science (2 of 3 years completed)</strong> — London South Bank University</li>
+  </ul>
+
+  <h2>Languages</h2>
+  <p>English — fluent · Bengali — fluent</p>
+
+</div>
+</body>
+</html>

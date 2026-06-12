@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0a1018"/>
+  <path d="M32 8 L52 17 v14 c0 12.5 -8.75 21.25 -20 25 c-11.25 -3.75 -20 -12.5 -20 -25 V17 Z"
+        fill="none" stroke="#4fe3c1" stroke-width="3.5" stroke-linejoin="round"/>
+  <text x="32" y="40" font-family="'Space Grotesk','Segoe UI',sans-serif" font-size="24"
+        font-weight="700" fill="#4fe3c1" text-anchor="middle">N</text>
+</svg>
