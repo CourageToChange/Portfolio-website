@@ -202,6 +202,46 @@
     }, 250);
   }
 
+  /* ---------- Section titles: decrypt on scroll ---------- */
+  if (!reducedMotion && "IntersectionObserver" in window) {
+    var titleGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@?!<>/01";
+    var titleIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        titleIo.unobserve(entry.target);
+        var node = entry.target.lastChild; // text node after the section number
+        if (!node || node.nodeType !== 3) return;
+        var finalVal = node.nodeValue;
+        var rev = 0;
+        var tick = setInterval(function () {
+          node.nodeValue = finalVal.split("").map(function (c, i) {
+            if (c === " " || i < rev) return c;
+            return titleGlyphs[Math.floor(Math.random() * titleGlyphs.length)];
+          }).join("");
+          rev += 0.7;
+          if (rev >= finalVal.length) {
+            node.nodeValue = finalVal;
+            clearInterval(tick);
+          }
+        }, 40);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll(".section__title").forEach(function (t) { titleIo.observe(t); });
+  }
+
+  /* ---------- Magnetic buttons ---------- */
+  if (window.matchMedia("(hover: hover) and (pointer: fine)").matches && !reducedMotion) {
+    document.querySelectorAll(".hero__actions .btn, .contact__actions .btn").forEach(function (btn) {
+      btn.addEventListener("pointermove", function (e) {
+        var r = btn.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width / 2;
+        var y = e.clientY - r.top - r.height / 2;
+        btn.style.transform = "translate(" + (x * 0.16).toFixed(1) + "px," + (y * 0.3).toFixed(1) + "px)";
+      });
+      btn.addEventListener("pointerleave", function () { btn.style.transform = ""; });
+    });
+  }
+
   /* ---------- Hero terminal typing ---------- */
   var term = document.getElementById("terminalBody");
   if (!term) return;
