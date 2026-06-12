@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #0a1018;
+    background-image:
+      radial-gradient(ellipse 55% 60% at 80% 10%, rgba(79,227,193,0.10), transparent 70%),
+      radial-gradient(ellipse 45% 50% at 10% 95%, rgba(64,120,230,0.10), transparent 70%),
+      linear-gradient(rgba(148,180,220,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148,180,220,0.05) 1px, transparent 1px);
+    background-size: auto, auto, 52px 52px, 52px 52px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #dbe7f3;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 0 90px;
+  }
+  .term {
+    font-family: Consolas, monospace; font-size: 26px; color: #4fe3c1;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 92px; font-weight: 700; letter-spacing: -2px;
+    background: linear-gradient(120deg, #f2f8fd 30%, #9fe8d8 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 22px; }
+  .sub { font-size: 34px; color: #8fa3b8; line-height: 1.45; }
+  .sub b { color: #dbe7f3; font-weight: 600; }
+  .foot { position: absolute; bottom: 48px; left: 90px;
+    font-family: Consolas, monospace; font-size: 22px; color: #4fe3c1; }
+  .shield { position: absolute; right: 90px; bottom: 48px; opacity: 0.9; }
+</style></head>
+<body>
+  <div class="term">$ whoami</div>
+  <h1>Noorun Nobi</h1>
+  <div class="sub">Security professional moving into <b>Cybersecurity &amp; IT Support</b><br>
+    CompTIA Security+ certified · London</div>
+  <div class="foot">noor.noorfamily.uk — served from a home server I built &amp; hardened myself</div>
+  <svg class="shield" width="92" height="92" viewBox="0 0 64 64">
+    <path d="M32 6 L54 16 v15 c0 14 -9.5 23.5 -22 27.5 C19.5 54.5 10 45 10 31 V16 Z"
+      fill="none" stroke="#4fe3c1" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M23 32 l7 7 l12 -13" fill="none" stroke="#4fe3c1" stroke-width="3.4"
+      stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</body></html>

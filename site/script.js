@@ -181,6 +181,27 @@
     sections.forEach(function (s) { sectionIo.observe(s); });
   }
 
+  /* ---------- Hero title decrypt effect ---------- */
+  var heroTitle = document.querySelector(".hero__title");
+  if (heroTitle && !reducedMotion) {
+    var finalText = heroTitle.textContent;
+    var glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&@?!<>/01";
+    var revealed = 0;
+    setTimeout(function () {
+      var scramble = setInterval(function () {
+        heroTitle.textContent = finalText.split("").map(function (c, i) {
+          if (c === " " || i < revealed) return c;
+          return glyphs[Math.floor(Math.random() * glyphs.length)];
+        }).join("");
+        revealed += 0.6;
+        if (revealed >= finalText.length) {
+          heroTitle.textContent = finalText;
+          clearInterval(scramble);
+        }
+      }, 38);
+    }, 250);
+  }
+
   /* ---------- Hero terminal typing ---------- */
   var term = document.getElementById("terminalBody");
   if (!term) return;
