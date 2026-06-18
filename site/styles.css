@@ -36,6 +36,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden; /* safety net so nothing forces horizontal page scroll */
 }
 
 h1, h2, h3, h4 {
@@ -440,7 +441,9 @@ code {
   .cards-3, .cards-3--creds { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 620px) {
-  .cards-3, .cards-3--creds { grid-template-columns: 1fr; }
+  .cards-3, .cards-3--creds, .cards-3--skills { grid-template-columns: 1fr; }
+  /* Long skill pills wrap inside the card instead of overflowing the screen. */
+  .cards-3--skills .pill { white-space: normal; }
 }
 
 .card {
@@ -543,6 +546,14 @@ code {
 }
 
 .project h3 { font-size: clamp(20px, 2.6vw, 26px); }
+
+.project__links {
+  margin: 6px 0 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+.project__links a { text-decoration: none; }
+.project__links a:hover { text-decoration: underline; }
 
 .project__oneliner {
   color: var(--text-dim);
@@ -718,6 +729,13 @@ code {
 
 @media (max-width: 980px) {
   .cards-3--skills { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* On phones, let the architecture diagram scale to fit the screen so the whole
+   thing (and its flow animation) is visible without sideways scrolling. */
+@media (max-width: 620px) {
+  .diagram { overflow-x: visible; }
+  .diagram svg { min-width: 0; }
 }
 
 /* ============ Experience ============ */
