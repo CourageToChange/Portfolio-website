@@ -36,7 +36,8 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden; /* safety net so nothing forces horizontal page scroll */
+  overflow-x: clip; /* safety net (clip, not hidden — hidden is disabled by the
+                       default visible overflow-y and wouldn't actually clip) */
 }
 
 h1, h2, h3, h4 {
@@ -422,6 +423,9 @@ code {
 .about { max-width: 760px; }
 .about p { color: var(--text-dim); font-size: 17.5px; }
 .about p strong { color: var(--text); }
+/* These language/eligibility pills are sentence-like, so let them wrap rather
+   than force the page wider than a phone (they still sit on one line on desktop). */
+.about__langs .pill { white-space: normal; }
 .about__langs {
   display: flex;
   flex-wrap: wrap;
@@ -734,7 +738,10 @@ code {
   margin-top: 10px;
 }
 
-@media (max-width: 980px) {
+/* Tablet only: 2 columns. Below 621px the phone rule (1 column) must win, so this
+   is scoped with min-width — otherwise, being later in the file, it would override
+   the ≤620px single-column rule at the same specificity and cause overflow. */
+@media (min-width: 621px) and (max-width: 980px) {
   .cards-3--skills { grid-template-columns: repeat(2, 1fr); }
 }
 
