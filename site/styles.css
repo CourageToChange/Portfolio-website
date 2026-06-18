@@ -442,8 +442,15 @@ code {
 }
 @media (max-width: 620px) {
   .cards-3, .cards-3--creds, .cards-3--skills { grid-template-columns: 1fr; }
-  /* Long skill pills wrap inside the card instead of overflowing the screen. */
-  .cards-3--skills .pill { white-space: normal; }
+  /* Premium phone layout: use more of the width, tighter vertical rhythm,
+     and keep skill pills clean single-line chips (no mid-word wrapping). */
+  .container { padding-inline: 16px; }
+  .section { padding: 54px 0; }
+  .section--contact { padding-bottom: 68px; }
+  .project { padding: 24px 18px; }
+  .card { padding: 22px 18px; }
+  .mini { padding: 18px 16px; }
+  .cards-3--skills .pill { white-space: nowrap; }
 }
 
 .card {
