@@ -1,0 +1,5 @@
+# noorfamily.uk portfolio
+User-agent: *
+Allow: /
+
+Sitemap: https://noor.noorfamily.uk/sitemap.xml
