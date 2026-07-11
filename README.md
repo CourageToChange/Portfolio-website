@@ -5,7 +5,7 @@ no build step and no dependencies** — just HTML, CSS and a small amount of van
 JavaScript. It is self-hosted on my own hardened home server (Proxmox → Nginx Proxy
 Manager → Cloudflare).
 
-**Live at:** https://noor.noorfamily.uk *(deploying soon)*
+**Live at:** https://noor.noorfamily.uk
 
 ## Why no framework?
 
