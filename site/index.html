@@ -408,6 +408,57 @@
           </ul>
         </article>
 
+        <!-- PROJECT 4 -->
+        <article class="project reveal">
+          <div class="project__head">
+            <h3>Bloom — Accessible Daily-Puzzle Web App</h3>
+            <p class="project__oneliner">
+              Designed, built and self-hosted a calm, accessibility-first puzzle app for a real
+              daily user with ADHD — 17 puzzle types, evidence-based design, 49 automated tests,
+              and a hardened private deployment with no open ports.
+            </p>
+          </div>
+          <div class="project__summary">
+            <p>
+              A gentle daily-puzzle Progressive Web App I built for my wife, designed from
+              published accessibility research rather than guesswork. <strong>Every design
+              decision — no timers, no streaks, no pressure language, opt-in sound only —
+              came from an evidence review of ADHD- and autism-friendly design</strong>, and the
+              finished app runs privately on my own server, invite-only, with automated backups.
+            </p>
+          </div>
+          <details class="project__details">
+            <summary><span>Full case study</span></summary>
+            <div class="project__case">
+              <div class="case-block">
+                <h4>The goal</h4>
+                <p>
+                  Mainstream puzzle apps are hostile to the person I built this for: ads,
+                  streak guilt, timers, visual noise. The brief was the opposite — something
+                  genuinely calm that one specific person would happily open every day. That
+                  meant researching how ADHD and autistic users actually experience apps,
+                  writing the findings into design rules, and holding every feature to them.
+                </p>
+              </div>
+              <div class="case-block">
+                <h4>What I built</h4>
+                <ul>
+                  <li><strong>17 puzzle families</strong> (word search, picross, mini-sudoku, anagrams, memory pairs and more), all generated client-side and validated by <strong>2,100-instance automated sweeps</strong> per family for solvability and uniqueness.</li>
+                  <li><strong>Accessibility as engineering, not decoration:</strong> 44&nbsp;px minimum touch targets, visible focus everywhere, high-contrast / larger-text / reduced-motion / dark modes, and sensory feedback that is strictly opt-in — with automated tests enforcing all of it.</li>
+                  <li><strong>A "calm audit" as a release gate:</strong> no countdown mechanics anywhere in the codebase, and language checked for pressure words before shipping.</li>
+                  <li><strong>Zero-dependency production code</strong> — plain JavaScript, no third-party libraries or trackers — installable as an offline-capable Progressive Web App; <strong>49 automated tests</strong> green before each release.</li>
+                  <li><strong>Security-first hosting on my own infrastructure:</strong> hardened Docker container (non-root, read-only filesystem, all capabilities dropped) behind an outbound-only tunnel — no inbound ports — with identity-based, invite-only access and automated six-hourly backups.</li>
+                </ul>
+              </div>
+              <ul class="pills pills--tags">
+                <li class="pill">Accessibility engineering</li><li class="pill">Evidence-based UX</li>
+                <li class="pill">Progressive Web App</li><li class="pill">Automated testing</li>
+                <li class="pill">Secure self-hosting</li><li class="pill">Docker hardening</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
         <!-- Smaller builds -->
         <h3 class="minis__title reveal">Smaller builds &amp; experiments</h3>
         <div class="minis">
