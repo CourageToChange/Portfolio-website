@@ -447,13 +447,64 @@
                   <li><strong>Accessibility as engineering, not decoration:</strong> 44&nbsp;px minimum touch targets, visible focus everywhere, high-contrast / larger-text / reduced-motion / dark modes, and sensory feedback that is strictly opt-in — with automated tests enforcing all of it.</li>
                   <li><strong>A "calm audit" as a release gate:</strong> no countdown mechanics anywhere in the codebase, and language checked for pressure words before shipping.</li>
                   <li><strong>Zero-dependency production code</strong> — plain JavaScript, no third-party libraries or trackers — installable as an offline-capable Progressive Web App; <strong>49 automated tests</strong> green before each release.</li>
-                  <li><strong>Security-first hosting on my own infrastructure:</strong> hardened Docker container (non-root, read-only filesystem, all capabilities dropped) behind an outbound-only tunnel — no inbound ports — with identity-based, invite-only access and automated six-hourly backups.</li>
+                  <li><strong>Private by design:</strong> runs on the home server above with the same security-first pattern as the flagship, plus identity-based invite-only access — the one person it's for is the only person who can reach it.</li>
                 </ul>
               </div>
               <ul class="pills pills--tags">
                 <li class="pill">Accessibility engineering</li><li class="pill">Evidence-based UX</li>
                 <li class="pill">Progressive Web App</li><li class="pill">Automated testing</li>
                 <li class="pill">Secure self-hosting</li><li class="pill">Docker hardening</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
+        <!-- PROJECT 5 -->
+        <article class="project reveal">
+          <div class="project__head">
+            <h3>Patchwork — Mood-Board PWA, Built by Directing an AI Engineering Team</h3>
+            <p class="project__oneliner">
+              Shipped a full-stack infinite-canvas app by orchestrating multiple AI coding agents
+              like an engineering team — written specs, assigned lanes, mandatory cross-review, and
+              my own final review on every change — from idea to production in days.
+            </p>
+            <p class="project__links"><a href="https://github.com/CourageToChange/patchwork" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
+          </div>
+          <div class="project__summary">
+            <p>
+              My wife wanted a calm place to collect outfit photos, notes and sketches — she set the
+              creative direction, I engineered it. The interesting part is <strong>how</strong>: I ran
+              the build as the director of several AI coding agents, each with a bounded role.
+              <strong>I wrote the specs and acceptance criteria, assigned work to parallel agent
+              lanes, required agents to cross-review each other's code, and personally reviewed and
+              live-tested every change before it shipped.</strong> AI wrote most of the code;
+              the engineering discipline that made it trustworthy was mine.
+            </p>
+          </div>
+          <details class="project__details">
+            <summary><span>Full case study</span></summary>
+            <div class="project__case">
+              <div class="case-block">
+                <h4>The orchestration discipline</h4>
+                <ul>
+                  <li><strong>Specs before code:</strong> every feature became a written ticket with acceptance criteria before any agent touched it; underspecified work was the number-one failure mode, so it simply wasn't allowed.</li>
+                  <li><strong>Independent cross-review:</strong> code from one agent lane was reviewed by a different agent, then by me. I rejected reviews when the evidence didn't hold up — including overruling one agent's "blocking" objections after my own testing proved the implementation correct.</li>
+                  <li><strong>Verify in production conditions:</strong> nothing shipped on a passing build alone — every change was exercised in a real browser against a production build. This caught real bugs that type checks and unit tests missed, including a subtle race condition that would have silently broken a feature forever.</li>
+                  <li><strong>Humans own the risk:</strong> privacy, security, deployment and final judgment never left my hands.</li>
+                </ul>
+              </div>
+              <div class="case-block">
+                <h4>What shipped</h4>
+                <ul>
+                  <li>A touch-first infinite-canvas PWA (React, TypeScript, tldraw) with photos, notes, drawing, stickers and board export, synced across iPad and iPhone through a Node/Express + SQLite API.</li>
+                  <li><strong>In-browser machine-learning background removal</strong> — cut a garment out of a photo entirely on-device (ONNX runtime, no cloud upload), keeping private photos private.</li>
+                  <li>Two isolated instances on my server: a private one behind identity-based access, and a public demo — plus a <strong>sanitised public source release</strong> produced by an allowlist exporter with an automated leak scanner that blocks IPs, credentials and private names from ever being published.</li>
+                </ul>
+              </div>
+              <ul class="pills pills--tags">
+                <li class="pill">AI orchestration</li><li class="pill">Technical project management</li>
+                <li class="pill">Full-stack TypeScript</li><li class="pill">Code review</li>
+                <li class="pill">In-browser ML</li><li class="pill">On GitHub</li>
               </ul>
             </div>
           </details>
