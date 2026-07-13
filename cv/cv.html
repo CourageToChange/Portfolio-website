@@ -119,7 +119,9 @@
   <div class="nobreak">
     <h3>Retro Snake Arena <span class="where">— multiplayer web game with security review</span></h3>
     <ul>
-      <li>Built and deployed a polished live browser game as a self-hosted web application. Produced a written security review of the live deployment. Demonstrated application deployment, documentation, troubleshooting and security-focused technical assessment.</li>
+      <li>Built and deployed a real-time multiplayer browser game (Node.js, Express, WebSockets, SQLite) as a self-hosted web application, with server-authoritative logic to prevent cheating.</li>
+      <li>Implemented secure authentication (scrypt-hashed passwords, hashed session tokens, HttpOnly cookies), parameterised SQL, input validation, XSS escaping and rate-limiting.</li>
+      <li>Performed a security review of the codebase — found an unauthenticated endpoint, a WebSocket denial-of-service risk and a CDN-evading rate-limit — and wrote a prioritised remediation plan.</li>
     </ul>
   </div>
 
