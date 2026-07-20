@@ -1,20 +1,20 @@
 # Noorun Nobi — Portfolio Website
 
-My personal portfolio site: a single-page, hand-built static website with **no frameworks,
-no build step and no dependencies** — just HTML, CSS and a small amount of vanilla
-JavaScript. It is self-hosted on my own hardened home server (Proxmox → Nginx Proxy
-Manager → Cloudflare).
+My portfolio site. One page, hand-written HTML and CSS with a bit of vanilla JavaScript,
+no framework and no build step. It runs on my own server at home, behind Nginx Proxy
+Manager and Cloudflare.
 
 **Live at:** https://noor.noorfamily.uk
 
 ## Why no framework?
 
-The site is a security-focused CV, so the build philosophy matches the content:
+Mostly because it's a CV for security work and it would be a bit embarrassing to ship it
+with forty dependencies I'd never read. There's nothing here to patch and nothing to
+audit. It's about 45 KB before fonts, so it renders in one round trip. It still works with
+JavaScript turned off, it honours `prefers-reduced-motion`, and the markup is semantic
+with real landmarks and a skip link.
 
-- **Small attack surface** — no dependencies means nothing to patch and nothing to audit.
-- **Fast** — ~45 KB of code before fonts; everything renders in one round trip.
-- **Robust** — works with JavaScript disabled, honours `prefers-reduced-motion`,
-  semantic HTML with proper landmarks and a skip link.
+I also just wanted to write it myself.
 
 ## Structure
 

@@ -423,6 +423,13 @@ code {
 .about { max-width: 760px; }
 .about p { color: var(--text-dim); font-size: 17.5px; }
 .about p strong { color: var(--text); }
+.about p.about__lead {
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+@media (max-width: 640px) { .about p.about__lead { font-size: 19px; } }
 /* These language/eligibility pills are sentence-like, so let them wrap rather
    than force the page wider than a phone (they still sit on one line on desktop). */
 .about__langs .pill { white-space: normal; }
@@ -629,6 +636,12 @@ code {
 }
 .case-block p, .case-block li { color: var(--text-dim); font-size: 15.5px; }
 .case-block strong { color: var(--text); font-weight: 600; }
+.case-block p.quiet {
+  border-left: 2px solid var(--line, rgba(255,255,255,.14));
+  padding-left: 14px;
+  font-style: italic;
+  opacity: .85;
+}
 .case-block ul { margin: 0; padding-left: 20px; }
 .case-block li { margin-bottom: 7px; }
 

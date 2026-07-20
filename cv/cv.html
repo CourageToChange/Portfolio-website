@@ -83,7 +83,7 @@
 <div class="page">
 
   <h1>Noorun Nobi</h1>
-  <p class="headline">Aspiring Cybersecurity &amp; IT Support Professional · CompTIA Security+ Certified</p>
+  <p class="headline">Entry-Level Cybersecurity &amp; IT Support · CompTIA Security+ Certified</p>
   <p class="contact">
     <span>London</span>
     <span><a href="mailto:nnobi.inbox@hotmail.com">nnobi.inbox@hotmail.com</a></span>
@@ -94,7 +94,7 @@
 
   <h2>Profile</h2>
   <p>
-    CompTIA Security+ certified career-changer seeking a first professional role as a SOC Analyst, Junior Cybersecurity Analyst, IT Support Technician or Service Desk Analyst. Brings a security-first operational mindset from working as an SIA-licensed Security Officer at the British Museum, supported by practical experience with Windows, Linux, networking, Proxmox, Cloudflare and self-hosted infrastructure. Designs, hardens and operates a Proxmox-based home server and security lab running approximately six isolated services with key-only SSH, default-deny firewalling, fail2ban, two-factor authentication, TLS, Cloudflare WAF/Tunnels and 3-2-1 backups. Also builds and deploys live self-hosted applications, demonstrating end-to-end troubleshooting, deployment and secure system operation. Studied Computer Science at degree level, completing two of three years at London South Bank University.
+    CompTIA Security+ certified, looking for a first role as a SOC Analyst, Junior Cybersecurity Analyst, IT Support Technician or Service Desk Analyst. Currently an SIA-licensed Security Officer at the British Museum, responsible for incident response and reporting, CCTV and access-control monitoring, and acting as the site's point of contact with the CBRE service desk. Outside work I run a Proxmox home server and security lab: six isolated services secured with key-only SSH, default-deny firewalling, fail2ban, two-factor authentication, TLS, Cloudflare WAF and Tunnels, and 3-2-1 backups that are verified nightly. I host the applications I build on it, and that is where most of my practical Linux, networking, deployment and troubleshooting experience has come from. Studied Computer Science at London South Bank University, completing two of three years.
   </p>
 
   <h2>Key Skills</h2>
@@ -112,6 +112,7 @@
       <li>Hardened the environment: key-only SSH, default-deny firewall, fail2ban intrusion prevention, TOTP two-factor authentication, network segmentation, least-privilege access.</li>
       <li>Deployed a reverse proxy with automated TLS (Let's Encrypt) and a Cloudflare WAF — managed rules, bot protection and rate-limiting on login endpoints.</li>
       <li>Implemented a 3-2-1 backup and disaster-recovery strategy with scripted automation and deletion-protection.</li>
+      <li>Investigated a backup drive that stopped appearing and, rather than assuming the restored drive was healthy, verified its contents — finding a month of snapshots written as zero-byte files by a job that had reported success throughout. Rewrote the backup scripts to validate each snapshot and refuse to run against an unmounted target, and added a nightly watchdog that confirms every backup is genuinely restorable, verified by deliberate failure testing.</li>
       <li>Run network-wide DNS filtering to block ad, tracker and malware domains across all devices.</li>
     </ul>
   </div>
@@ -128,14 +129,14 @@
   <div class="nobreak">
     <h3>Patchwork <span class="where">— full-stack PWA delivered by directing an AI engineering team</span></h3>
     <ul>
-      <li>Delivered a live mood-board and visual-canvas PWA based on my partner's original idea. Directed an AI engineering team to turn the concept into a working self-hosted application. Demonstrated product direction, technical communication and disciplined AI-assisted delivery.</li>
+      <li>Delivered a live mood-board and visual-canvas PWA (React, TypeScript, Node/Express, SQLite) from my wife's original idea, working as the director of a team of AI coding agents: I wrote the specifications and acceptance criteria, assigned bounded work to parallel agent lanes, required cross-review between them, and reviewed and browser-tested every change against a production build before release. Privacy, security, deployment and final sign-off stayed with me throughout.</li>
     </ul>
   </div>
 
   <div class="nobreak">
     <h3>Other projects <span class="where">— more on GitHub: github.com/CourageToChange</span></h3>
     <ul>
-      <li><strong>Bloom</strong> — accessibility-first daily-puzzle web app built for a real user with ADHD: 17 puzzle types, evidence-based calm design, 49 automated tests enforcing touch-target and sensory-setting requirements, self-hosted with invite-only access.</li>
+      <li><strong>Bloom</strong> — accessibility-first daily-puzzle web app built for one real daily user and designed from published research on ADHD- and autism-friendly interfaces: 17 puzzle types, no timer or streak mechanics, 49 automated tests enforcing touch-target and sensory-setting requirements, self-hosted with invite-only access.</li>
       <li><strong>South London Law Society website</strong> — full-stack case-management site: case submission, real-time tracking, solicitor and admin workflows (React, Node.js/Express, MySQL, AES-encrypted data).</li>
       <li><strong>StudyTrack</strong> — native Android app that turns plain-text weekly study plans into daily checklists with widgets and reminders.</li>
       <li><strong>Private photo &amp; file migration</strong> — moved thousands of photos to a self-hosted library via CLI tooling with de-duplication, metadata preservation and least-privilege access.</li>
