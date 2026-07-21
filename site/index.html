@@ -297,14 +297,14 @@
               <g class="dia-host">
                 <rect x="20" y="118" width="720" height="162" rx="14"/>
                 <text x="40" y="146" class="dia-host-label">proxmox ve — hardened host</text>
-                <text x="40" y="164" class="dia-sub">key-only SSH · fail2ban · TOTP 2FA · LXC isolation · 3-2-1 backups</text>
+                <text x="40" y="164" class="dia-sub">key-only SSH · fail2ban · TOTP 2FA · LXC isolation · verified backups</text>
               </g>
               <!-- service chips -->
               <g class="dia-chip"><rect x="40" y="186" width="100" height="36" rx="8"/><text x="90" y="208" text-anchor="middle">plex</text></g>
               <g class="dia-chip"><rect x="152" y="186" width="128" height="36" rx="8"/><text x="216" y="208" text-anchor="middle">adguard home</text></g>
               <g class="dia-chip"><rect x="292" y="186" width="148" height="36" rx="8"/><text x="366" y="208" text-anchor="middle">immich · LAN-only</text></g>
               <g class="dia-chip"><rect x="452" y="186" width="100" height="36" rx="8"/><text x="502" y="208" text-anchor="middle">kavita</text></g>
-              <g class="dia-chip"><rect x="564" y="186" width="124" height="36" rx="8"/><text x="626" y="208" text-anchor="middle">media stack</text></g>
+              <g class="dia-chip"><rect x="564" y="186" width="124" height="36" rx="8"/><text x="626" y="208" text-anchor="middle">nginx proxy</text></g>
               <g class="dia-chip dia-chip--accent"><rect x="40" y="232" width="148" height="36" rx="8"/><text x="114" y="254" text-anchor="middle">this website ✓</text></g>
               <text x="208" y="254" class="dia-sub">← you are being served from here, through every layer above</text>
             </svg>
@@ -325,25 +325,27 @@
                 <ul>
                   <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex — Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
                   <li><strong>Architecture:</strong> 6 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
-                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private, LAN-only photo backup), Kavita (e-book library), Nginx Proxy Manager (reverse proxy with TLS termination), and a media-automation stack.</li>
+                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Nginx Proxy Manager (reverse proxy with TLS termination) — plus the apps I've built and host myself.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4>Security hardening</h4>
                 <ul>
                   <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
-                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, minimal audited port-forwarding, unnecessary services disabled.</li>
+                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, unnecessary services disabled. <strong>No inbound ports at all</strong> — anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts — and I review the logs.</li>
                   <li><strong>Perimeter:</strong> Cloudflare proxy hides the home IP, with WAF managed rules, Bot Fight Mode and rate-limiting on login endpoints; Let's Encrypt TLS with automated renewal; custom domain with dynamic DNS.</li>
-                  <li><strong>Data &amp; endpoint:</strong> full-disk encryption on the admin workstation, secure credential handling, and a data-segregation policy for the most sensitive documents.</li>
+                  <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
                   <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4>Data protection &amp; recovery</h4>
                 <ul>
-                  <li><strong>3-2-1 backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, an off-site cloud copy, and deletion-protection archives.</li>
-                  <li><strong>Reliability:</strong> SMART disk-health monitoring, UUID-based mounts, storage quotas, and cron-driven scripted automation.</li>
+                  <li><strong>Backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, six-hourly snapshots of the apps I host, and a nightly watchdog that checks each one is genuinely restorable.</li>
+                  <li><strong>Irreplaceable files:</strong> my wife's old artwork lives on the server as a read-only archive, so it can't be deleted or overwritten by accident.</li>
+                  <li><strong>The honest gap:</strong> every copy is currently in the house. That covers drive failure and my own mistakes, but not fire or theft, so a genuine off-site copy is the next thing on the list.</li>
+                  <li><strong>Reliability:</strong> SMART disk-health monitoring via <code>smartd</code>, UUID-based mounts, and cron-driven scripted automation.</li>
                 </ul>
               </div>
               <div class="case-block">
@@ -376,7 +378,7 @@
                 <li class="pill">Network security &amp; firewalls</li><li class="pill">Virtualisation / containers</li>
                 <li class="pill">Intrusion prevention</li><li class="pill">TLS / PKI</li>
                 <li class="pill">DNS filtering</li><li class="pill">Reverse proxy</li>
-                <li class="pill">2FA / access control</li><li class="pill">Backup &amp; DR (3-2-1)</li>
+                <li class="pill">2FA / access control</li><li class="pill">Backup &amp; recovery</li>
                 <li class="pill">Defence-in-depth</li><li class="pill">Bash &amp; automation</li>
                 <li class="pill">Log review</li>
               </ul>
@@ -416,7 +418,7 @@
               <div class="case-block">
                 <h4>Extras</h4>
                 <ul>
-                  <li>Automated smoke tests, an installable Progressive Web App, and an Android wrapper.</li>
+                  <li>Automated smoke tests and an installable Progressive Web App. An Android wrapper is in progress.</li>
                   <li>Version-controlled on GitHub with incremental, documented commits.</li>
                 </ul>
               </div>
@@ -486,7 +488,7 @@
                   <li><strong>17 puzzle families</strong> (word search, picross, mini-sudoku, anagrams, memory pairs and more), all generated client-side and validated by <strong>2,100-instance automated sweeps</strong> per family for solvability and uniqueness.</li>
                   <li><strong>Accessibility with tests behind it:</strong> 44&nbsp;px minimum touch targets, visible focus everywhere, high-contrast, larger-text, reduced-motion and dark modes, and sensory feedback that only happens if you ask for it. All of it enforced by automated tests, so I can't quietly regress it later.</li>
                   <li><strong>A "calm audit" before each release:</strong> a check that no countdown mechanic has crept into the codebase, and that no pressure words have crept into the copy.</li>
-                  <li><strong>No dependencies in production</strong> — plain JavaScript, no third-party libraries, no trackers. Installable and works offline. 49 automated tests have to pass before anything ships.</li>
+                  <li><strong>No dependencies in production</strong> — plain JavaScript, no third-party libraries, no trackers. Installable and works offline. 59 automated tests have to pass before anything ships.</li>
                   <li><strong>Private by design:</strong> runs on the home server above with the same security-first pattern as the flagship, plus identity-based invite-only access — the one person it's for is the only person who can reach it.</li>
                 </ul>
               </div>
