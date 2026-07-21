@@ -254,12 +254,11 @@
               too.
             </p>
             <p>
-              The hardening is where most of the time went. Key-only SSH, a default-deny firewall,
-              fail2ban, two-factor auth on the management interface, TLS on anything reachable from
-              outside, and a Cloudflare WAF with rate-limiting on logins. Backups run on a schedule
-              to more than one drive, and a watchdog checks nightly that they can actually be
-              restored. I added that last part after finding out the hard way that a backup you
-              haven't tested isn't really a backup.
+              The hardening is where most of the time went — the lockdown described above, plus a
+              Cloudflare WAF with rate-limiting on the login endpoints. Backups run on a schedule to
+              more than one drive, and a watchdog checks nightly that they can actually be restored.
+              I added that last part after finding out the hard way that a backup you haven't tested
+              isn't really a backup.
             </p>
           </div>
 
@@ -334,16 +333,16 @@
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts — and I review the logs.</li>
                   <li><strong>Perimeter:</strong> Cloudflare proxy hides the home IP, with WAF managed rules, Bot Fight Mode and rate-limiting on login endpoints; Let's Encrypt TLS with automated renewal; custom domain with dynamic DNS.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
-                  <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container. I also take things out when they don't earn their place — I ran an *arr media-automation stack for a while, couldn't get it behaving reliably, and removed it rather than leave a half-working service running and exposed.</li>
+                  <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container. I also take things out when they don't earn their place — I ran an *arr media-automation stack for a while, couldn't get it behaving reliably, and took it out instead of leaving a half-working service running and exposed.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4>Data protection &amp; recovery</h4>
                 <ul>
-                  <li><strong>Backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, six-hourly snapshots of the apps I host, and a nightly watchdog that checks each one is genuinely restorable rather than merely present.</li>
+                  <li><strong>Backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, six-hourly snapshots of the apps I host, and a nightly watchdog that checks each one is genuinely restorable, not just present.</li>
                   <li><strong>Documents are a real 3-2-1:</strong> the originals live in Google Drive, which is my off-site copy; they're mirrored nightly onto the server, and copied again onto a second physical drive. That second copy is deliberately made without <code>--delete</code>, so a file deleted in Google Drive doesn't disappear from the backup with it.</li>
                   <li><strong>Photos and artwork are covered off-site too:</strong> our phones back up to Amazon Photos independently of the server, and my wife's artwork is mirrored to cloud storage as well as living on the server as a read-only archive.</li>
-                  <li><strong>The media library is deliberately not backed up.</strong> It's the largest thing on the server and the only part I could reacquire, so backing it up would cost more than it's worth. What I <em>do</em> keep off-site is an index of everything in it — so if a drive dies or the house burns down, I rebuild the server and work back from the list rather than trying to remember what was there.</li>
+                  <li><strong>The media library is deliberately not backed up.</strong> It's the largest thing on the server and the only part I could reacquire, so backing it up would cost more than it's worth. What I <em>do</em> keep off-site is an index of everything in it — so if a drive dies or the house burns down, I rebuild the server and work back from the list instead of trying to remember what was there.</li>
                   <li><strong>Reliability:</strong> SMART disk-health monitoring via <code>smartd</code>, UUID-based mounts, and cron-driven scripted automation.</li>
                 </ul>
               </div>
@@ -520,8 +519,9 @@
               browser before it shipped.
             </p>
             <p>
-              The agents wrote most of the code. Deciding what was correct, what was safe and what
-              was good enough stayed with me, and that's the skill I'd actually claim here.
+              Most of the code came from the agents. What I'd actually claim is the judgement
+              around it — deciding what was correct, what was safe, and what was good enough to
+              ship.
             </p>
           </div>
           <details class="project__details">
@@ -568,7 +568,7 @@
           </article>
           <article class="mini reveal">
             <h4>Custom PC Build &amp; Hardware Repair</h4>
-            <p>I picked the parts and built the PC I use every day, and I fix my own things rather than replace them. A PS4 taken apart on the kitchen table and put back together working, an iPhone battery swapped out.</p>
+            <p>I picked the parts and built the PC I use every day, and I fix my own things instead of replacing them. A PS4 taken apart on the kitchen table and put back together working, an iPhone battery swapped out.</p>
             <ul class="pills"><li class="pill">PC hardware</li><li class="pill">Diagnostics</li><li class="pill">Repair</li></ul>
           </article>
           <article class="mini reveal">
