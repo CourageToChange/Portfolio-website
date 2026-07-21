@@ -336,15 +336,15 @@
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts — and I review the logs.</li>
                   <li><strong>Perimeter:</strong> Cloudflare proxy hides the home IP, with WAF managed rules, Bot Fight Mode and rate-limiting on login endpoints; Let's Encrypt TLS with automated renewal; custom domain with dynamic DNS.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
-                  <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container.</li>
+                  <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container. I also take things out when they don't earn their place — I ran an *arr media-automation stack for a while, couldn't get it behaving reliably, and removed it rather than leave a half-working service running and exposed.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4>Data protection &amp; recovery</h4>
                 <ul>
-                  <li><strong>Backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, six-hourly snapshots of the apps I host, and a nightly watchdog that checks each one is genuinely restorable.</li>
-                  <li><strong>Irreplaceable files:</strong> my wife's old artwork lives on the server as a read-only archive, so it can't be deleted or overwritten by accident.</li>
-                  <li><strong>The honest gap:</strong> every copy is currently in the house. That covers drive failure and my own mistakes, but not fire or theft, so a genuine off-site copy is the next thing on the list.</li>
+                  <li><strong>Backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, six-hourly snapshots of the apps I host, and a nightly watchdog that checks each one is genuinely restorable rather than merely present.</li>
+                  <li><strong>Documents are a real 3-2-1:</strong> the originals live in Google Drive, which is my off-site copy; they're mirrored nightly onto the server, and copied again onto a second physical drive. That second copy is deliberately made without <code>--delete</code>, so a file deleted in Google Drive doesn't disappear from the backup with it.</li>
+                  <li><strong>Everything that starts on the server is not:</strong> photos, media, the apps I host and my wife's artwork have three copies across two drives, but all of them are in this house. That survives a dead disk or my own mistake, not a fire. Fixing it is the next job — and I'd rather say that than put "3-2-1" on everything and hope nobody asks.</li>
                   <li><strong>Reliability:</strong> SMART disk-health monitoring via <code>smartd</code>, UUID-based mounts, and cron-driven scripted automation.</li>
                 </ul>
               </div>
@@ -559,9 +559,9 @@
         <h3 class="minis__title reveal">Smaller builds &amp; experiments</h3>
         <div class="minis">
           <article class="mini reveal">
-            <h4><a class="mini__link" href="https://github.com/CourageToChange/South-London-Law-Society-Website" target="_blank" rel="noopener">South London Law Society <span aria-hidden="true">↗</span></a></h4>
-            <p>A case-management site where the public submit legal cases, solicitors pick them up and admins oversee the lot. Case data is AES-encrypted at rest.</p>
-            <ul class="pills"><li class="pill">React.js</li><li class="pill">Node.js / Express</li><li class="pill">MySQL</li><li class="pill">On GitHub</li></ul>
+            <h4>South London Law Society</h4>
+            <p>A university team project: a case-management site where the public submit legal cases, solicitors pick them up and admins oversee the lot. React, Node/Express and MySQL. The team's source was never published, so there's no repo worth linking.</p>
+            <ul class="pills"><li class="pill">React.js</li><li class="pill">Node.js / Express</li><li class="pill">MySQL</li><li class="pill">University team project</li></ul>
           </article>
           <article class="mini reveal">
             <h4><a class="mini__link" href="https://github.com/CourageToChange/StudyTrack" target="_blank" rel="noopener">StudyTrack — Android App <span aria-hidden="true">↗</span></a></h4>
