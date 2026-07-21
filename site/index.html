@@ -203,10 +203,8 @@
             </div>
             <h3>Operations &amp; Facilities</h3>
             <ul class="pills">
-              <li class="pill">Fault logging &amp; tracking</li>
-              <li class="pill">Escalation to resolution</li>
-              <li class="pill">Contractor access coordination</li>
               <li class="pill">Fault intake &amp; escalation</li>
+              <li class="pill">Contractor access coordination</li>
               <li class="pill">Shift logs &amp; incident records</li>
             </ul>
           </article>
@@ -234,7 +232,6 @@
         <h2 class="section__title reveal"><span class="section__num">03</span> Projects &amp; Home Lab</h2>
         <p class="section__lede reveal">
           Everything here is running right now, and most of it is used daily by people I know.
-          That's the part I like.
         </p>
 
         <!-- PROJECT 1 — FLAGSHIP -->
@@ -252,11 +249,12 @@
             <p>
               I got tired of paying Google and Apple to hold our photos, so I put Proxmox on a
               refurbished Dell OptiPlex and started moving things onto it. It now runs six isolated
-              containers: Plex, network-wide DNS filtering, private photo backup, an e-book library,
-              a reverse proxy and a media stack. This website is served from it too.
+              containers: Plex, network-wide DNS filtering, private photo backup, an e-book library
+              and a reverse proxy, plus the apps I've built myself. This website is served from
+              it too.
             </p>
             <p>
-              Securing it became the part I enjoyed most. Key-only SSH, a default-deny firewall,
+              The hardening is where most of the time went. Key-only SSH, a default-deny firewall,
               fail2ban, two-factor auth on the management interface, TLS on anything reachable from
               outside, and a Cloudflare WAF with rate-limiting on logins. Backups run on a schedule
               to more than one drive, and a watchdog checks nightly that they can actually be
@@ -265,7 +263,7 @@
             </p>
           </div>
 
-          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running six isolated containers including Plex, AdGuard Home, Immich, Kavita and a media stack — plus this website.">
+          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running isolated containers for Plex, AdGuard Home, Immich, Kavita and Nginx Proxy Manager — plus this website.">
             <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <!-- flow lines -->
               <path class="dia-flow" d="M118 52 H 200"/>
@@ -332,7 +330,7 @@
                 <h4>Security hardening</h4>
                 <ul>
                   <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
-                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, unnecessary services disabled. <strong>No inbound ports at all</strong> — anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
+                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, unnecessary services disabled. No inbound ports at all — anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts — and I review the logs.</li>
                   <li><strong>Perimeter:</strong> Cloudflare proxy hides the home IP, with WAF managed rules, Bot Fight Mode and rate-limiting on login endpoints; Let's Encrypt TLS with automated renewal; custom domain with dynamic DNS.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
@@ -364,7 +362,7 @@
                   checks every night that each backup is genuinely restorable. Then I broke it on
                   purpose to make sure the watchdog actually complained. Reading the other scheduled
                   jobs afterwards turned up a worse version of the same bug: two of them were
-                  mirrors that would have copied "empty" over the only off-site copy of our family
+                  mirrors that would have copied "empty" over the only other copy of our family
                   photos if their source ever went missing. Both now check both ends before they
                   run.
                 </p>
@@ -453,14 +451,14 @@
           <div class="project__head">
             <h3>Bloom — Accessible Daily-Puzzle Web App</h3>
             <p class="project__oneliner">
-              A calm daily-puzzle app I made for my wife. 17 puzzle types, no timers, no streaks,
-              nothing that nags. It runs privately on my server with no open ports, and 49
+              A calm daily-puzzle app I built for one person who uses it every day. 17 puzzle types, no timers, no streaks,
+              nothing that nags. It runs privately on my server with no open ports, and 59
               automated tests keep it that way.
             </p>
           </div>
           <div class="project__summary">
             <p>
-              Every puzzle app my wife tried was working against her: ads, streak guilt, countdown
+              The mainstream puzzle apps were all working against the person I built it for: ads, streak guilt, countdown
               timers, noise everywhere. Rather than guess at what "calm" ought to mean, I went and
               read the published research on ADHD- and autism-friendly design — it's the most
               rigorous work out there on interfaces that don't overwhelm people — wrote the
