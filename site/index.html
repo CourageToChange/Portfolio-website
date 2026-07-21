@@ -118,9 +118,8 @@
           <p>
             It started because I didn't want to keep paying Google and Apple to hold our photos.
             Now every photo the two of us take backs itself up at home overnight, there's an ad
-            blocker running for the whole house, and I host the things I build on it — a puzzle
-            game I made for my wife, and a board where she keeps her knitting and clothes-making
-            ideas. Plex runs on it too, and four of my friends are on it constantly. Honestly, that's
+            blocker running for the whole house, and I host the things I build on it — a daily
+            puzzle game, and a board my wife keeps her knitting and clothes-making ideas on. Plex runs on it too, and four of my friends are on it constantly. Honestly, that's
             the best part of the whole thing. People I know use something I built, every day, and
             none of them are paying a subscription for it. It's just fun.
           </p>
@@ -249,9 +248,10 @@
             <p>
               I got tired of paying Google and Apple to hold our photos, so I put Proxmox on a
               refurbished Dell OptiPlex and started moving things onto it. It now runs six isolated
-              containers: Plex, network-wide DNS filtering, private photo backup, an e-book library
-              and a reverse proxy, plus the apps I've built myself. This website is served from
-              it too.
+              containers: Plex, network-wide DNS filtering, private photo backup, an e-book library,
+              a reverse proxy, and a read-only operations console I built for the server itself. The
+              apps I've built run inside the proxy container, and this website is served from there
+              too.
             </p>
             <p>
               The hardening is where most of the time went. Key-only SSH, a default-deny firewall,
@@ -453,8 +453,7 @@
             <h3>Bloom — Accessible Daily-Puzzle Web App</h3>
             <p class="project__oneliner">
               A calm daily-puzzle app I built for one person who uses it every day. 17 puzzle types, no timers, no streaks,
-              nothing that nags. It runs privately on my server with no open ports, and 59
-              automated tests keep it that way.
+              nothing that nags. No open ports, and 59 automated tests keep it that way.
             </p>
           </div>
           <div class="project__summary">
@@ -465,7 +464,7 @@
               rigorous work out there on interfaces that don't overwhelm people — wrote the
               findings down as rules, and held every feature to them. No timers, no streaks, no pressure language,
               sound off unless you turn it on. It runs privately on my own server, invite-only,
-              with automated backups. She plays it most days, which is the only metric I wanted.
+              with automated backups. It gets opened most days, which is the only metric I wanted.
             </p>
           </div>
           <details class="project__details">
@@ -475,7 +474,7 @@
                 <h4>The brief</h4>
                 <p>
                   Something one specific person would happily open every day, with nothing in it
-                  designed to make her feel bad for missing a day. That's a harder brief than it
+                  designed to make anyone feel bad for missing a day. That's a harder brief than it
                   sounds, because almost every convention in the genre exists to drive engagement.
                   I had to look up how ADHD and autistic users actually experience apps rather
                   than trust my instincts, then turn that into rules I couldn't talk myself out of.
@@ -487,7 +486,7 @@
                   <li><strong>17 puzzle families</strong> (word search, picross, mini-sudoku, anagrams, memory pairs and more), all generated client-side and validated by <strong>2,100-instance automated sweeps</strong> per family for solvability and uniqueness.</li>
                   <li><strong>Accessibility with tests behind it:</strong> 44&nbsp;px minimum touch targets, visible focus everywhere, high-contrast, larger-text, reduced-motion and dark modes, and sensory feedback that only happens if you ask for it. All of it enforced by automated tests, so I can't quietly regress it later.</li>
                   <li><strong>A "calm audit" before each release:</strong> a check that no countdown mechanic has crept into the codebase, and that no pressure words have crept into the copy.</li>
-                  <li><strong>No dependencies in production</strong> — plain JavaScript, no third-party libraries, no trackers. Installable and works offline. 59 automated tests have to pass before anything ships.</li>
+                  <li><strong>No client-side framework and no trackers</strong> — the puzzles are plain JavaScript I wrote. The server runs on a single dependency (Express), and sign-in goes through Google, so I never hold anyone's password. Installable and works offline. 59 automated tests have to pass before anything ships.</li>
                   <li><strong>Private by design:</strong> runs on the home server above with the same security-first pattern as the flagship, plus identity-based invite-only access — the one person it's for is the only person who can reach it.</li>
                 </ul>
               </div>
