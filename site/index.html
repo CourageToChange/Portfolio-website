@@ -120,9 +120,9 @@
             Now every photo the two of us take backs itself up at home overnight, there's an ad
             blocker running for the whole house, and I host the things I build on it — a puzzle
             game I made for my wife, and a board where she keeps her knitting and clothes-making
-            ideas. Plex runs on it too. My sister-in-law found the horror films and hasn't stopped
-            since. Honestly, that's the best part of the whole thing. People I know use something
-            I built, every day, and none of them are paying a subscription for it. It's just fun.
+            ideas. Plex runs on it too, and four of my friends are on it constantly. Honestly, that's
+            the best part of the whole thing. People I know use something I built, every day, and
+            none of them are paying a subscription for it. It's just fun.
           </p>
           <p>
             Securing it is the part I got properly into. Key-only SSH, a default-deny firewall,
@@ -172,7 +172,7 @@
               <li class="pill">Access control</li>
               <li class="pill">Network security</li>
               <li class="pill">Incident response &amp; reporting</li>
-              <li class="pill">CCTV &amp; access-control systems</li>
+              <li class="pill">Access-control systems</li>
               <li class="pill">Service-desk / ticketing workflows</li>
               <li class="pill">System hardening</li>
               <li class="pill">Governance &amp; compliance principles</li>
@@ -342,7 +342,8 @@
                 <ul>
                   <li><strong>Backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, six-hourly snapshots of the apps I host, and a nightly watchdog that checks each one is genuinely restorable rather than merely present.</li>
                   <li><strong>Documents are a real 3-2-1:</strong> the originals live in Google Drive, which is my off-site copy; they're mirrored nightly onto the server, and copied again onto a second physical drive. That second copy is deliberately made without <code>--delete</code>, so a file deleted in Google Drive doesn't disappear from the backup with it.</li>
-                  <li><strong>Everything that starts on the server is not:</strong> photos, media, the apps I host and my wife's artwork have three copies across two drives, but all of them are in this house. That survives a dead disk or my own mistake, not a fire. Fixing it is the next job — and I'd rather say that than put "3-2-1" on everything and hope nobody asks.</li>
+                  <li><strong>Photos and artwork are covered off-site too:</strong> our phones back up to Amazon Photos independently of the server, and my wife's artwork is mirrored to cloud storage as well as living on the server as a read-only archive.</li>
+                  <li><strong>The media library is deliberately not backed up.</strong> It's the largest thing on the server and the only part I could reacquire, so backing it up would cost more than it's worth. What I <em>do</em> keep off-site is an index of everything in it — so if a drive dies or the house burns down, I rebuild the server and work back from the list rather than trying to remember what was there.</li>
                   <li><strong>Reliability:</strong> SMART disk-health monitoring via <code>smartd</code>, UUID-based mounts, and cron-driven scripted automation.</li>
                 </ul>
               </div>
@@ -612,7 +613,7 @@
               <li>Provide front-line physical security at a major, high-footfall cultural institution.</li>
               <li>When something breaks, staff come to security. I take the report, get the details right and pass it to our control room, who bring in the facilities contractor — first-line intake and escalation, which is the same shape as a service desk.</li>
               <li>Coordinate contractor access into restricted and high-security areas.</li>
-              <li>Monitor CCTV and access-control systems and respond to incidents following established protocols.</li>
+              <li>Work the access-control systems day to day — card readers for staff RFID passes — and respond to incidents to established protocols.</li>
               <li>Compile accurate incident reports, daily logs and structured handovers; handle sensitive information with discretion and integrity.</li>
             </ul>
           </article>

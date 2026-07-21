@@ -9,8 +9,8 @@ Manager and Cloudflare.
 ## Why no framework?
 
 Mostly because it's a CV for security work and it would be a bit embarrassing to ship it
-with forty dependencies I'd never read. There's nothing here to patch and nothing to
-audit. It's about 45 KB before fonts, so it renders in one round trip. It still works with
+with forty dependencies I'd never read. The only third party the page talks to is Google
+Fonts; everything else is mine, so there's very little to patch and very little to audit. It's about 80 KB before fonts, so it renders in one round trip. It still works with
 JavaScript turned off, it honours `prefers-reduced-motion`, and the markup is semantic
 with real landmarks and a skip link.
 
