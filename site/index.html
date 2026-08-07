@@ -87,7 +87,7 @@
           </p>
           <div class="hero__actions reveal-up" style="--d:3">
             <a class="btn btn--primary" href="#contact">Get in touch</a>
-            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf" download>Download CV</a>
+            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260729" download>Download CV</a>
           </div>
           <p class="hero__hosted reveal-up" style="--d:4">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -239,7 +239,7 @@
             <span class="project__badge">Flagship</span>
             <h3>Self-Hosted Home Server &amp; Security Lab</h3>
             <p class="project__oneliner">
-              A Linux server in my house running six isolated services, locked down with key-only
+              A Linux server in my house running seven isolated services, locked down with key-only
               SSH, a default-deny firewall, fail2ban, 2FA, TLS and backups across more than one
               drive. My family and friends use it every day.
             </p>
@@ -247,9 +247,10 @@
           <div class="project__summary">
             <p>
               I got tired of paying Google and Apple to hold our photos, so I put Proxmox on a
-              refurbished Dell OptiPlex and started moving things onto it. It now runs six isolated
+              refurbished Dell OptiPlex and started moving things onto it. It now runs seven isolated
               containers: Plex, network-wide DNS filtering, private photo backup, an e-book library,
-              a reverse proxy, and a read-only operations console I built with an AI coding agent. The
+              a reverse proxy, a read-only operations console, and one that holds nothing but the
+              public demos, deliberately kept away from everything else. I specced the console and had an agent write it. The
               apps I've built run inside the proxy container, and this website is served from there
               too.
             </p>
@@ -262,7 +263,7 @@
             </p>
           </div>
 
-          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running isolated containers for Plex, AdGuard Home, Immich, Kavita and Nginx Proxy Manager — plus this website.">
+          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running isolated containers for Plex, AdGuard Home, Immich, Kavita, and Nginx Proxy Manager — plus this website.">
             <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <!-- flow lines -->
               <path class="dia-flow" d="M118 52 H 200"/>
@@ -321,8 +322,8 @@
                 <h4>What I built</h4>
                 <ul>
                   <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex — Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
-                  <li><strong>Architecture:</strong> 6 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
-                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Nginx Proxy Manager (reverse proxy with TLS termination) — plus the apps I've built and host myself.</li>
+                  <li><strong>Architecture:</strong> 7 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
+                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), Nginx Proxy Manager (reverse proxy with TLS termination), and Signal Room (a read-only operations console that watches the rest; there's a <a href="https://signal-demo.noorfamily.uk/" target="_blank" rel="noopener">demo of it running on made-up data ↗</a> and the <a href="https://github.com/CourageToChange/signal-room" target="_blank" rel="noopener">source is on GitHub ↗</a>) — plus the apps I've built and host myself.</li>
                 </ul>
               </div>
               <div class="case-block">
@@ -387,19 +388,22 @@
         <!-- PROJECT 2 -->
         <article class="project reveal">
           <div class="project__head">
-            <h3>Retro Snake Arena — Multiplayer Web Game + Security Review</h3>
+            <h3>Retro Snake Arena — Browser Game Built with AI Agents, Then Security-Reviewed</h3>
             <p class="project__oneliner">
-              A browser game I deployed on my own server and then reviewed for security. The review
-              found three real problems, which was the point of doing it.
+              A browser game I built by directing AI coding agents, deployed on my own server, and
+              then reviewed for security myself. The review found three real problems, which was the
+              point of doing it.
             </p>
-            <p class="project__links"><a href="https://snake.noorfamily.uk/" target="_blank" rel="noopener">Play it live <span aria-hidden="true">↗</span></a></p>
+            <p class="project__links"><a href="https://snake.noorfamily.uk/" target="_blank" rel="noopener">Play it live <span aria-hidden="true">↗</span></a> · <a href="https://github.com/CourageToChange/retro-snake-arena" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
           </div>
           <div class="project__summary">
             <p>
-              A real-time multiplayer browser game where the server decides what happened, so a
-              player can't edit their own score into existence. Node.js, Express, WebSockets,
-              vanilla JavaScript and HTML5 Canvas, no framework, with accounts, rooms, moderated
-              chat and leaderboards. I managed the project and did the security review myself.
+              Three modes, all single-player: an open arena with about twenty bot snakes,
+              classic grid Snake, and a maze run. The server is Node and Express. The game itself is
+              plain JavaScript on a Canvas, with no framework and no build step, and the whole thing
+              has two dependencies at runtime. It started out multiplayer, because I wanted
+              something to play with friends. Single-player turned out cooler and more stable, and
+              it means the scores actually compare.
             </p>
           </div>
           <details class="project__details">
@@ -408,22 +412,23 @@
               <div class="case-block">
                 <h4>Security engineering</h4>
                 <ul>
-                  <li><strong>Authentication done right:</strong> passwords hashed with scrypt + per-user salt and timing-safe comparison; session tokens stored only as SHA-256 hashes; HttpOnly / SameSite cookies.</li>
+                  <li><strong>Sign-in:</strong> Google only. There are no passwords in the app at all, and if it ever finds an old email or password column in the users table it rebuilds the table without them. Session tokens are stored only as SHA-256 hashes, in HttpOnly SameSite cookies.</li>
                   <li><strong>Web-vuln defences:</strong> parameterised SQL (injection prevention), input sanitisation and XSS output-escaping, allowlists for user input, and rate-limiting on authentication and actions.</li>
-                  <li><strong>Security review:</strong> I went through the codebase looking for what I'd learned to look for, and found three things worth fixing: a score-submission endpoint anyone could call without logging in, a WebSocket with no cap on payload size (so one client could exhaust the server), and a rate-limit that counted the CDN's IP instead of the visitor's, which meant it wasn't limiting anyone. I wrote them up in priority order with fixes.</li>
+                  <li><strong>Security review:</strong> I went through the codebase looking for what I'd learned to look for, and found three things worth fixing: a score endpoint anyone could call without logging in, a WebSocket with no cap on payload size, so one client could exhaust the server, and a rate limit that counted Cloudflare's IP instead of the visitor's, which meant it wasn't limiting anyone. I wrote them up in priority order and fixed them. Signed-out players can still submit a run, they just don't land on the board. The WebSocket one stopped mattering later, when I took multiplayer out.</li>
+                  <li><strong>Scoring, honestly:</strong> the browser reports the score, so I don't pretend the boards are verified. Each run gets a signed, single-use token, and the server throws a score away unless it arrives with a valid unused token and is possible under the game's own rules.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4>Extras</h4>
                 <ul>
-                  <li>Automated smoke tests and an installable Progressive Web App. An Android wrapper is in progress.</li>
+                  <li>Automated smoke and browser tests, and it installs to a phone's home screen like an app.</li>
                   <li>Version-controlled on GitHub with incremental, documented commits.</li>
                 </ul>
               </div>
               <ul class="pills pills--tags">
                 <li class="pill">Full-stack web development</li><li class="pill">Secure coding (OWASP-aligned)</li>
                 <li class="pill">Security code review</li><li class="pill">Vulnerability assessment</li>
-                <li class="pill">Git / GitHub</li><li class="pill">Project management</li>
+                <li class="pill">Git / GitHub</li><li class="pill">Threat modelling</li>
               </ul>
             </div>
           </details>
@@ -451,14 +456,16 @@
           <div class="project__head">
             <h3>Bloom — Accessible Daily-Puzzle Web App</h3>
             <p class="project__oneliner">
-              A calm daily-puzzle app I built for one person who uses it every day. 17 puzzle types, no timers, no streaks,
-              nothing that nags. No open ports, and 59 automated tests keep it that way.
+              A calm daily-puzzle app with one real daily user. 17 puzzle types, no timers, no streaks,
+              nothing that nags. The test suite fails the build if a countdown or a line of pressure
+              language ever creeps back in.
             </p>
+            <p class="project__links"><a href="https://bloom-demo.noorfamily.uk/" target="_blank" rel="noopener">Try the demo <span aria-hidden="true">↗</span></a> · <a href="https://github.com/CourageToChange/bloom" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
           </div>
           <div class="project__summary">
             <p>
-              The mainstream puzzle apps were all working against the person I built it for: ads, streak guilt, countdown
-              timers, noise everywhere. Rather than guess at what "calm" ought to mean, I went and
+              The mainstream puzzle apps are built to drive engagement: ads, streak guilt, countdown
+              timers, noise everywhere. I wanted the opposite. Rather than guess at what "calm" ought to mean, I went and
               read the published research on ADHD- and autism-friendly design — it's the most
               rigorous work out there on interfaces that don't overwhelm people — wrote the
               findings down as rules, and held every feature to them. No timers, no streaks, no pressure language,
@@ -472,21 +479,21 @@
               <div class="case-block">
                 <h4>The brief</h4>
                 <p>
-                  Something one specific person would happily open every day, with nothing in it
-                  designed to make anyone feel bad for missing a day. That's a harder brief than it
+                  Something someone would happily open every day, with nothing in it designed to make
+                  anyone feel bad for missing a day. That's a harder brief than it
                   sounds, because almost every convention in the genre exists to drive engagement.
-                  I had to look up how ADHD and autistic users actually experience apps rather
-                  than trust my instincts, then turn that into rules I couldn't talk myself out of.
+                  I worked from the research on how those interfaces land rather
+                  than trusting my instincts, and turned that into rules I couldn't talk myself out of.
                 </p>
               </div>
               <div class="case-block">
                 <h4>What I built</h4>
                 <ul>
-                  <li><strong>17 puzzle families</strong> (word search, picross, mini-sudoku, anagrams, memory pairs and more), all generated client-side and validated by <strong>2,100-instance automated sweeps</strong> per family for solvability and uniqueness.</li>
+                  <li><strong>17 puzzle families</strong> (word search, picross, mini-sudoku, anagrams, memory pairs and more), all generated client-side, with the generators run against <strong>2,100 seeds apiece</strong> to prove they stay solvable and don't repeat themselves.</li>
                   <li><strong>Accessibility with tests behind it:</strong> 44&nbsp;px minimum touch targets, visible focus everywhere, high-contrast, larger-text, reduced-motion and dark modes, and sensory feedback that only happens if you ask for it. All of it enforced by automated tests, so I can't quietly regress it later.</li>
                   <li><strong>A "calm audit" before each release:</strong> a check that no countdown mechanic has crept into the codebase, and that no pressure words have crept into the copy.</li>
-                  <li><strong>No client-side framework and no trackers</strong> — the puzzles are plain JavaScript I wrote. The server runs on a single dependency (Express), and sign-in goes through Google, so I never hold anyone's password. Installable and works offline. 59 automated tests have to pass before anything ships.</li>
-                  <li><strong>Private by design:</strong> runs on the home server above with the same security-first pattern as the flagship, plus identity-based invite-only access — the one person it's for is the only person who can reach it.</li>
+                  <li><strong>No client-side framework and no trackers</strong> — the puzzles are plain JavaScript, generated in the browser. The server has two runtime dependencies: Express, and a JWT library it uses to check the tokens from the access proxy in front of it. Sign-in goes through Google, so I never hold anyone's password. Installable and works offline. The whole test suite has to pass before anything ships.</li>
+                  <li><strong>Private by design:</strong> runs on the home server above with the same security-first pattern as the flagship, plus identity-based invite-only access. Only invited accounts can reach the real one. The demo above is a separate copy with no accounts at all: the server refuses every write, and it runs its own puzzle seed, so it isn't showing anyone's day.</li>
                 </ul>
               </div>
               <ul class="pills pills--tags">
@@ -507,7 +514,7 @@
               it by running a team of AI coding agents — writing the specs, splitting the work
               between them, and reviewing every change myself before it went live.
             </p>
-            <p class="project__links"><a href="https://github.com/CourageToChange/patchwork" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
+            <p class="project__links"><a href="https://patchwork-demo.noorfamily.uk/" target="_blank" rel="noopener">Try the demo <span aria-hidden="true">↗</span></a> · <a href="https://github.com/CourageToChange/patchwork" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
           </div>
           <div class="project__summary">
             <p>
@@ -541,7 +548,7 @@
                 <ul>
                   <li>A touch-first infinite canvas (React, TypeScript, tldraw) with photos, notes, drawing, stickers and board export, synced between her iPad and iPhone through a Node/Express and SQLite API.</li>
                   <li><strong>Background removal with no cloud service involved.</strong> A quick cut-out runs on the device itself, in a Web Worker using ONNX runtime. If she wants a sharper one, the photo goes to a container on my own server — hardened, non-root, read-only, and not reachable from the internet. Either way her photos never reach a third party.</li>
-                  <li>Two separate instances on my server: a private one behind identity-based access, and a public demo. The public source release is generated by an allowlist exporter with a leak scanner that refuses to publish if it finds an IP, a credential or a private name.</li>
+                  <li>Two separate instances on my server: a private one behind identity-based access, and a public demo that is deliberately less capable — the server refuses every write, its four boards are made up, background removal only runs in the browser, and the public build ships without my tldraw licence key, so it carries their watermark. The public source release is generated by an allowlist exporter with a leak scanner that refuses to publish if it finds an IP, a credential or a private name.</li>
                 </ul>
               </div>
               <ul class="pills pills--tags">

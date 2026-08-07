@@ -94,7 +94,7 @@
 
   <h2>Profile</h2>
   <p>
-    CompTIA Security+ certified, looking for a first role as a SOC Analyst, Junior Cybersecurity Analyst, IT Support Technician or Service Desk Analyst. Currently an SIA-licensed Security Officer at the British Museum, responsible for incident response and reporting, access-control systems, and first-line intake and escalation of facilities faults. Outside work I run a Proxmox home server and security lab: six isolated containers, hardened and monitored as set out below, reachable only through outbound Cloudflare Tunnels, with backups verified nightly instead of assumed. I host the applications I build on it, and that is where most of my practical Linux, networking, deployment and troubleshooting experience has come from. Studied Computer Science at London South Bank University, completing two of three years.
+    CompTIA Security+ certified, looking for a first role as a SOC Analyst, Junior Cybersecurity Analyst, IT Support Technician or Service Desk Analyst. Currently an SIA-licensed Security Officer at the British Museum, responsible for incident response and reporting, access-control systems, and first-line intake and escalation of facilities faults. Outside work I run a Proxmox home server and security lab: seven isolated containers, hardened and monitored as set out below, reachable only through outbound Cloudflare Tunnels, with backups verified nightly instead of assumed. I host the applications I build on it, and that is where most of my practical Linux, networking, deployment and troubleshooting experience has come from. Studied Computer Science at London South Bank University, completing two of three years.
   </p>
 
   <h2>Key Skills</h2>
@@ -118,11 +118,12 @@
   </div>
 
   <div class="nobreak">
-    <h3>Retro Snake Arena <span class="where">— multiplayer web game with security review</span></h3>
+    <h3>Retro Snake Arena <span class="where">— browser game built with AI agents, with security review</span></h3>
     <ul>
-      <li>Built and deployed a real-time multiplayer browser game (Node.js, Express, WebSockets, SQLite) as a self-hosted web application, with server-authoritative logic to prevent cheating.</li>
-      <li>Implemented secure authentication (scrypt-hashed passwords, hashed session tokens, HttpOnly cookies), parameterised SQL, input validation, XSS escaping and rate-limiting.</li>
-      <li>Performed a security review of the codebase — found an unauthenticated endpoint, a WebSocket denial-of-service risk and a CDN-evading rate-limit — and wrote a prioritised remediation plan.</li>
+      <li>Directed AI coding agents to build a browser game (Node.js, Express, SQLite, vanilla JavaScript and Canvas), specifying the work and reviewing every change, then deployed it as a self-hosted web application with no framework and two runtime dependencies.</li>
+      <li>Implemented Google-only sign-in with no stored passwords, session tokens held only as SHA-256 hashes, HttpOnly cookies, parameterised SQL, input validation, XSS escaping and rate-limiting.</li>
+      <li>Signed each play session with a single-use token so the server can reject scores that arrive without one or that the game's own rules make impossible.</li>
+      <li>Performed a security review of the codebase, found an unauthenticated endpoint, an uncapped WebSocket payload and a rate limit counting the CDN's IP rather than the visitor's, wrote a prioritised remediation plan and fixed all three; the WebSocket finding stopped applying when the multiplayer code came out.</li>
     </ul>
   </div>
 
@@ -136,7 +137,7 @@
   <div class="nobreak">
     <h3>Other projects <span class="where">— more on GitHub: github.com/CourageToChange</span></h3>
     <ul>
-      <li><strong>Bloom</strong> — accessibility-first daily-puzzle web app built for one real daily user and designed from published research on ADHD- and autism-friendly interfaces: 17 puzzle types, no timer or streak mechanics, 59 automated tests enforcing touch-target and sensory-setting requirements, self-hosted with invite-only access.</li>
+      <li><strong>Bloom</strong> — accessibility-first daily-puzzle web app with one real daily user: 17 puzzle types, no timer or streak mechanics, and an automated test suite including one test that fails the build if any countdown mechanic or pressure wording reaches a release, self-hosted with invite-only access.</li>
       <li><strong>South London Law Society website</strong> — university team project: a case-management site for legal case submission, tracking, and solicitor/admin workflows (React, Node.js/Express, MySQL). Team-built; the source was not published.</li>
       <li><strong>StudyTrack</strong> — native Android app that turns plain-text weekly study plans into daily checklists with widgets and reminders.</li>
       <li><strong>Private photo &amp; file migration</strong> — moved thousands of photos to a self-hosted library via CLI tooling with de-duplication, metadata preservation and least-privilege access.</li>
