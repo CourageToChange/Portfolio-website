@@ -447,6 +447,11 @@ code {
   gap: 20px;
   perspective: 900px;
 }
+/* Grid items default to min-width:auto, so a long unbreakable pill can force its track
+   wider than the 1fr share and push the whole grid past the container. That made the
+   page scroll sideways in the 981-1100px band, where the skills grid is 4 columns.
+   min-width:0 lets the tracks shrink and the pills wrap instead. */
+.cards-3 > * { min-width: 0; }
 .cards-3--creds, .cards-3--skills { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 980px) {
   .cards-3, .cards-3--creds { grid-template-columns: repeat(2, 1fr); }
@@ -758,11 +763,59 @@ code {
   .cards-3--skills { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* On phones, let the architecture diagram scale to fit the screen so the whole
-   thing (and its flow animation) is visible without sideways scrolling. */
-@media (max-width: 620px) {
+/* Two diagrams, one shown at a time. Scaling the wide one down to phone width put its
+   labels at roughly 5.6px, so phones get a purpose-built narrow version instead of a
+   shrunken copy. Both are aria-hidden; the <figure>'s aria-label is the accessible name,
+   so swapping them changes nothing for a screen reader. */
+.diagram .dia--narrow { display: none; }
+
+/* Breakpoint measured in a real viewport, not estimated. The wide diagram is 760 units
+   across, so its 13px labels only reach a readable ~12px once the card itself is about
+   700px wide — and the card is far narrower than the viewport (615px at an 821px
+   viewport, 868px at 1440px). That puts the crossover near 1000px, not the 790px a
+   detached-clone probe first suggested; the clone did not inherit the real section
+   padding. Below 1000px — phones, tablets and small laptop windows — the stacked
+   diagram is used instead. The original 620px breakpoint left everything from 620px to
+   1000px rendering the wide diagram at 9.6-11.8px. */
+@media (max-width: 1000px) {
   .diagram { overflow-x: visible; }
   .diagram svg { min-width: 0; }
+  .diagram .dia--wide { display: none; }
+  .diagram .dia--narrow {
+    display: block;
+    /* Without a cap this would stretch to the full card on a tablet or small laptop
+       (over 2x scale) and render enormous labels. Capped and centred, it stays
+       proportionate at every width below the breakpoint. */
+    /* 340px keeps the scale near 1:1 against the 320-unit viewBox, so the labels land at
+       roughly 14.9px — the same size the wide diagram renders at on desktop. A larger cap
+       made the tablet diagram bigger than the desktop one. */
+    max-width: 340px;
+    margin-inline: auto;
+  }
+
+  /* The narrow diagram still renders at about 0.89x (the card and section padding take
+     roughly 127px of a 412px screen), so the type is sized up here to land back at a
+     readable on-screen size rather than at the shrunken one. Measured, not guessed:
+     label 14 -> ~12.5px on screen, sub 12 -> ~10.7px. */
+  .diagram .dia--narrow .dia-node text,
+  .diagram .dia--narrow .dia-chip text { font-size: 14px; }
+  .diagram .dia--narrow .dia-sub { font-size: 12px !important; }
+  .diagram .dia--narrow .dia-host-label { font-size: 13px; }
+}
+
+/* Small phones. The container and card padding take a fixed ~127px whatever the screen
+   width, so on a 360px phone the diagram only got 233px and the labels fell back to
+   10.2px. Letting the card bleed into the container's own padding (which is empty space)
+   and trimming its inner padding buys back about 32px, and the type is sized up to suit.
+   Measured at 360px: label 10.2px -> 12.4px, sub 8.7px -> 10.3px. */
+@media (max-width: 480px) {
+  .diagram {
+    margin-inline: -12px;
+    padding-inline: 10px;
+  }
+  .diagram .dia--narrow .dia-node text,
+  .diagram .dia--narrow .dia-chip text { font-size: 15px; }
+  .diagram .dia--narrow .dia-sub { font-size: 12.5px !important; }
 }
 
 /* ============ Experience ============ */

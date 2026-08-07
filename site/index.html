@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=20260720a">
+  <link rel="stylesheet" href="styles.css?v=20260807b">
 
   <!-- Structured data for search engines -->
   <script type="application/ld+json">
@@ -264,7 +264,7 @@
           </div>
 
           <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running seven isolated containers — Plex, AdGuard Home, Immich, Kavita, Nginx Proxy Manager, a read-only operations console, and one holding only the public demos — plus this website, served from the proxy container.">
-            <svg viewBox="0 0 760 348" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <svg class="dia--wide" viewBox="0 0 760 348" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <!-- flow lines -->
               <path class="dia-flow" d="M118 52 H 200"/>
               <path class="dia-flow" d="M332 52 H 414"/>
@@ -307,6 +307,57 @@
               <g class="dia-chip"><rect x="176" y="232" width="132" height="36" rx="8"/><text x="242" y="254" text-anchor="middle">public demos</text></g>
               <g class="dia-chip dia-chip--accent"><rect x="40" y="278" width="148" height="36" rx="8"/><text x="114" y="300" text-anchor="middle">this website ✓</text></g>
               <text x="208" y="300" class="dia-sub">← you are being served from here, through every layer above</text>
+            </svg>
+
+            <!-- Phone variant: same content, stacked. The wide diagram is 760 units across, so
+                 scaling it into a ~330px phone screen shrinks it to 0.43x and renders the 13px
+                 labels at about 5.6px — unreadable. This one is 320 units across, so it lands
+                 near 1:1 and the type stays at its real size. Swapped by CSS at 620px. -->
+            <svg class="dia--narrow" viewBox="0 0 320 568" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <!-- flow lines -->
+              <path class="dia-flow" d="M160 50 V 66"/>
+              <path class="dia-flow" d="M160 110 V 126"/>
+              <path class="dia-flow" d="M160 170 V 186"/>
+              <path class="dia-flow" d="M160 230 V 246"/>
+              <!-- chain, top to bottom -->
+              <g class="dia-node">
+                <rect x="60" y="6" width="200" height="44" rx="10"/>
+                <text x="160" y="26" text-anchor="middle">internet</text>
+                <text x="160" y="41" text-anchor="middle" class="dia-sub">untrusted</text>
+              </g>
+              <g class="dia-node">
+                <rect x="60" y="66" width="200" height="44" rx="10"/>
+                <text x="160" y="86" text-anchor="middle">cloudflare</text>
+                <text x="160" y="101" text-anchor="middle" class="dia-sub">WAF · CDN · rate-limit</text>
+              </g>
+              <g class="dia-node">
+                <rect x="60" y="126" width="200" height="44" rx="10"/>
+                <text x="160" y="146" text-anchor="middle">firewall</text>
+                <text x="160" y="161" text-anchor="middle" class="dia-sub">default-deny</text>
+              </g>
+              <g class="dia-node dia-node--accent">
+                <rect x="60" y="186" width="200" height="44" rx="10"/>
+                <text x="160" y="206" text-anchor="middle">nginx proxy</text>
+                <text x="160" y="221" text-anchor="middle" class="dia-sub">TLS termination</text>
+              </g>
+              <!-- proxmox host box -->
+              <g class="dia-host">
+                <rect x="8" y="246" width="304" height="312" rx="14"/>
+                <text x="22" y="270" class="dia-host-label">proxmox ve — hardened host</text>
+                <text x="22" y="288" class="dia-sub">key-only SSH · fail2ban · TOTP 2FA</text>
+                <text x="22" y="303" class="dia-sub">LXC isolation · verified backups</text>
+              </g>
+              <!-- service chips, two columns -->
+              <g class="dia-chip"><rect x="20" y="316" width="132" height="34" rx="8"/><text x="86" y="338" text-anchor="middle">plex</text></g>
+              <g class="dia-chip"><rect x="168" y="316" width="132" height="34" rx="8"/><text x="234" y="338" text-anchor="middle">adguard home</text></g>
+              <g class="dia-chip"><rect x="20" y="358" width="280" height="34" rx="8"/><text x="160" y="380" text-anchor="middle">immich · LAN-only</text></g>
+              <g class="dia-chip"><rect x="20" y="400" width="132" height="34" rx="8"/><text x="86" y="422" text-anchor="middle">kavita</text></g>
+              <g class="dia-chip"><rect x="168" y="400" width="132" height="34" rx="8"/><text x="234" y="422" text-anchor="middle">nginx proxy</text></g>
+              <g class="dia-chip"><rect x="20" y="442" width="132" height="34" rx="8"/><text x="86" y="464" text-anchor="middle">signal room</text></g>
+              <g class="dia-chip"><rect x="168" y="442" width="132" height="34" rx="8"/><text x="234" y="464" text-anchor="middle">public demos</text></g>
+              <g class="dia-chip dia-chip--accent"><rect x="20" y="484" width="280" height="34" rx="8"/><text x="160" y="506" text-anchor="middle">this website ✓</text></g>
+              <text x="20" y="532" class="dia-sub">↑ you are being served from here,</text>
+              <text x="20" y="547" class="dia-sub">through every layer above</text>
             </svg>
             <figcaption class="dia-caption">Live architecture — every layer above is real and currently protecting this page.</figcaption>
           </figure>
