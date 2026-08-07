@@ -263,8 +263,8 @@
             </p>
           </div>
 
-          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running isolated containers for Plex, AdGuard Home, Immich, Kavita, and Nginx Proxy Manager — plus this website.">
-            <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running seven isolated containers — Plex, AdGuard Home, Immich, Kavita, Nginx Proxy Manager, a read-only operations console, and one holding only the public demos — plus this website, served from the proxy container.">
+            <svg viewBox="0 0 760 348" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <!-- flow lines -->
               <path class="dia-flow" d="M118 52 H 200"/>
               <path class="dia-flow" d="M332 52 H 414"/>
@@ -293,7 +293,7 @@
               </g>
               <!-- proxmox host box -->
               <g class="dia-host">
-                <rect x="20" y="118" width="720" height="162" rx="14"/>
+                <rect x="20" y="118" width="720" height="210" rx="14"/>
                 <text x="40" y="146" class="dia-host-label">proxmox ve — hardened host</text>
                 <text x="40" y="164" class="dia-sub">key-only SSH · fail2ban · TOTP 2FA · LXC isolation · verified backups</text>
               </g>
@@ -303,8 +303,10 @@
               <g class="dia-chip"><rect x="292" y="186" width="148" height="36" rx="8"/><text x="366" y="208" text-anchor="middle">immich · LAN-only</text></g>
               <g class="dia-chip"><rect x="452" y="186" width="100" height="36" rx="8"/><text x="502" y="208" text-anchor="middle">kavita</text></g>
               <g class="dia-chip"><rect x="564" y="186" width="124" height="36" rx="8"/><text x="626" y="208" text-anchor="middle">nginx proxy</text></g>
-              <g class="dia-chip dia-chip--accent"><rect x="40" y="232" width="148" height="36" rx="8"/><text x="114" y="254" text-anchor="middle">this website ✓</text></g>
-              <text x="208" y="254" class="dia-sub">← you are being served from here, through every layer above</text>
+              <g class="dia-chip"><rect x="40" y="232" width="124" height="36" rx="8"/><text x="102" y="254" text-anchor="middle">signal room</text></g>
+              <g class="dia-chip"><rect x="176" y="232" width="132" height="36" rx="8"/><text x="242" y="254" text-anchor="middle">public demos</text></g>
+              <g class="dia-chip dia-chip--accent"><rect x="40" y="278" width="148" height="36" rx="8"/><text x="114" y="300" text-anchor="middle">this website ✓</text></g>
+              <text x="208" y="300" class="dia-sub">← you are being served from here, through every layer above</text>
             </svg>
             <figcaption class="dia-caption">Live architecture — every layer above is real and currently protecting this page.</figcaption>
           </figure>
