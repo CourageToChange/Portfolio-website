@@ -29,18 +29,79 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Noorun Nobi",
-    "jobTitle": "Entry-Level Cybersecurity & IT Support",
-    "description": "Security Officer at the British Museum moving into cybersecurity. CompTIA Security+ certified, with a self-hosted Proxmox server and security lab built, hardened and maintained at home.",
-    "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" },
-    "knowsLanguage": ["English", "Bengali"],
-    "email": "mailto:nnobi.inbox@hotmail.com",
-    "sameAs": [
-      "https://www.linkedin.com/in/noorun-nobi-6b76a3217",
-      "https://github.com/CourageToChange"
-    ],
-    "url": "https://noor.noorfamily.uk/"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://noor.noorfamily.uk/#noorun-nobi",
+        "name": "Noorun Nobi",
+        "jobTitle": "Entry-Level Cybersecurity & IT Support",
+        "description": "Security Officer at the British Museum moving into cybersecurity. CompTIA Security+ certified, with a self-hosted Proxmox server and security lab built, hardened and maintained at home.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "London",
+          "addressCountry": "GB"
+        },
+        "knowsLanguage": [
+          "English",
+          "Bengali"
+        ],
+        "email": "mailto:nnobi.inbox@hotmail.com",
+        "sameAs": [
+          "https://www.linkedin.com/in/noorun-nobi-6b76a3217",
+          "https://github.com/CourageToChange"
+        ],
+        "url": "https://noor.noorfamily.uk/",
+        "mainEntityOfPage": "https://noor.noorfamily.uk/"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Retro Snake Arena",
+        "url": "https://snake.noorfamily.uk/",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Web browser",
+        "isAccessibleForFree": true,
+        "author": {
+          "@id": "https://noor.noorfamily.uk/#noorun-nobi"
+        },
+        "sameAs": "https://github.com/CourageToChange/retro-snake-arena"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Signal Room",
+        "url": "https://signal-demo.noorfamily.uk/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web browser",
+        "isAccessibleForFree": true,
+        "author": {
+          "@id": "https://noor.noorfamily.uk/#noorun-nobi"
+        },
+        "sameAs": "https://github.com/CourageToChange/signal-room"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Bloom",
+        "url": "https://bloom-demo.noorfamily.uk/",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Web browser",
+        "isAccessibleForFree": true,
+        "author": {
+          "@id": "https://noor.noorfamily.uk/#noorun-nobi"
+        },
+        "sameAs": "https://github.com/CourageToChange/bloom"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Patchwork",
+        "url": "https://patchwork-demo.noorfamily.uk/",
+        "applicationCategory": "DesignApplication",
+        "operatingSystem": "Web browser",
+        "isAccessibleForFree": true,
+        "author": {
+          "@id": "https://noor.noorfamily.uk/#noorun-nobi"
+        },
+        "sameAs": "https://github.com/CourageToChange/patchwork"
+      }
+    ]
   }
   </script>
 </head>
