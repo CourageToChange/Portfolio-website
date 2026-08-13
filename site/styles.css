@@ -430,9 +430,8 @@ code {
   font-weight: 500;
 }
 @media (max-width: 640px) { .about p.about__lead { font-size: 19px; } }
-/* These language/eligibility pills are sentence-like, so let them wrap rather
-   than force the page wider than a phone (they still sit on one line on desktop). */
-.about__langs .pill { white-space: normal; }
+/* (These sentence-like language/eligibility pills used to need an explicit
+   white-space:normal override; .pill now wraps by default, so it's redundant.) */
 .about__langs {
   display: flex;
   flex-wrap: wrap;
@@ -452,21 +451,35 @@ code {
    page scroll sideways in the 981-1100px band, where the skills grid is 4 columns.
    min-width:0 lets the tracks shrink and the pills wrap instead. */
 .cards-3 > * { min-width: 0; }
-.cards-3--creds, .cards-3--skills { grid-template-columns: repeat(4, 1fr); }
+.cards-3--creds { grid-template-columns: repeat(4, 1fr); }
+/* Skills is 2-up by DEFAULT and only goes 4-up at 1100px (see the min-width:1100
+   block further down). A 4-column skills card holds 185px of content, and the
+   longest label needs 271px — so below 1100px the columns are simply too narrow:
+   at 981px they are 160px and 17 of 29 pills wrap, two of them to three lines,
+   breaking after a "/" or a "·" and leaving dangling separators. 1100 rather than
+   1080 because three pills measure 184.4px against 185px available — a 0.6px
+   margin that a 1080px breakpoint would tip straight back into wrapping.
+   ⚠️ ORDER MATTERS: this base rule must stay ABOVE the max-width:620px block
+   below, or phones inherit two 224px columns instead of one. Same specificity,
+   later rule wins. */
+.cards-3--skills { grid-template-columns: repeat(2, 1fr); }
 @media (max-width: 980px) {
   .cards-3, .cards-3--creds { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 620px) {
   .cards-3, .cards-3--creds, .cards-3--skills { grid-template-columns: 1fr; }
-  /* Premium phone layout: use more of the width, tighter vertical rhythm,
-     and keep skill pills clean single-line chips (no mid-word wrapping). */
+  /* Premium phone layout: use more of the width, tighter vertical rhythm. */
   .container { padding-inline: 16px; }
   .section { padding: 54px 0; }
   .section--contact { padding-bottom: 68px; }
   .project { padding: 24px 18px; }
   .card { padding: 22px 18px; }
   .mini { padding: 18px 16px; }
-  .cards-3--skills .pill { white-space: nowrap; }
+  /* NOTE: this used to re-assert `white-space: nowrap` on skill pills to keep
+     them single-line. In one column they fit on most phones, but on a 320px
+     screen the longest pill (271px) exceeded the 252px available and overflowed
+     again — the same bug, just hidden on larger handsets. Wrapping is correct
+     here too; the pills that fit still render on one line. */
 }
 
 .card {
@@ -523,10 +536,32 @@ code {
   font-size: 12px;
   color: var(--text-dim);
   background: rgba(148, 180, 220, 0.07);
-  border: 1px solid var(--line);
-  border-radius: 999px;
+  /* Raised from 0.12. A pill can now span two or three lines, and this border is
+     the ONLY cue that "Service-desk /" and "ticketing workflows" are one skill
+     rather than two. At 0.12 it was 1.13:1 against the card — grey on grey doing
+     semantic work. 0.22 is 1.57:1: still quiet, but actually visible. */
+  border: 1px solid rgba(148, 180, 220, 0.22);
+  /* Was 999px. A stadium radius resolves to half the height, so a two-line pill
+     got a 25.8px corner INSIDE a 14px card — an inner radius rounder than its
+     container, which is what made wrapped pills read as "a chip that broke"
+     rather than as intent. At one line 999px resolved to 15.9px, so 14px is
+     visually the same chip. */
+  border-radius: var(--radius);
   padding: 5px 12px;
-  white-space: nowrap;
+  /* A pill must never be wider than the card holding it. `nowrap` forced long
+     labels to spill past the card edge, where the NEXT card's opaque background
+     painted over them — so they read as text clipped mid-word rather than as
+     overflow. The skills grid is the worst case: a 4-column card leaves 185px of
+     content, while "Service-desk / ticketing workflows" needs 271px. Wrapping
+     only engages when a label genuinely doesn't fit, so short pills stay
+     single-line chips. `break-word` is the last resort for an unbreakable token
+     (nothing here needs it today — the longest is "vulnerabilities" at ~108px).
+     NOTE: `text-wrap: balance` was tried here and MEASURED INERT — byte-identical
+     line breaks to `normal` on all 29 skills pills at 360/981/1440px, because with
+     2-4 short tokens the greedy break is already the balanced one. Removed rather
+     than left in looking load-bearing. */
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 .pill--quiet { background: transparent; }
 .pills--tags { margin-top: 22px; }
@@ -756,11 +791,19 @@ code {
   margin-top: 10px;
 }
 
-/* Tablet only: 2 columns. Below 621px the phone rule (1 column) must win, so this
-   is scoped with min-width — otherwise, being later in the file, it would override
-   the ≤620px single-column rule at the same specificity and cause overflow. */
-@media (min-width: 621px) and (max-width: 980px) {
-  .cards-3--skills { grid-template-columns: repeat(2, 1fr); }
+/* Skills goes 4-up ONLY here, where the container has reached its full 1080px and
+   each column finally gets its whole 185px of content. 621-1099px keeps the 2-column
+   default set near the top of the file; below 621px the phone rule (1 column) wins.
+   This block must stay AFTER the ≤620px block — being later at the same specificity
+   is what lets it take effect at all. */
+@media (min-width: 1100px) {
+  /* The "Operations & Facilities" title wraps to two lines at this width while the
+     other three don't, which pushed its pill block 20.7px below the rest of the row.
+     Reserving two lines aligns all four. Scoped to ≥1100px on purpose: at 2 columns
+     the cards are wide enough that no title wraps, and reserving space there would
+     just open a gap under every heading. (px floor first for older engines.) */
+  .cards-3--skills .card h3 { min-height: 42px; min-height: 2lh; }
+  .cards-3--skills { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* Two diagrams, one shown at a time. Scaling the wide one down to phone width put its
@@ -874,7 +917,10 @@ code {
   text-transform: uppercase;
   color: var(--text-dim);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  /* Same family as .pill, same reason: this chip wraps to two lines in the
+     981-1080px band (where the Credentials grid is still 4-up), and a stadium
+     radius turns it into a capsule rounder than the card holding it. */
+  border-radius: var(--radius);
   padding: 3px 11px;
   margin-bottom: 14px;
 }
