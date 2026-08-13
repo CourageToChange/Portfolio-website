@@ -91,6 +91,18 @@
       },
       {
         "@type": "SoftwareApplication",
+        "name": "LocalPhotoPDF",
+        "url": "https://github.com/CourageToChange/LocalPhotoPDF",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Windows",
+        "isAccessibleForFree": true,
+        "author": {
+          "@id": "https://noor.noorfamily.uk/#noorun-nobi"
+        },
+        "sameAs": "https://github.com/CourageToChange/LocalPhotoPDF"
+      },
+      {
+        "@type": "SoftwareApplication",
         "name": "Patchwork",
         "url": "https://patchwork-demo.noorfamily.uk/",
         "applicationCategory": "DesignApplication",
@@ -148,7 +160,7 @@
           </p>
           <div class="hero__actions reveal-up" style="--d:3">
             <a class="btn btn--primary" href="#contact">Get in touch</a>
-            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260807" download>Download CV</a>
+            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260810" download>Download CV</a>
           </div>
           <p class="hero__hosted reveal-up" style="--d:4">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -300,7 +312,7 @@
             <span class="project__badge">Flagship</span>
             <h3>Self-Hosted Home Server &amp; Security Lab</h3>
             <p class="project__oneliner">
-              A Linux server in my house running seven isolated services, locked down with key-only
+              A Linux server in my house running seven isolated containers, locked down with key-only
               SSH, a default-deny firewall, fail2ban, 2FA, TLS and backups across more than one
               drive. My family and friends use it every day.
             </p>
@@ -310,21 +322,26 @@
               I got tired of paying Google and Apple to hold our photos, so I put Proxmox on a
               refurbished Dell OptiPlex and started moving things onto it. It now runs seven isolated
               containers: Plex, network-wide DNS filtering, private photo backup, an e-book library,
-              a reverse proxy, a read-only operations console, and one that holds nothing but the
-              public demos, deliberately kept away from everything else. I specced the console and had an agent write it. The
-              apps I've built run inside the proxy container, and this website is served from there
-              too.
+              one holding the apps I've built, a read-only operations console, and one that holds
+              nothing but the public demos, deliberately kept away from everything else. I specced
+              the console and had an agent write it. This website is served from the same container
+              as the apps.
             </p>
             <p>
-              The hardening is where most of the time went — the lockdown described above, plus a
-              Cloudflare WAF with rate-limiting on the login endpoints. Backups run on a schedule to
+              A reverse proxy sat in the middle of all this for a while and did the TLS. The
+              tunnels took that job over, so I checked nothing was still pointing at it and
+              deleted it.
+            </p>
+            <p>
+              The hardening is where most of the time went — the lockdown described above, plus
+              Cloudflare in front of anything public. Backups run on a schedule to
               more than one drive, and a watchdog checks nightly that they can actually be restored.
               I added that last part after finding out the hard way that a backup you haven't tested
               isn't really a backup.
             </p>
           </div>
 
-          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then Nginx Proxy Manager with TLS, into a hardened Proxmox host running seven isolated containers — Plex, AdGuard Home, Immich, Kavita, Nginx Proxy Manager, a read-only operations console, and one holding only the public demos — plus this website, served from the proxy container.">
+          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then a tunnel that only ever dials out, so no inbound port is open. Behind it, a hardened Proxmox host runs seven isolated containers — Plex, AdGuard Home, Immich, Kavita, one holding the apps I've built, a read-only operations console, and one holding only the public demos — plus this website, served from the same container as the apps.">
             <svg class="dia--wide" viewBox="0 0 760 348" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <!-- flow lines -->
               <path class="dia-flow" d="M118 52 H 200"/>
@@ -340,7 +357,7 @@
               <g class="dia-node">
                 <rect x="200" y="28" width="132" height="48" rx="10"/>
                 <text x="266" y="49" text-anchor="middle">cloudflare</text>
-                <text x="266" y="65" text-anchor="middle" class="dia-sub">WAF · CDN · rate-limit</text>
+                <text x="266" y="65" text-anchor="middle" class="dia-sub">WAF · CDN · DDoS</text>
               </g>
               <g class="dia-node">
                 <rect x="414" y="28" width="132" height="48" rx="10"/>
@@ -349,8 +366,8 @@
               </g>
               <g class="dia-node dia-node--accent">
                 <rect x="628" y="28" width="112" height="48" rx="10"/>
-                <text x="684" y="49" text-anchor="middle">nginx proxy</text>
-                <text x="684" y="65" text-anchor="middle" class="dia-sub">TLS termination</text>
+                <text x="684" y="49" text-anchor="middle">tunnel</text>
+                <text x="684" y="65" text-anchor="middle" class="dia-sub">outbound-only</text>
               </g>
               <!-- proxmox host box -->
               <g class="dia-host">
@@ -363,7 +380,7 @@
               <g class="dia-chip"><rect x="152" y="186" width="128" height="36" rx="8"/><text x="216" y="208" text-anchor="middle">adguard home</text></g>
               <g class="dia-chip"><rect x="292" y="186" width="148" height="36" rx="8"/><text x="366" y="208" text-anchor="middle">immich · LAN-only</text></g>
               <g class="dia-chip"><rect x="452" y="186" width="100" height="36" rx="8"/><text x="502" y="208" text-anchor="middle">kavita</text></g>
-              <g class="dia-chip"><rect x="564" y="186" width="124" height="36" rx="8"/><text x="626" y="208" text-anchor="middle">nginx proxy</text></g>
+              <g class="dia-chip"><rect x="564" y="186" width="124" height="36" rx="8"/><text x="626" y="208" text-anchor="middle">my apps</text></g>
               <g class="dia-chip"><rect x="40" y="232" width="124" height="36" rx="8"/><text x="102" y="254" text-anchor="middle">signal room</text></g>
               <g class="dia-chip"><rect x="176" y="232" width="132" height="36" rx="8"/><text x="242" y="254" text-anchor="middle">public demos</text></g>
               <g class="dia-chip dia-chip--accent"><rect x="40" y="278" width="148" height="36" rx="8"/><text x="114" y="300" text-anchor="middle">this website ✓</text></g>
@@ -389,7 +406,7 @@
               <g class="dia-node">
                 <rect x="60" y="66" width="200" height="44" rx="10"/>
                 <text x="160" y="86" text-anchor="middle">cloudflare</text>
-                <text x="160" y="101" text-anchor="middle" class="dia-sub">WAF · CDN · rate-limit</text>
+                <text x="160" y="101" text-anchor="middle" class="dia-sub">WAF · CDN · DDoS</text>
               </g>
               <g class="dia-node">
                 <rect x="60" y="126" width="200" height="44" rx="10"/>
@@ -398,8 +415,8 @@
               </g>
               <g class="dia-node dia-node--accent">
                 <rect x="60" y="186" width="200" height="44" rx="10"/>
-                <text x="160" y="206" text-anchor="middle">nginx proxy</text>
-                <text x="160" y="221" text-anchor="middle" class="dia-sub">TLS termination</text>
+                <text x="160" y="206" text-anchor="middle">tunnel</text>
+                <text x="160" y="221" text-anchor="middle" class="dia-sub">outbound-only</text>
               </g>
               <!-- proxmox host box -->
               <g class="dia-host">
@@ -413,7 +430,7 @@
               <g class="dia-chip"><rect x="168" y="316" width="132" height="34" rx="8"/><text x="234" y="338" text-anchor="middle">adguard home</text></g>
               <g class="dia-chip"><rect x="20" y="358" width="280" height="34" rx="8"/><text x="160" y="380" text-anchor="middle">immich · LAN-only</text></g>
               <g class="dia-chip"><rect x="20" y="400" width="132" height="34" rx="8"/><text x="86" y="422" text-anchor="middle">kavita</text></g>
-              <g class="dia-chip"><rect x="168" y="400" width="132" height="34" rx="8"/><text x="234" y="422" text-anchor="middle">nginx proxy</text></g>
+              <g class="dia-chip"><rect x="168" y="400" width="132" height="34" rx="8"/><text x="234" y="422" text-anchor="middle">my apps</text></g>
               <g class="dia-chip"><rect x="20" y="442" width="132" height="34" rx="8"/><text x="86" y="464" text-anchor="middle">signal room</text></g>
               <g class="dia-chip"><rect x="168" y="442" width="132" height="34" rx="8"/><text x="234" y="464" text-anchor="middle">public demos</text></g>
               <g class="dia-chip dia-chip--accent"><rect x="20" y="484" width="280" height="34" rx="8"/><text x="160" y="506" text-anchor="middle">this website ✓</text></g>
@@ -437,7 +454,7 @@
                 <ul>
                   <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex — Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
                   <li><strong>Architecture:</strong> 7 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
-                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), Nginx Proxy Manager (reverse proxy with TLS termination), and Signal Room (a read-only operations console that watches the rest; there's a <a href="https://signal-demo.noorfamily.uk/" target="_blank" rel="noopener">demo of it running on made-up data ↗</a> and the <a href="https://github.com/CourageToChange/signal-room" target="_blank" rel="noopener">source is on GitHub ↗</a>) — plus the apps I've built and host myself.</li>
+                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Signal Room (a read-only operations console that watches the rest; there's a <a href="https://signal-demo.noorfamily.uk/" target="_blank" rel="noopener">demo of it running on made-up data ↗</a> and the <a href="https://github.com/CourageToChange/signal-room" target="_blank" rel="noopener">source is on GitHub ↗</a>) — plus the apps I've built and host myself.</li>
                 </ul>
               </div>
               <div class="case-block">
@@ -446,7 +463,7 @@
                   <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
                   <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, unnecessary services disabled. No inbound ports at all — anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts — and I review the logs.</li>
-                  <li><strong>Perimeter:</strong> Cloudflare proxy hides the home IP, with WAF managed rules, Bot Fight Mode and rate-limiting on login endpoints; Let's Encrypt TLS with automated renewal; custom domain with dynamic DNS.</li>
+                  <li><strong>Perimeter:</strong> Cloudflare sits in front and hides the home IP, and its DDoS protection is always on. TLS is terminated there, so the origin has no certificate to renew and no port open to present one on — the tunnel only ever dials out. The demo containers do their own connection limiting at the origin.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
                   <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container. I also take things out when they don't earn their place — I ran an *arr media-automation stack for a while, couldn't get it behaving reliably, and took it out instead of leaving a half-working service running and exposed.</li>
                 </ul>
@@ -677,6 +694,11 @@
         <!-- Smaller builds -->
         <h3 class="minis__title reveal">Smaller builds &amp; experiments</h3>
         <div class="minis">
+          <article class="mini reveal">
+            <h4><a class="mini__link" href="https://github.com/CourageToChange/LocalPhotoPDF" target="_blank" rel="noopener">LocalPhotoPDF <span aria-hidden="true">&#8599;</span></a></h4>
+            <p>I scan a lot of documents and wanted them as PDFs without putting them through a website first. So this does the one job, offline, with no account. Reviewing it before release found seven bugs the tests had missed &mdash; and an eighth after that, where the built installer quietly carried the path of the machine it was built on.</p>
+            <ul class="pills"><li class="pill">C#</li><li class="pill">.NET / WPF</li><li class="pill">Open source</li><li class="pill">On GitHub</li></ul>
+          </article>
           <article class="mini reveal">
             <h4>South London Law Society</h4>
             <p>A university team project: a case-management site where the public submit legal cases, solicitors pick them up and admins oversee the lot. React, Node/Express and MySQL. The team's source was never published, so there's no repo worth linking.</p>

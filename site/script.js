@@ -255,7 +255,7 @@
     ["ls ~/skills", true, 350],
     ["python  java  c  bash  linux  networking", false, 250],
     ["systemctl status homelab", true, 350],
-    ["● active (running) — 6 hardened services\n  fail2ban ✓  firewall ✓  2FA ✓  TLS ✓  backups ✓", false, 250],
+    ["● active (running) — 7 hardened services\n  fail2ban ✓  firewall ✓  2FA ✓  TLS ✓  backups ✓", false, 250],
     ["", true, 0] // final empty prompt with cursor
   ];
 

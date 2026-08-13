@@ -108,9 +108,9 @@
   <div class="nobreak">
     <h3>Self-Hosted Home Server &amp; Security Lab</h3>
     <ul>
-      <li>Built and administer a 6-service self-hosted Linux server (Proxmox / LXC) as a personal security lab — this is also where my portfolio website is hosted.</li>
+      <li>Built and administer a seven-container self-hosted Linux server (Proxmox / LXC) as a personal security lab — this is also where my portfolio website is hosted.</li>
       <li>Hardened the environment: key-only SSH, default-deny firewall, fail2ban intrusion prevention, TOTP two-factor authentication, network segmentation, least-privilege access.</li>
-      <li>Deployed a reverse proxy with automated TLS (Let's Encrypt) and a Cloudflare WAF — managed rules, bot protection and rate-limiting on login endpoints.</li>
+      <li>Ran a reverse proxy with automated TLS in front of the services, then replaced it with outbound-only Cloudflare Tunnels so there are no inbound ports at all. Removed the proxy afterwards, once I had checked nothing was still using it.</li>
       <li>Implemented a scripted, automated backup and disaster-recovery strategy: weekly full-system backups to a dedicated SSD, photo libraries mirrored to a second drive, six-hourly application snapshots, and a read-only archive for irreplaceable files.</li>
       <li>Investigated a backup drive that stopped appearing and, instead of assuming the restored drive was healthy, verified its contents — finding a month of snapshots written as zero-byte files by a job that had reported success throughout. Rewrote the backup scripts to validate each snapshot and refuse to run against an unmounted target, and added a nightly watchdog that confirms every backup is genuinely restorable, verified by deliberate failure testing.</li>
       <li>Run network-wide DNS filtering to block ad, tracker and malware domains across all devices.</li>
