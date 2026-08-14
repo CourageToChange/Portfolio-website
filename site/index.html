@@ -156,11 +156,11 @@
           <h1 class="hero__title reveal-up" style="--d:1">Noorun Nobi</h1>
           <p class="hero__subtitle reveal-up" style="--d:2">
             Entry-Level Cybersecurity and IT Support<br>
-            CompTIA Security+ certified, based in London. Currently a Security Officer at the British Museum and moving into tech — I run a hardened Linux server at home and host everything I build on it.
+            CompTIA Security+ certified, based in London. Currently a Security Officer at the British Museum and moving into tech. I run a hardened Linux server at home and host everything I build on it.
           </p>
           <div class="hero__actions reveal-up" style="--d:3">
             <a class="btn btn--primary" href="#contact">Get in touch</a>
-            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260810" download>Download CV</a>
+            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260814" download>Download CV</a>
           </div>
           <p class="hero__hosted reveal-up" style="--d:4">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -191,8 +191,7 @@
           <p>
             It started because I didn't want to keep paying Google and Apple to hold our photos.
             Now every photo the two of us take backs itself up at home overnight, there's an ad
-            blocker running for the whole house, and I host the things I build on it — a daily
-            puzzle game, and a board my wife keeps her knitting and clothes-making ideas on. Plex runs on it too, and four of my friends are on it constantly. Honestly, that's
+            blocker running for the whole house, and I host the things I build on it: a daily puzzle game, and a board my wife keeps her knitting and clothes-making ideas on. Plex runs on it too, and four of my friends are on it constantly. Honestly, that's
             the best part of the whole thing. People I know use something I built, every day, and
             none of them are paying a subscription for it. It's just fun.
           </p>
@@ -206,7 +205,7 @@
           <p>
             Right now I'm a Security Officer at the British Museum. It's genuine responsibility,
             and it's taught me to stay calm and write an incident up properly while it's still
-            going on — which counts for more on a service desk or in a SOC than people expect.
+            going on, which counts for more on a service desk or in a SOC than people expect.
             But I want work that keeps teaching me things. I try to talk about tech with my
             colleagues at lunch and I've yet to find anyone who's interested, which is a fair
             sign I'm in the wrong room. I love computers and servers. I love researching parts,
@@ -215,8 +214,8 @@
           </p>
           <p>
             I studied Computer Science at London South Bank University and completed two of the
-            three years. I build my own PCs, I fix my own things when they break — I've had a PS4
-            in pieces on the kitchen table — and the house is wired up with Alexa and Google&nbsp;Home
+            three years. I build my own PCs, I fix my own things when they break. I've had a PS4
+            in pieces on the kitchen table, and the house is wired up with Alexa and Google&nbsp;Home
             routines and motion sensors that I maintain when they inevitably drift.
           </p>
           <p class="about__langs">
@@ -333,7 +332,7 @@
               deleted it.
             </p>
             <p>
-              The hardening is where most of the time went — the lockdown described above, plus
+              The hardening is where most of the time went: the lockdown described above, plus
               Cloudflare in front of anything public. Backups run on a schedule to
               more than one drive, and a watchdog checks nightly that they can actually be restored.
               I added that last part after finding out the hard way that a backup you haven't tested
@@ -452,20 +451,20 @@
               <div class="case-block">
                 <h4>What I built</h4>
                 <ul>
-                  <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex — Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
+                  <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex: Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
                   <li><strong>Architecture:</strong> 7 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
-                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Signal Room (a read-only operations console that watches the rest; there's a <a href="https://signal-demo.noorfamily.uk/" target="_blank" rel="noopener">demo of it running on made-up data ↗</a> and the <a href="https://github.com/CourageToChange/signal-room" target="_blank" rel="noopener">source is on GitHub ↗</a>) — plus the apps I've built and host myself.</li>
+                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Signal Room (a read-only operations console that watches the rest; there's a <a href="https://signal-demo.noorfamily.uk/" target="_blank" rel="noopener">demo of it running on made-up data ↗</a> and the <a href="https://github.com/CourageToChange/signal-room" target="_blank" rel="noopener">source is on GitHub ↗</a>), plus the apps I've built and host myself.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4>Security hardening</h4>
                 <ul>
                   <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
-                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, unnecessary services disabled. No inbound ports at all — anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
-                  <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts — and I review the logs.</li>
-                  <li><strong>Perimeter:</strong> Cloudflare sits in front and hides the home IP, and its DDoS protection is always on. TLS is terminated there, so the origin has no certificate to renew and no port open to present one on — the tunnel only ever dials out. The demo containers do their own connection limiting at the origin.</li>
+                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, unnecessary services disabled. No inbound ports at all. Anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
+                  <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts, and I review the logs.</li>
+                  <li><strong>Perimeter:</strong> Cloudflare sits in front and hides the home IP, and its DDoS protection is always on. TLS is terminated there, so the origin has no certificate to renew and no port open to present one on. The tunnel only ever dials out. The demo containers do their own connection limiting at the origin.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
-                  <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container. I also take things out when they don't earn their place — I ran an *arr media-automation stack for a while, couldn't get it behaving reliably, and took it out instead of leaving a half-working service running and exposed.</li>
+                  <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container. I also take things out when they don't earn their place. I ran an *arr media-automation stack for a while, couldn't get it behaving reliably, and took it out instead of leaving a half-working service running and exposed.</li>
                 </ul>
               </div>
               <div class="case-block">
@@ -474,15 +473,14 @@
                   <li><strong>Backups:</strong> automated weekly full-system backups to a dedicated SSD, photo libraries mirrored to a separate drive, six-hourly snapshots of the apps I host, and a nightly watchdog that checks each one is genuinely restorable, not just present.</li>
                   <li><strong>Documents are a real 3-2-1:</strong> the originals live in Google Drive, which is my off-site copy; they're mirrored nightly onto the server, and copied again onto a second physical drive. That second copy is deliberately made without <code>--delete</code>, so a file deleted in Google Drive doesn't disappear from the backup with it.</li>
                   <li><strong>Photos and artwork are covered off-site too:</strong> our phones back up to Amazon Photos independently of the server, and my wife's artwork is mirrored to cloud storage as well as living on the server as a read-only archive.</li>
-                  <li><strong>The media library is deliberately not backed up.</strong> It's the largest thing on the server and the only part I could reacquire, so backing it up would cost more than it's worth. What I <em>do</em> keep off-site is an index of everything in it — so if a drive dies or the house burns down, I rebuild the server and work back from the list instead of trying to remember what was there.</li>
+                  <li><strong>The media library is deliberately not backed up.</strong> It's the largest thing on the server and the only part I could reacquire, so backing it up would cost more than it's worth. What I <em>do</em> keep off-site is an index of everything in it, so if a drive dies or the house burns down, I rebuild the server and work back from the list instead of trying to remember what was there.</li>
                   <li><strong>Reliability:</strong> SMART disk-health monitoring via <code>smartd</code>, UUID-based mounts, and cron-driven scripted automation.</li>
                 </ul>
               </div>
               <div class="case-block">
                 <h4>The backup that wasn't</h4>
                 <p>
-                  One evening a backup drive wasn't showing up. I assumed it had died — it turned
-                  out to be a loose connection. But rather than plug it back in and move on, I went
+                  One evening a backup drive wasn't showing up. I assumed it had died. It turned out to be a loose connection. But rather than plug it back in and move on, I went
                   and checked whether the backups on it were any good. A month of one app's
                   snapshots were zero bytes. The cron job had been writing empty files and
                   reporting success the entire time, and nothing had ever told me. A copy on a
@@ -596,10 +594,10 @@
           <div class="project__summary">
             <p>
               The mainstream puzzle apps are built to drive engagement: ads, streak guilt, countdown
-              timers, noise everywhere. I wanted the opposite. Rather than guess at what "calm" ought to mean, I went and
-              read the published research on ADHD- and autism-friendly design — it's the most
-              rigorous work out there on interfaces that don't overwhelm people — wrote the
-              findings down as rules, and held every feature to them. No timers, no streaks, no pressure language,
+              timers, noise everywhere. I wanted the opposite. I didn't want to guess at what "calm" ought to mean, so I went and
+              read the published research on ADHD- and autism-friendly design. It's the most
+              rigorous work out there on interfaces that don't overwhelm people. I wrote the
+              findings down as rules and held every feature to them. No timers, no streaks, no pressure language,
               sound off unless you turn it on. It runs privately on my own server, invite-only,
               with automated backups. It gets opened most days, which is the only metric I wanted.
             </p>
@@ -623,7 +621,7 @@
                   <li><strong>17 puzzle families</strong> (word search, picross, mini-sudoku, anagrams, memory pairs and more), all generated client-side, with the generators run against <strong>2,100 seeds apiece</strong> to prove they stay solvable and don't repeat themselves.</li>
                   <li><strong>Accessibility with tests behind it:</strong> 44&nbsp;px minimum touch targets, visible focus everywhere, high-contrast, larger-text, reduced-motion and dark modes, and sensory feedback that only happens if you ask for it. All of it enforced by automated tests, so I can't quietly regress it later.</li>
                   <li><strong>A "calm audit" before each release:</strong> a check that no countdown mechanic has crept into the codebase, and that no pressure words have crept into the copy.</li>
-                  <li><strong>No client-side framework and no trackers</strong> — the puzzles are plain JavaScript, generated in the browser. The server has two runtime dependencies: Express, and a JWT library it uses to check the tokens from the access proxy in front of it. Sign-in goes through Google, so I never hold anyone's password. Installable and works offline. The whole test suite has to pass before anything ships.</li>
+                  <li><strong>No client-side framework and no trackers</strong>. The puzzles are plain JavaScript, generated in the browser. The server has two runtime dependencies: Express, and a JWT library it uses to check the tokens from the access proxy in front of it. Sign-in goes through Google, so I never hold anyone's password. Installable and works offline. The whole test suite has to pass before anything ships.</li>
                   <li><strong>Private by design:</strong> runs on the home server above with the same security-first pattern as the flagship, plus identity-based invite-only access. Only invited accounts can reach the real one. The demo above is a separate copy with no accounts at all: the server refuses every write, and it runs its own puzzle seed, so it isn't showing anyone's day.</li>
                 </ul>
               </div>
@@ -642,14 +640,14 @@
             <h3>Patchwork — Mood-Board PWA, Built by Directing an AI Engineering Team</h3>
             <p class="project__oneliner">
               My wife wanted somewhere calm to keep her knitting and clothes-making ideas. I built
-              it by running a team of AI coding agents — writing the specs, splitting the work
+              it by running a team of AI coding agents: writing the specs, splitting the work
               between them, and reviewing every change myself before it went live.
             </p>
             <p class="project__links"><a href="https://patchwork-demo.noorfamily.uk/" target="_blank" rel="noopener">Try the demo <span aria-hidden="true">↗</span></a> · <a href="https://github.com/CourageToChange/patchwork" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
           </div>
           <div class="project__summary">
             <p>
-              The idea was my wife's, and she still directs it — what it looks like, how it should
+              The idea was my wife's, and she still directs it: what it looks like, how it should
               feel, what's allowed in. I engineered it. The part I find interesting is how: I ran
               the build like a small engineering team, except the engineers were AI agents. I wrote
               the specs and the acceptance criteria, gave each agent a bounded lane, made them
@@ -658,7 +656,7 @@
             </p>
             <p>
               Most of the code came from the agents. What I'd actually claim is the judgement
-              around it — deciding what was correct, what was safe, and what was good enough to
+              around it: deciding what was correct, what was safe, and what was good enough to
               ship.
             </p>
           </div>
@@ -669,7 +667,7 @@
                 <h4>The orchestration discipline</h4>
                 <ul>
                   <li><strong>Specs before code.</strong> Every feature got written down with acceptance criteria before an agent touched it. Vague instructions were far and away the biggest cause of wasted work, so I stopped allowing them.</li>
-                  <li><strong>One agent's code reviewed by a different agent, then by me.</strong> I threw out reviews when the reasoning didn't hold up, including overruling an agent that insisted on blocking a change — I tested it myself and it was fine.</li>
+                  <li><strong>One agent's code reviewed by a different agent, then by me.</strong> I threw out reviews when the reasoning didn't hold up, including overruling an agent that insisted on blocking a change. I tested it myself and it was fine.</li>
                   <li><strong>A passing build was never enough.</strong> Every change got exercised in a real browser against a production build before it shipped. That caught things the type checker and the unit tests were happy with, including a race condition that would have quietly broken a feature forever.</li>
                   <li><strong>I kept the parts that carry risk.</strong> Privacy, security, deployment and the final call on whether something was good never went to an agent.</li>
                 </ul>
@@ -678,8 +676,8 @@
                 <h4>What shipped</h4>
                 <ul>
                   <li>A touch-first infinite canvas (React, TypeScript, tldraw) with photos, notes, drawing, stickers and board export, synced between her iPad and iPhone through a Node/Express and SQLite API.</li>
-                  <li><strong>Background removal with no cloud service involved.</strong> A quick cut-out runs on the device itself, in a Web Worker using ONNX runtime. If she wants a sharper one, the photo goes to a container on my own server — hardened, non-root, read-only, and not reachable from the internet. Either way her photos never reach a third party.</li>
-                  <li>Two separate instances on my server: a private one behind identity-based access, and a public demo that is deliberately less capable — the server refuses every write, its four boards are made up, background removal only runs in the browser, and the public build ships without my tldraw licence key, so it carries their watermark. The public source release is generated by an allowlist exporter with a leak scanner that refuses to publish if it finds an IP, a credential or a private name.</li>
+                  <li><strong>Background removal with no cloud service involved.</strong> A quick cut-out runs on the device itself, in a Web Worker using ONNX runtime. If she wants a sharper one, the photo goes to a container on my own server: hardened, non-root, read-only, and not reachable from the internet. Either way her photos never reach a third party.</li>
+                  <li>Two separate instances on my server: a private one behind identity-based access, and a public demo that is deliberately less capable. The server refuses every write, its four boards are made up, background removal only runs in the browser, and the public build ships without my tldraw licence key, so it carries their watermark. The public source release is generated by an allowlist exporter with a leak scanner that refuses to publish if it finds an IP, a credential or a private name.</li>
                 </ul>
               </div>
               <ul class="pills pills--tags">
@@ -696,7 +694,7 @@
         <div class="minis">
           <article class="mini reveal">
             <h4><a class="mini__link" href="https://github.com/CourageToChange/LocalPhotoPDF" target="_blank" rel="noopener">LocalPhotoPDF <span aria-hidden="true">&#8599;</span></a></h4>
-            <p>I scan a lot of documents and wanted them as PDFs without putting them through a website first. So this does the one job, offline, with no account. Reviewing it before release found seven bugs the tests had missed &mdash; and an eighth after that, where the built installer quietly carried the path of the machine it was built on.</p>
+            <p>I scan a lot of documents and wanted them as PDFs without putting them through a website first. So this does the one job, offline, with no account. Reviewing it before release found seven bugs the tests had missed, and an eighth after that, where the built installer quietly carried the path of the machine it was built on.</p>
             <ul class="pills"><li class="pill">C#</li><li class="pill">.NET / WPF</li><li class="pill">Open source</li><li class="pill">On GitHub</li></ul>
           </article>
           <article class="mini reveal">
@@ -716,7 +714,7 @@
           </article>
           <article class="mini reveal">
             <h4>Smart Home Automation</h4>
-            <p>Alexa and Google Home routines running off motion sensors and IoT devices. The bathroom has no window, so a sensor handles the light — and when it drifts or the clocks change and it stops behaving, I go and find out why.</p>
+            <p>Alexa and Google Home routines running off motion sensors and IoT devices. The bathroom has no window, so a sensor handles the light, and when it drifts or the clocks change and it stops behaving, I go and find out why.</p>
             <ul class="pills"><li class="pill">IoT</li><li class="pill">Automation</li></ul>
           </article>
           <article class="mini reveal">
@@ -736,7 +734,7 @@
           </article>
           <article class="mini reveal">
             <h4><a class="mini__link" href="https://github.com/CourageToChange/password-strength-checker" target="_blank" rel="noopener">Password Strength Checker <span aria-hidden="true">↗</span></a></h4>
-            <p>My first ever program, in C. My first ever <code>git push</code> silently failed and I didn't notice for years — the repo sat here empty. I rebuilt it and finally gave it its code.</p>
+            <p>My first ever program, in C. My first ever <code>git push</code> silently failed and I didn't notice for years. The repo sat here empty. I rebuilt it and finally gave it its code.</p>
             <ul class="pills"><li class="pill">C</li><li class="pill">Security</li><li class="pill">On GitHub</li></ul>
           </article>
         </div>
@@ -753,9 +751,9 @@
             <h3>Security Officer — The British Museum, London</h3>
             <ul>
               <li>Provide front-line physical security at a major, high-footfall cultural institution.</li>
-              <li>When something breaks, staff come to security. I take the report, get the details right and pass it to our control room, who bring in the facilities contractor — first-line intake and escalation, which is the same shape as a service desk.</li>
+              <li>When something breaks, staff come to security. I take the report, get the details right and pass it to our control room, who bring in the facilities contractor. That's first-line intake and escalation, which is the same shape as a service desk.</li>
               <li>Coordinate contractor access into restricted and high-security areas.</li>
-              <li>Work the access-control systems day to day — card readers for staff RFID passes — and respond to incidents to established protocols.</li>
+              <li>Work the access-control systems day to day (card readers for staff RFID passes), and respond to incidents to established protocols.</li>
               <li>Compile accurate incident reports, daily logs and structured handovers; handle sensitive information with discretion and integrity.</li>
             </ul>
           </article>
@@ -798,7 +796,7 @@
           <article class="card card--cred reveal">
             <span class="cred__status cred__status--done">Licensed</span>
             <h3>SIA &amp; CCTV Licences</h3>
-            <p>SIA Door Supervisor licence, CCTV (Public Space Surveillance) licence and First Aid certificate — professional monitoring and incident-response credentials.</p>
+            <p>SIA Door Supervisor licence, CCTV (Public Space Surveillance) licence and First Aid certificate. These are professional monitoring and incident-response credentials.</p>
           </article>
           <article class="card card--cred reveal">
             <span class="cred__status cred__status--edu">Education</span>
@@ -820,7 +818,7 @@
         <h2 class="section__title reveal"><span class="section__num">06</span> Contact</h2>
         <div class="contact reveal">
           <p class="contact__lede">
-            I'm after my first role in cybersecurity or IT — an <strong>apprenticeship</strong>, a
+            I'm after my first role in cybersecurity or IT: an <strong>apprenticeship</strong>, a
             <strong>SOC Tier&nbsp;1 / Security Analyst</strong> role, or an
             <strong>IT Service Desk</strong> position. I'd rather be somewhere I'm learning
             constantly than somewhere I've already got it figured out. If that sounds like your

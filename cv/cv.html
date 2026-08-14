@@ -94,7 +94,7 @@
 
   <h2>Profile</h2>
   <p>
-    CompTIA Security+ certified, looking for a first role as a SOC Analyst, Junior Cybersecurity Analyst, IT Support Technician or Service Desk Analyst. Currently an SIA-licensed Security Officer at the British Museum, responsible for incident response and reporting, access-control systems, and first-line intake and escalation of facilities faults. Outside work I run a Proxmox home server and security lab: seven isolated containers, hardened and monitored as set out below, reachable only through outbound Cloudflare Tunnels, with backups verified nightly instead of assumed. I host the applications I build on it, and that is where most of my practical Linux, networking, deployment and troubleshooting experience has come from. Studied Computer Science at London South Bank University, completing two of three years.
+    CompTIA Security+ certified, looking for a first role as a SOC Analyst, Junior Cybersecurity Analyst, IT Support Technician or Service Desk Analyst. Currently an SIA-licensed Security Officer at the British Museum, handling incident response and reporting, access control, and first-line escalation of facilities faults. Outside work I run a Proxmox home server and security lab: seven isolated containers, reachable only through outbound Cloudflare Tunnels, with backups verified nightly instead of assumed. I host the applications I build on it. Most of my practical Linux, networking, deployment and troubleshooting experience comes from there. Two years of Computer Science at London South Bank University.
   </p>
 
   <h2>Key Skills</h2>
@@ -108,11 +108,12 @@
   <div class="nobreak">
     <h3>Self-Hosted Home Server &amp; Security Lab</h3>
     <ul>
-      <li>Built and administer a seven-container self-hosted Linux server (Proxmox / LXC) as a personal security lab — this is also where my portfolio website is hosted.</li>
+      <li>Built and administer a seven-container self-hosted Linux server (Proxmox / LXC) as a personal security lab. My portfolio website is hosted on it.</li>
       <li>Hardened the environment: key-only SSH, default-deny firewall, fail2ban intrusion prevention, TOTP two-factor authentication, network segmentation, least-privilege access.</li>
-      <li>Ran a reverse proxy with automated TLS in front of the services, then replaced it with outbound-only Cloudflare Tunnels so there are no inbound ports at all. Removed the proxy afterwards, once I had checked nothing was still using it.</li>
+      <li>Ran a reverse proxy with automated TLS, then replaced it with outbound-only Cloudflare Tunnels so there are no inbound ports at all. Removed the proxy once I had checked nothing still used it.</li>
       <li>Implemented a scripted, automated backup and disaster-recovery strategy: weekly full-system backups to a dedicated SSD, photo libraries mirrored to a second drive, six-hourly application snapshots, and a read-only archive for irreplaceable files.</li>
-      <li>Investigated a backup drive that stopped appearing and, instead of assuming the restored drive was healthy, verified its contents — finding a month of snapshots written as zero-byte files by a job that had reported success throughout. Rewrote the backup scripts to validate each snapshot and refuse to run against an unmounted target, and added a nightly watchdog that confirms every backup is genuinely restorable, verified by deliberate failure testing.</li>
+      <li>A backup drive stopped appearing. I checked what was actually on it, and found a month of snapshots written as zero-byte files by a job that had reported success throughout.</li>
+      <li>Rewrote the backup scripts to validate each snapshot and refuse to run against an unmounted target, then added a nightly watchdog that confirms every backup is restorable. Broke it on purpose to check the watchdog complained.</li>
       <li>Run network-wide DNS filtering to block ad, tracker and malware domains across all devices.</li>
     </ul>
   </div>
@@ -120,24 +121,27 @@
   <div class="nobreak">
     <h3>Retro Snake Arena <span class="where">— browser game built with AI agents, with security review</span></h3>
     <ul>
-      <li>Directed AI coding agents to build a browser game (Node.js, Express, SQLite, vanilla JavaScript and Canvas), specifying the work and reviewing every change, then deployed it as a self-hosted web application with no framework and two runtime dependencies.</li>
+      <li>Directed AI coding agents to build a browser game (Node.js, Express, SQLite, vanilla JavaScript and Canvas), specifying the work and reviewing every change. Deployed it self-hosted, with no framework and two runtime dependencies.</li>
       <li>Implemented Google-only sign-in with no stored passwords, session tokens held only as SHA-256 hashes, HttpOnly cookies, parameterised SQL, input validation, XSS escaping and rate-limiting.</li>
       <li>Signed each play session with a single-use token so the server can reject scores that arrive without one or that the game's own rules make impossible.</li>
-      <li>Performed a security review of the codebase, found an unauthenticated endpoint, an uncapped WebSocket payload and a rate limit counting the CDN's IP rather than the visitor's, wrote a prioritised remediation plan and fixed all three; the WebSocket finding stopped applying when the multiplayer code came out.</li>
+      <li>Reviewed the codebase and found three problems: an unauthenticated score endpoint, an uncapped WebSocket payload, and a rate limit counting the CDN's IP rather than the visitor's, so it limited nobody.</li>
+      <li>Wrote them up as a prioritised remediation plan and fixed all three. The WebSocket one stopped applying when multiplayer came out.</li>
     </ul>
   </div>
 
   <div class="nobreak">
     <h3>Patchwork <span class="where">— full-stack PWA delivered by directing an AI engineering team</span></h3>
     <ul>
-      <li>Delivered a live mood-board and visual-canvas PWA (React, TypeScript, Node/Express, SQLite) from my wife's original idea, working as the director of a team of AI coding agents: I wrote the specifications and acceptance criteria, assigned bounded work to parallel agent lanes, required cross-review between them, and reviewed and browser-tested every change against a production build before release. Privacy, security, deployment and final sign-off stayed with me throughout.</li>
+      <li>Delivered a live mood-board and visual-canvas PWA (React, TypeScript, Node/Express, SQLite) from my wife's original idea, directing a team of AI coding agents.</li>
+      <li>I wrote the specs and the acceptance criteria, gave each agent a bounded lane, and made them review each other's work.</li>
+      <li>I reviewed and browser-tested every change against a production build before release. Privacy, security, deployment and the final call stayed with me.</li>
     </ul>
   </div>
 
   <div class="nobreak">
     <h3>Other projects <span class="where">— more on GitHub: github.com/CourageToChange</span></h3>
     <ul>
-      <li><strong>Bloom</strong> — accessibility-first daily-puzzle web app with one real daily user: 17 puzzle types, no timer or streak mechanics, and an automated test suite including one test that fails the build if any countdown mechanic or pressure wording reaches a release, self-hosted with invite-only access.</li>
+      <li><strong>Bloom</strong> — accessibility-first daily-puzzle web app with one real daily user. 17 puzzle types, no timers or streaks, and 59 automated tests, one of which fails the build if any countdown mechanic or pressure wording reaches a release. Self-hosted, invite-only.</li>
       <li><strong>South London Law Society website</strong> — university team project: a case-management site for legal case submission, tracking, and solicitor/admin workflows (React, Node.js/Express, MySQL). Team-built; the source was not published.</li>
       <li><strong>StudyTrack</strong> — native Android app that turns plain-text weekly study plans into daily checklists with widgets and reminders.</li>
       <li><strong>Private photo &amp; file migration</strong> — moved thousands of photos to a self-hosted library via CLI tooling with de-duplication, metadata preservation and least-privilege access.</li>
@@ -151,7 +155,7 @@
     <p class="sub">August 2024 — Present</p>
     <ul>
       <li>Provide front-line physical security at a major, high-footfall cultural institution.</li>
-      <li>First point of contact when staff report a fault: capture the details accurately and escalate through the control room to the facilities contractor — first-line intake and handover.</li>
+      <li>First point of contact when staff report a fault. I capture the details accurately and escalate through the control room to the facilities contractor, which is first-line intake and handover.</li>
       <li>Coordinate contractor access into restricted and high-security areas.</li>
       <li>Operate access-control systems day to day (card readers for staff RFID passes), respond to incidents to established protocols, and maintain accurate shift logs and incident records.</li>
     </ul>
