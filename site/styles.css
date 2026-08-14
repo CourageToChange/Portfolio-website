@@ -451,7 +451,13 @@ code {
    page scroll sideways in the 981-1100px band, where the skills grid is 4 columns.
    min-width:0 lets the tracks shrink and the pills wrap instead. */
 .cards-3 > * { min-width: 0; }
-.cards-3--creds { grid-template-columns: repeat(4, 1fr); }
+/* Credentials is 2-up by DEFAULT and only goes 4-up at 1100px, for the same reason
+   as skills below. It used to be 4-up from 981px, where each card holds 160px of
+   content and the prose runs at ~22 characters per line against a comfortable
+   45-75, and the "CERTIFIED · OCT 2025" chip wrapped to two lines.
+   ⚠️ ORDER MATTERS, same as skills: this base rule must stay ABOVE the
+   max-width:620px block below, or phones inherit two columns instead of one. */
+.cards-3--creds { grid-template-columns: repeat(2, 1fr); }
 /* Skills is 2-up by DEFAULT and only goes 4-up at 1100px (see the min-width:1100
    block further down). A 4-column skills card holds 185px of content, and the
    longest label needs 271px — so below 1100px the columns are simply too narrow:
@@ -804,6 +810,13 @@ code {
      just open a gap under every heading. (px floor first for older engines.) */
   .cards-3--skills .card h3 { min-height: 42px; min-height: 2lh; }
   .cards-3--skills { grid-template-columns: repeat(4, 1fr); }
+  /* Credentials deliberately does NOT go 4-up here, unlike skills. Measured
+     2026-08-14: at 4 columns a credentials card holds 187px of content and its
+     prose runs at ~21 characters per line even at 1440px, against a comfortable
+     45-75. Skills gets away with 4-up because its cards hold short pills; these
+     hold sentences. There is no realistic viewport where 4 columns work for
+     them, so 2-up (a 2x2 block of the four cards) is the answer at every width
+     above the phone breakpoint. At 1440px that gives ~62 characters per line. */
 }
 
 /* Two diagrams, one shown at a time. Scaling the wide one down to phone width put its
