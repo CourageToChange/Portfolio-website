@@ -30,3 +30,43 @@ worth looking at.
 
 ⚠️ Known, pre-existing, not worth chasing: 621–750px sits at 2-up and ~31 characters. That band
 was already 2-up before PF18, and widening it would touch `.cards-3` generally.
+
+## `perf-baseline.mjs`
+
+Core Web Vitals, long tasks, the animation frame rate actually painted, request and byte counts,
+the third-party split, and how much of the stylesheet is really used. Runs a phone profile and a
+desktop profile.
+
+```bash
+node scripts/perf-baseline.mjs                                  # live site
+node scripts/perf-baseline.mjs --json docs/perf-2026-08-16.json # keep it for comparison
+node scripts/perf-baseline.mjs --url http://127.0.0.1:8731/     # somewhere else
+```
+
+It measures the **live url** by default, not a local copy. A local file and the deployed site have
+disagreed before on a byte-identical bundle, so what is on this machine proves nothing about what a
+visitor loads.
+
+The phone profile sets `isMobile` and `hasTouch`. Without those the page gets the desktop layout at
+a phone width, which measures a page nobody ever sees.
+
+Current numbers and what came of them: `docs/PERF.md`.
+
+## `font-audit.mjs`
+
+Asks the browser what font family and weight it actually resolved for every element that renders
+text, and lists that against what the page requested.
+
+```bash
+node scripts/font-audit.mjs
+```
+
+**Why it exists.** Grepping the stylesheet for `font-weight` cannot tell you whether a weight is
+used. Family and weight are set independently and both inherit, so a declared weight can land on
+any family, or on none at all. Only the browser knows what it resolved.
+
+It found two things a grep could not. `Space Grotesk:wght@500` is requested and rendered on nothing.
+And the CSS asks for `Inter 700`, which is never loaded, so the browser falls back to the heaviest
+face it has. That sounded like faux bold until it was measured: 600, 700 and 800 all render the same
+string at exactly 423.39px, so the browser is clamping rather than synthesising, and nothing looks
+wrong.
