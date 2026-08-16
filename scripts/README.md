@@ -47,6 +47,12 @@ It measures the **live url** by default, not a local copy. A local file and the 
 disagreed before on a byte-identical bundle, so what is on this machine proves nothing about what a
 visitor loads.
 
+It loads the page once and discards that result before measuring. Without the warm-up, whichever
+profile runs first absorbs any cold start and reports it as its own TTFB. Pointed at another
+project on 2026-08-16 it produced phone TTFB 2852 ms against desktop 71 ms and an LCP of 3432 ms
+that read as a real problem. CPU throttling cannot change server response time, which is what gave
+it away. Warm, the same page measured 428 ms.
+
 The phone profile sets `isMobile` and `hasTouch`. Without those the page gets the desktop layout at
 a phone width, which measures a page nobody ever sees.
 

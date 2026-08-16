@@ -173,6 +173,25 @@ async function measure(browser, profile) {
 }
 
 const browser = await chromium.launch();
+
+// Warm the target first and throw the result away.
+//
+// Without this, whichever profile runs first absorbs any cold start and reports it as its own
+// TTFB. Measuring bloom-demo on 2026-08-16 gave phone TTFB 2852 ms against desktop 71 ms, and an
+// LCP of 3432 ms that read as "NEEDS WORK". CPU throttling cannot affect server response time, so
+// the gap was the giveaway: it was a cold container, not a slow page. Warm, the same page measured
+// LCP 428 ms. A tool that can invent a headline problem is worse than no tool.
+{
+  const warm = await browser.newContext();
+  const page = await warm.newPage();
+  try {
+    await page.goto(TARGET, { waitUntil: "load", timeout: 60000 });
+  } catch {
+    // A failed warm-up is not a failed run; the real attempts below will report properly.
+  }
+  await warm.close();
+}
+
 const results = [];
 for (const profile of PROFILES) {
   results.push(await measure(browser, profile));
