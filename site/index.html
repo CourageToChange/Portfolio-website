@@ -45,6 +45,17 @@
           "English",
           "Bengali"
         ],
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "name": "CompTIA Security+",
+          "credentialCategory": "certification",
+          "recognizedBy": {
+            "@type": "Organization",
+            "name": "CompTIA"
+          },
+          "dateCreated": "2025-10",
+          "expires": "2028-10"
+        },
         "email": "mailto:nnobi.inbox@hotmail.com",
         "sameAs": [
           "https://www.linkedin.com/in/noorun-nobi-6b76a3217",
@@ -56,6 +67,7 @@
       {
         "@type": "SoftwareApplication",
         "name": "Retro Snake Arena",
+        "description": "A browser game built by directing AI coding agents, deployed on a self-hosted server and then security-reviewed by hand. Three single-player modes: an open arena with bot snakes, classic grid Snake, and a maze run.",
         "url": "https://snake.noorfamily.uk/",
         "applicationCategory": "GameApplication",
         "operatingSystem": "Web browser",
@@ -68,6 +80,7 @@
       {
         "@type": "SoftwareApplication",
         "name": "Signal Room",
+        "description": "A read-only operations console for a self-hosted server. It reads Proxmox telemetry, backup job state, HTTPS responses and certificate expiry, and it cannot change anything on the machine it watches. Built with an AI coding agent to a fixed read-only spec.",
         "url": "https://signal-demo.noorfamily.uk/",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Web browser",
@@ -80,6 +93,7 @@
       {
         "@type": "SoftwareApplication",
         "name": "Bloom",
+        "description": "A calm daily-puzzle web app with 17 puzzle types and no timers, streaks or pressure language. The test suite fails the build if a countdown or a line of pressure wording is reintroduced.",
         "url": "https://bloom-demo.noorfamily.uk/",
         "applicationCategory": "GameApplication",
         "operatingSystem": "Web browser",
@@ -92,9 +106,13 @@
       {
         "@type": "SoftwareApplication",
         "name": "LocalPhotoPDF",
+        "description": "An offline Windows desktop app that turns photos and scans into a single PDF on the local machine, with no account and no upload. Every release ships with checksums, build provenance attestation and a software bill of materials.",
         "url": "https://github.com/CourageToChange/LocalPhotoPDF",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Windows",
+        "softwareVersion": "1.0.0",
+        "datePublished": "2026-08-15",
+        "downloadUrl": "https://github.com/CourageToChange/LocalPhotoPDF/releases/latest",
         "isAccessibleForFree": true,
         "author": {
           "@id": "https://noor.noorfamily.uk/#noorun-nobi"
@@ -104,6 +122,7 @@
       {
         "@type": "SoftwareApplication",
         "name": "Patchwork",
+        "description": "A mood-board progressive web app with a touch-first infinite canvas for photos, notes and drawing, synced between devices through a self-hosted API. Built by directing a team of AI coding agents.",
         "url": "https://patchwork-demo.noorfamily.uk/",
         "applicationCategory": "DesignApplication",
         "operatingSystem": "Web browser",
@@ -160,7 +179,7 @@
           </p>
           <div class="hero__actions reveal-up" style="--d:3">
             <a class="btn btn--primary" href="#contact">Get in touch</a>
-            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260814" download>Download CV</a>
+            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260820" download>Download CV</a>
           </div>
           <p class="hero__hosted reveal-up" style="--d:4">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -453,7 +472,7 @@
                 <ul>
                   <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex: Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
                   <li><strong>Architecture:</strong> 7 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
-                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Signal Room (a read-only operations console that watches the rest; there's a <a href="https://signal-demo.noorfamily.uk/" target="_blank" rel="noopener">demo of it running on made-up data ↗</a> and the <a href="https://github.com/CourageToChange/signal-room" target="_blank" rel="noopener">source is on GitHub ↗</a>), plus the apps I've built and host myself.</li>
+                  <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Signal Room (a read-only operations console that watches the rest, which has its own case study further down this page), plus the apps I've built and host myself.</li>
                 </ul>
               </div>
               <div class="case-block">
@@ -689,14 +708,116 @@
           </details>
         </article>
 
+        <!-- PROJECT 6 -->
+        <article class="project reveal">
+          <div class="project__head">
+            <h3>Signal Room — Read-Only Operations Console, Built with an AI Coding Agent</h3>
+            <p class="project__oneliner">
+              It watches the server and it cannot touch it. Ten of the things it tracks sit on one
+              machine, so when that machine goes they all go red together. I get a single incident
+              with a timeline, rather than ten alerts and a guess about which came first.
+            </p>
+            <p class="project__links"><a href="https://signal-demo.noorfamily.uk/" target="_blank" rel="noopener">Try the drill <span aria-hidden="true">↗</span></a> · <a href="https://github.com/CourageToChange/signal-room" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
+          </div>
+          <div class="project__summary">
+            <p>
+              I wanted to know when something broke without going and looking. I built it with an AI
+              coding agent working to my spec, and the read-only rule was the one line of that spec I
+              would not let move. Anything that can fix the server can also break it, and I didn't want
+              that running unattended. So this one can't. It reads
+              Proxmox telemetry, backup job state, HTTPS responses and certificate expiry, and it has
+              <strong>no Docker socket and no service account with a shell</strong>, every one of
+              them <code>nologin</code>. There isn't one <code>subprocess</code> call in the whole
+              backend, so it cannot run anything on the box even if it wanted to, and you can check
+              that yourself.
+            </p>
+          </div>
+          <details class="project__details">
+            <summary><span>Full case study</span></summary>
+            <div class="project__case">
+              <div class="case-block">
+                <h4>The constraint it was built around</h4>
+                <p>
+                  Read-only was the requirement from the first line, not a decision I came to later.
+                  There is no way for it to restart a service and nothing happens automatically. If
+                  it finds a problem, I go and fix it. That reads like a limitation and it is the
+                  entire point, because the worst thing a monitoring tool can do is become the reason
+                  the server went down.
+                </p>
+              </div>
+              <div class="case-block">
+                <h4>What I built</h4>
+                <ul>
+                  <li><strong>One process owns the database.</strong> The collector, the web server and the notifier never open SQLite. They reach it over Unix sockets, each with its own group and env file. The web server's socket accepts sixteen named methods and no SQL, holds no file handle on the database, and never holds the Proxmox token. Compromise it and the worst it can do is close an incident it can already see.</li>
+                  <li><strong>It works out what caused what.</strong> It knows which service sits on which machine, so one container falling over produces a single incident with an evidence timeline. Everything stacked on top of it gets attached to that same incident.</li>
+                  <li><strong>A release isn't finished when the tests go green.</strong> Nothing counts as supported here until that exact build has survived restore, rollback, resource, access, tunnel and firewall checks, and then a full day of running without a restart. A tag on its own doesn't mean it is running anywhere.</li>
+                  <li><strong>115 backend tests</strong> covering the API, the collector, the database and its migrations, and the notifier, with a separate suite on the front end.</li>
+                  <li><strong>The public version is a drill, not the real console.</strong> Every server, incident and alert in the demo above is invented. It is a static build with no analytics, no cookies and no storage, and it cannot reach anything on my network.</li>
+                </ul>
+              </div>
+              <ul class="pills pills--tags">
+                <li class="pill">Python</li><li class="pill">FastAPI</li>
+                <li class="pill">SQLite</li><li class="pill">Privilege separation</li>
+                <li class="pill">Monitoring &amp; alerting</li><li class="pill">Threat modelling</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
+        <!-- PROJECT 7 -->
+        <article class="project reveal">
+          <div class="project__head">
+            <h3>LocalPhotoPDF — Offline Windows App for Turning Photos into PDFs</h3>
+            <p class="project__oneliner">
+              I scan a lot of paperwork, and every tool for turning it into a PDF wanted me to upload
+              it somewhere first. This one does the job on the machine, with no account, and the
+              files never leave.
+            </p>
+            <p class="project__links"><a href="https://github.com/CourageToChange/LocalPhotoPDF/releases/latest" target="_blank" rel="noopener">Download it <span aria-hidden="true">↗</span></a> · <a href="https://github.com/CourageToChange/LocalPhotoPDF" target="_blank" rel="noopener">Source on GitHub <span aria-hidden="true">↗</span></a></p>
+          </div>
+          <div class="project__summary">
+            <p>
+              I built it with AI coding agents and then went through the result myself, which turned
+              up seven defects the tests had missed. One could leave the window permanently
+              unresponsive, with Task Manager the only way out. The eighth is the one I would have
+              hated to ship: the binary carried the full path it was built from, so running
+              <code>strings</code> on a download would have shown the account name and folder layout
+              of my machine. A checksum does not catch that. It only proves the file is the one that
+              was built. It is all in the changelog, because agents writing the code is not the
+              interesting part. What reviewing it turned up is.
+            </p>
+          </div>
+          <details class="project__details">
+            <summary><span>Full case study</span></summary>
+            <div class="project__case">
+              <div class="case-block">
+                <h4>What it does</h4>
+                <p>
+                  Pick photos or scans, put them in order, get a PDF. It runs offline and there is no
+                  account to make. The one thing it reaches the internet for is checking whether a
+                  newer version exists, and only when you press the button.
+                </p>
+              </div>
+              <div class="case-block">
+                <h4>Shipping it properly</h4>
+                <ul>
+                  <li><strong>The build now refuses to package a binary containing that path.</strong> It fails the build. A checklist would only have worked for as long as somebody remembered to read it.</li>
+                  <li><strong>Every release is checksummed and attested.</strong> The installer, a portable zip, a <code>SHA256SUMS.txt</code> and a software bill of materials, all produced by the tagged build. I checked it by downloading the release back the way a stranger would. The copy sitting on my own disk proves nothing.</li>
+                  <li><strong>The version tags cannot be moved or deleted.</strong> Blocking force pushes turned out not to be enough on its own. Deleting a tag was refused, but moving one forward still went through, because moving a tag onto a later commit counts as a fast-forward. Closing it properly took a second rule.</li>
+                </ul>
+              </div>
+              <ul class="pills pills--tags">
+                <li class="pill">C#</li><li class="pill">.NET / WPF</li>
+                <li class="pill">Windows desktop</li><li class="pill">Supply-chain security</li>
+                <li class="pill">Built with AI agents</li><li class="pill">Open source</li>
+              </ul>
+            </div>
+          </details>
+        </article>
+
         <!-- Smaller builds -->
         <h3 class="minis__title reveal">Smaller builds &amp; experiments</h3>
         <div class="minis">
-          <article class="mini reveal">
-            <h4><a class="mini__link" href="https://github.com/CourageToChange/LocalPhotoPDF" target="_blank" rel="noopener">LocalPhotoPDF <span aria-hidden="true">&#8599;</span></a></h4>
-            <p>I scan a lot of documents and wanted them as PDFs without putting them through a website first. So this does the one job, offline, with no account. Reviewing it before release found seven bugs the tests had missed, and an eighth after that, where the built installer quietly carried the path of the machine it was built on.</p>
-            <ul class="pills"><li class="pill">C#</li><li class="pill">.NET / WPF</li><li class="pill">Open source</li><li class="pill">On GitHub</li></ul>
-          </article>
           <article class="mini reveal">
             <h4>South London Law Society</h4>
             <p>A university team project: a case-management site where the public submit legal cases, solicitors pick them up and admins oversee the lot. React, Node/Express and MySQL. The team's source was never published, so there's no repo worth linking.</p>
