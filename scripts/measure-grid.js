@@ -1,9 +1,21 @@
 /* Measure the credentials grid across the band PF18 reported as cramped.
  * Checks columns, per-card content width, characters per line, whether the
  * status chip wraps, and that the page never scrolls sideways. */
+const fs = require("fs");
 const path = require("path");
-const CODEX = "C:/Users/NNobi/Desktop/Proxmox/Codex";
-const { chromium } = require(path.join(CODEX, "node_modules", "playwright"));
+// Playwright is borrowed from a sibling project, the same way perf-baseline.mjs does it, so
+// this repo keeps no dependencies of its own. Resolved and checked at run time.
+const PLAYWRIGHT_CANDIDATES = [
+  path.resolve(process.cwd(), "../Codex/node_modules/playwright"),
+  path.resolve(process.cwd(), "../Puzzle Game/node_modules/playwright"),
+  path.resolve(process.cwd(), "../Signal Room/frontend/node_modules/playwright"),
+];
+const playwrightPath = PLAYWRIGHT_CANDIDATES.find((dir) => fs.existsSync(dir));
+if (!playwrightPath) {
+  console.error("playwright not found. Looked in:\n  " + PLAYWRIGHT_CANDIDATES.join("\n  "));
+  process.exit(1);
+}
+const { chromium } = require(playwrightPath);
 
 const URL = process.argv[2] || "http://127.0.0.1:8731/";
 const WIDTHS = [360, 620, 621, 980, 981, 1024, 1080, 1099, 1100, 1440];
