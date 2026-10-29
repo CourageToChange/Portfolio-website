@@ -471,7 +471,7 @@
                 <h4>What I built</h4>
                 <ul>
                   <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex: Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
-                  <li><strong>Architecture:</strong> 7 unprivileged LXC containers, each service isolated to contain the blast radius of any compromise, plus the hardened host.</li>
+                  <li><strong>Architecture:</strong> 7 unprivileged LXC containers plus the hardened host. Most services get one each; the apps I've built share one, and the public demos have one to themselves.</li>
                   <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Signal Room (a read-only operations console that watches the rest, which has its own case study further down this page), plus the apps I've built and host myself.</li>
                 </ul>
               </div>
@@ -479,7 +479,7 @@
                 <h4>Security hardening</h4>
                 <ul>
                   <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
-                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, segmentation via isolated containers, unnecessary services disabled. No inbound ports at all. Anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
+                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, unnecessary services disabled. No inbound ports at all. Anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts, and I review the logs.</li>
                   <li><strong>Perimeter:</strong> Cloudflare sits in front and hides the home IP, and its DDoS protection is always on. TLS is terminated there, so the origin has no certificate to renew and no port open to present one on. The tunnel only ever dials out. The demo containers do their own connection limiting at the origin.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
@@ -604,7 +604,7 @@
           <div class="project__head">
             <h3>Bloom — Accessible Daily-Puzzle Web App</h3>
             <p class="project__oneliner">
-              A calm daily-puzzle app with one real daily user. 17 puzzle types, no timers, no streaks,
+              A calm daily-puzzle app. 17 puzzle types, no timers, no streaks,
               nothing that nags. The test suite fails the build if a countdown or a line of pressure
               language ever creeps back in.
             </p>
@@ -751,7 +751,7 @@
                   <li><strong>One process owns the database.</strong> The collector, the web server and the notifier never open SQLite. They reach it over Unix sockets, each with its own group and env file. The web server's socket accepts sixteen named methods and no SQL, holds no file handle on the database, and never holds the Proxmox token. Compromise it and the worst it can do is close an incident it can already see.</li>
                   <li><strong>It works out what caused what.</strong> It knows which service sits on which machine, so one container falling over produces a single incident with an evidence timeline. Everything stacked on top of it gets attached to that same incident.</li>
                   <li><strong>A release isn't finished when the tests go green.</strong> Nothing counts as supported here until that exact build has survived restore, rollback, resource, access, tunnel and firewall checks, and then a full day of running without a restart. A tag on its own doesn't mean it is running anywhere.</li>
-                  <li><strong>115 backend tests</strong> covering the API, the collector, the database and its migrations, and the notifier, with a separate suite on the front end.</li>
+                  <li><strong>156 backend tests</strong> covering the API, the collector, the database and its migrations, and the notifier, with a separate suite on the front end.</li>
                   <li><strong>The public version is a drill, not the real console.</strong> Every server, incident and alert in the demo above is invented. It is a static build with no analytics, no cookies and no storage, and it cannot reach anything on my network.</li>
                 </ul>
               </div>
@@ -821,7 +821,7 @@
           <article class="mini reveal">
             <h4><a class="mini__link" href="https://github.com/CourageToChange/home-server-blueprint" target="_blank" rel="noopener">Home server blueprint <span aria-hidden="true">&#8599;</span></a></h4>
             <p>One machine holds my family's photos and also serves three public demos. Those two jobs never reach each other, and I wrote up why. Commands change every release or two. The reasons don't.</p>
-            <ul class="pills"><li class="pill">Written guide</li><li class="pill">Proxmox</li><li class="pill">Network segmentation</li><li class="pill">On GitHub</li></ul>
+            <ul class="pills"><li class="pill">Written guide</li><li class="pill">Proxmox</li><li class="pill">On GitHub</li></ul>
           </article>
           <article class="mini reveal">
             <h4><a class="mini__link" href="https://github.com/CourageToChange/ai-agent-workflow" target="_blank" rel="noopener">Working with AI agents <span aria-hidden="true">&#8599;</span></a></h4>
