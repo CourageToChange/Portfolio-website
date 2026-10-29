@@ -330,7 +330,7 @@
             <span class="project__badge">Flagship</span>
             <h3>Self-Hosted Home Server &amp; Security Lab</h3>
             <p class="project__oneliner">
-              A Linux server in my house running seven isolated containers, locked down with key-only
+              A Linux server in my house running seven containers, locked down with key-only
               SSH, a default-deny firewall, fail2ban, 2FA, TLS and backups across more than one
               drive. My family and friends use it every day.
             </p>
@@ -338,7 +338,7 @@
           <div class="project__summary">
             <p>
               I got tired of paying Google and Apple to hold our photos, so I put Proxmox on a
-              refurbished Dell OptiPlex and started moving things onto it. It now runs seven isolated
+              refurbished Dell OptiPlex and started moving things onto it. It now runs seven
               containers: Plex, network-wide DNS filtering, private photo backup, an e-book library,
               one holding the apps I've built, a read-only operations console, and one that holds
               nothing but the public demos, deliberately kept away from everything else. I specced
@@ -352,14 +352,14 @@
             </p>
             <p>
               The hardening is where most of the time went: the lockdown described above, plus
-              Cloudflare in front of anything public. Backups run on a schedule to
+              Cloudflare in front of the websites. Backups run on a schedule to
               more than one drive, and a watchdog checks nightly that they can actually be restored.
               I added that last part after finding out the hard way that a backup you haven't tested
               isn't really a backup.
             </p>
           </div>
 
-          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then a tunnel that only ever dials out, so this website needs no inbound port. Behind it, a hardened Proxmox host runs seven isolated containers — Plex, AdGuard Home, Immich, Kavita, one holding the apps I've built, a read-only operations console, and one holding only the public demos — plus this website, served from the same container as the apps.">
+          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then a tunnel that only ever dials out, so this website needs no inbound port. Behind it, a hardened Proxmox host runs seven containers: Plex, which streams outside the house on port 32400, AdGuard Home, Immich, Kavita, one holding the apps I've built, a read-only operations console, and one holding only the public demos. This website is served from the same container as the apps.">
             <svg class="dia--wide" viewBox="0 0 760 348" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <!-- flow lines -->
               <path class="dia-flow" d="M118 52 H 200"/>
@@ -394,11 +394,11 @@
                 <text x="40" y="164" class="dia-sub">key-only SSH · fail2ban · TOTP 2FA · LXC isolation · verified backups</text>
               </g>
               <!-- service chips -->
-              <g class="dia-chip"><rect x="40" y="186" width="100" height="36" rx="8"/><text x="90" y="208" text-anchor="middle">plex</text></g>
-              <g class="dia-chip"><rect x="152" y="186" width="128" height="36" rx="8"/><text x="216" y="208" text-anchor="middle">adguard home</text></g>
-              <g class="dia-chip"><rect x="292" y="186" width="148" height="36" rx="8"/><text x="366" y="208" text-anchor="middle">immich · LAN-only</text></g>
-              <g class="dia-chip"><rect x="452" y="186" width="100" height="36" rx="8"/><text x="502" y="208" text-anchor="middle">kavita</text></g>
-              <g class="dia-chip"><rect x="564" y="186" width="124" height="36" rx="8"/><text x="626" y="208" text-anchor="middle">my apps</text></g>
+              <g class="dia-chip"><rect x="40" y="186" width="108" height="36" rx="8"/><text x="94" y="208" text-anchor="middle">plex · 32400</text></g>
+              <g class="dia-chip"><rect x="160" y="186" width="128" height="36" rx="8"/><text x="224" y="208" text-anchor="middle">adguard home</text></g>
+              <g class="dia-chip"><rect x="300" y="186" width="148" height="36" rx="8"/><text x="374" y="208" text-anchor="middle">immich · LAN-only</text></g>
+              <g class="dia-chip"><rect x="460" y="186" width="100" height="36" rx="8"/><text x="510" y="208" text-anchor="middle">kavita</text></g>
+              <g class="dia-chip"><rect x="572" y="186" width="124" height="36" rx="8"/><text x="634" y="208" text-anchor="middle">my apps</text></g>
               <g class="dia-chip"><rect x="40" y="232" width="124" height="36" rx="8"/><text x="102" y="254" text-anchor="middle">signal room</text></g>
               <g class="dia-chip"><rect x="176" y="232" width="132" height="36" rx="8"/><text x="242" y="254" text-anchor="middle">public demos</text></g>
               <g class="dia-chip dia-chip--accent"><rect x="40" y="278" width="148" height="36" rx="8"/><text x="114" y="300" text-anchor="middle">this website ✓</text></g>
@@ -444,7 +444,7 @@
                 <text x="22" y="303" class="dia-sub">LXC isolation · verified backups</text>
               </g>
               <!-- service chips, two columns -->
-              <g class="dia-chip"><rect x="20" y="316" width="132" height="34" rx="8"/><text x="86" y="338" text-anchor="middle">plex</text></g>
+              <g class="dia-chip"><rect x="20" y="316" width="132" height="34" rx="8"/><text x="86" y="338" text-anchor="middle">plex · 32400</text></g>
               <g class="dia-chip"><rect x="168" y="316" width="132" height="34" rx="8"/><text x="234" y="338" text-anchor="middle">adguard home</text></g>
               <g class="dia-chip"><rect x="20" y="358" width="280" height="34" rx="8"/><text x="160" y="380" text-anchor="middle">immich · LAN-only</text></g>
               <g class="dia-chip"><rect x="20" y="400" width="132" height="34" rx="8"/><text x="86" y="422" text-anchor="middle">kavita</text></g>
@@ -471,7 +471,7 @@
                 <h4>What I built</h4>
                 <ul>
                   <li><strong>Platform:</strong> Proxmox VE (enterprise type-1 hypervisor) on a Dell OptiPlex: Intel i5-9500, 16&nbsp;GB RAM, multi-disk storage.</li>
-                  <li><strong>Architecture:</strong> 7 unprivileged LXC containers plus the hardened host. Most services get one each; the apps I've built share one, and the public demos have one to themselves.</li>
+                  <li><strong>Architecture:</strong> 7 unprivileged LXC containers plus the hardened host. Most services get one each; my own apps and this website share one, and the public demos have one to themselves.</li>
                   <li><strong>Services:</strong> Plex (hardware-transcoded media streaming), AdGuard Home (network-wide DNS filtering of ads/trackers/malware), Immich (private photo backup, reachable only on the home network), Kavita (e-book library), and Signal Room (a read-only operations console that watches the rest, which has its own case study further down this page), plus the apps I've built and host myself.</li>
                 </ul>
               </div>
@@ -479,9 +479,9 @@
                 <h4>Security hardening</h4>
                 <ul>
                   <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
-                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, unnecessary services disabled. The websites and demos are reached through outbound-only Cloudflare Tunnels, so none of them needs a port forward. The one forward left on the router is 32400, for Plex remote streaming.</li>
+                  <li><strong>Network:</strong> default-DROP host firewall, every service except Plex restricted to the LAN subnet, unnecessary services disabled. The websites and demos are reached through outbound-only Cloudflare Tunnels, so none of them needs a port forward. Plex is the exception: the one forward left on the router is 32400, so it works away from home.</li>
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts, and I review the logs.</li>
-                  <li><strong>Perimeter:</strong> Cloudflare sits in front and hides the home IP, and its DDoS protection is always on. TLS is terminated there, so the origin has no certificate to renew and no port open to present one on. The tunnel only ever dials out. The demo containers do their own connection limiting at the origin.</li>
+                  <li><strong>Perimeter:</strong> Cloudflare sits in front of every site I host, so looking one up gives you a Cloudflare address and never my home IP, and its DDoS protection is always on. TLS is terminated there, so the web origin has no certificate to renew and no port open to present one on. The tunnel only ever dials out. The demo containers do their own connection limiting at the origin.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
                   <li><strong>Operations:</strong> regular patching cadence and security audits of the host and every container. I also take things out when they don't earn their place. I ran an *arr media-automation stack for a while, couldn't get it behaving reliably, and took it out instead of leaving a half-working service running and exposed.</li>
                 </ul>
@@ -751,7 +751,7 @@
                   <li><strong>One process owns the database.</strong> The collector, the web server and the notifier never open SQLite. They reach it over Unix sockets, each with its own group and env file. The web server's socket accepts sixteen named methods and no SQL, holds no file handle on the database, and never holds the Proxmox token. Compromise it and the worst it can do is close an incident it can already see.</li>
                   <li><strong>It works out what caused what.</strong> It knows which service sits on which machine, so one container falling over produces a single incident with an evidence timeline. Everything stacked on top of it gets attached to that same incident.</li>
                   <li><strong>A release isn't finished when the tests go green.</strong> Nothing counts as supported here until that exact build has survived restore, rollback, resource, access, tunnel and firewall checks, and then a full day of running without a restart. A tag on its own doesn't mean it is running anywhere.</li>
-                  <li><strong>156 backend tests</strong> covering the API, the collector, the database and its migrations, and the notifier, with a separate suite on the front end.</li>
+                  <li><strong>More than 150 backend tests</strong> covering the API, the collector, the database and its migrations, and the notifier, with a separate suite on the front end.</li>
                   <li><strong>The public version is a drill, not the real console.</strong> Every server, incident and alert in the demo above is invented. It is a static build with no analytics, no cookies and no storage, and it cannot reach anything on my network.</li>
                 </ul>
               </div>
