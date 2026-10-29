@@ -179,7 +179,7 @@
           </p>
           <div class="hero__actions reveal-up" style="--d:3">
             <a class="btn btn--primary" href="#contact">Get in touch</a>
-            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20260820" download>Download CV</a>
+            <a class="btn btn--ghost" href="assets/cv/Noorun-Nobi-CV.pdf?v=20261029" download>Download CV</a>
           </div>
           <p class="hero__hosted reveal-up" style="--d:4">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
@@ -359,7 +359,7 @@
             </p>
           </div>
 
-          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then a tunnel that only ever dials out, so no inbound port is open. Behind it, a hardened Proxmox host runs seven isolated containers — Plex, AdGuard Home, Immich, Kavita, one holding the apps I've built, a read-only operations console, and one holding only the public demos — plus this website, served from the same container as the apps.">
+          <figure class="diagram reveal" role="img" aria-label="Architecture diagram: internet traffic passes through Cloudflare's WAF and CDN, then a default-deny firewall, then a tunnel that only ever dials out, so this website needs no inbound port. Behind it, a hardened Proxmox host runs seven isolated containers — Plex, AdGuard Home, Immich, Kavita, one holding the apps I've built, a read-only operations console, and one holding only the public demos — plus this website, served from the same container as the apps.">
             <svg class="dia--wide" viewBox="0 0 760 348" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <!-- flow lines -->
               <path class="dia-flow" d="M118 52 H 200"/>
@@ -479,7 +479,7 @@
                 <h4>Security hardening</h4>
                 <ul>
                   <li><strong>Access control:</strong> key-only SSH (passwords disabled), hardened <code>sshd</code>, TOTP 2FA on the management interface, least-privilege read-only API tokens.</li>
-                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, unnecessary services disabled. No inbound ports at all. Anything public is reached through outbound-only Cloudflare Tunnels, so there is nothing on the router to forward or to find.</li>
+                  <li><strong>Network:</strong> default-DROP host firewall, services restricted to the LAN subnet, unnecessary services disabled. The websites and demos are reached through outbound-only Cloudflare Tunnels, so none of them needs a port forward. The one forward left on the router is 32400, for Plex remote streaming.</li>
                   <li><strong>Intrusion prevention:</strong> fail2ban auto-bans brute-force attempts, and I review the logs.</li>
                   <li><strong>Perimeter:</strong> Cloudflare sits in front and hides the home IP, and its DDoS protection is always on. TLS is terminated there, so the origin has no certificate to renew and no port open to present one on. The tunnel only ever dials out. The demo containers do their own connection limiting at the origin.</li>
                   <li><strong>Data &amp; endpoint:</strong> BitLocker full-disk encryption on the workstation I administer the server from, and credentials kept out of scripts and configs.</li>
