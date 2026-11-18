@@ -1016,3 +1016,446 @@ html.js .reveal.is-visible, html.js .reveal-up.is-visible {
   }
   html.js .reveal, html.js .reveal-up { opacity: 1; transform: none; }
 }
+
+
+/* ============ Desktop improvements ============ */
+.progress { width: 100% !important; transform: scaleX(var(--p, 0)); transform-origin: 0 50%; will-change: transform; }
+
+/* Section rail in the empty left margin */
+.rail { display: none; }
+@media (min-width: 1360px) {
+  .rail {
+    position: fixed; left: clamp(28px, 4vw, 64px); top: 50%; transform: translateY(-50%);
+    z-index: 40; display: flex; flex-direction: column; gap: 6px;
+    opacity: 0; transition: opacity .4s ease; pointer-events: none;
+  }
+  .rail.is-on { opacity: 1; pointer-events: auto; }
+  .rail a {
+    display: flex; align-items: center; gap: 16px; padding: 7px 0;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
+    color: var(--text-dim); text-decoration: none; transition: color .25s ease;
+  }
+  .rail a::before {
+    content: ""; width: 14px; height: 2px; border-radius: 2px; background: currentColor; opacity: .45;
+    transform-origin: 0 50%; transition: transform .3s ease, opacity .3s ease;
+  }
+  .rail a:hover { color: var(--text); }
+  .rail a.is-active { color: var(--accent); }
+  .rail a.is-active::before { transform: scaleX(1.6); opacity: 1; }
+}
+
+@media (min-width: 1100px) {
+  /* Skills: two wide cards a row, so pills sit on one line and rows end level */
+  .cards-3--skills { grid-template-columns: repeat(2, 1fr); }
+  .cards-3--skills .card h3 { min-height: 0; }
+
+  /* Terminal: a little depth, follows the pointer */
+  .hero__terminal { perspective: 1100px; }
+  .terminal {
+    transform: rotateX(var(--trx, 0deg)) rotateY(var(--try, -4deg));
+    transition: transform .5s cubic-bezier(.2, .7, .2, 1), box-shadow .5s ease;
+    will-change: transform;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .5), 0 0 0 1px rgba(79, 227, 193, .06), 0 0 90px rgba(79, 227, 193, .07);
+  }
+
+  /* Timeline: the line fills as you read down */
+  .timeline::after {
+    content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px;
+    background: var(--accent); transform: scaleY(var(--tl, 0)); transform-origin: 50% 0;
+    box-shadow: 0 0 10px rgba(79, 227, 193, .45); will-change: transform;
+  }
+  .timeline__item::before { z-index: 1; transition: background .35s ease, box-shadow .35s ease; }
+  .timeline__item.is-passed::before { background: var(--accent); box-shadow: 0 0 0 5px rgba(79, 227, 193, .14); }
+}
+
+/* Diagram: traffic. Most is refused, one request gets through. */
+.pk { opacity: 0; }
+.pk--bad { fill: #ff7a7a; }
+.pk--ok { fill: var(--accent); filter: drop-shadow(0 0 4px rgba(79, 227, 193, .8)); }
+.diagram.is-live .pk { animation: var(--an) 6s linear infinite; animation-delay: var(--dl, 0s); }
+.diagram.is-live .dia-chip--accent rect { animation: served 6s ease-in-out infinite; }
+@keyframes pkCf {
+  0% { transform: translate(118px, 52px); opacity: 0; }
+  4% { opacity: 1; }
+  20% { transform: translate(196px, 52px); opacity: 1; }
+  26%, 100% { transform: translate(196px, 52px) scale(2.2); opacity: 0; }
+}
+@keyframes pkFw {
+  0% { transform: translate(118px, 52px); opacity: 0; }
+  4% { opacity: 1; }
+  16% { transform: translate(200px, 52px); opacity: 1; }
+  17% { transform: translate(200px, 52px); opacity: 0; }
+  28% { transform: translate(332px, 52px); opacity: 0; }
+  29% { opacity: 1; }
+  42% { transform: translate(410px, 52px); opacity: 1; }
+  48%, 100% { transform: translate(410px, 52px) scale(2.2); opacity: 0; }
+}
+@keyframes pkOk {
+  0% { transform: translate(118px, 52px); opacity: 0; }
+  3% { opacity: 1; }
+  12% { transform: translate(200px, 52px); opacity: 1; }
+  13% { transform: translate(200px, 52px); opacity: 0; }
+  24% { transform: translate(332px, 52px); opacity: 0; }
+  25% { opacity: 1; }
+  34% { transform: translate(414px, 52px); opacity: 1; }
+  35% { opacity: 0; }
+  46% { transform: translate(546px, 52px); opacity: 0; }
+  47% { opacity: 1; }
+  56% { transform: translate(628px, 52px); opacity: 1; }
+  57% { transform: translate(628px, 52px); opacity: 0; }
+  60% { transform: translate(684px, 76px); opacity: 0; }
+  61% { opacity: 1; }
+  70% { transform: translate(684px, 118px); opacity: 1; }
+  76%, 100% { transform: translate(684px, 118px); opacity: 0; }
+}
+@keyframes served {
+  0%, 68%, 100% { fill: rgba(79, 227, 193, .06); stroke: var(--accent-line); }
+  78% { fill: rgba(79, 227, 193, .24); stroke: var(--accent); }
+}
+@media (prefers-reduced-motion: reduce) { .pk { display: none; } .terminal { transform: none; } }
+
+/* ============ Desktop side margins: a quiet living network ============ */
+.sides { display: none; }
+@media (min-width: 1360px) and (prefers-reduced-motion: no-preference) {
+  .sides {
+    display: block; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    opacity: 0; transition: opacity .9s ease;
+  }
+  .sides.is-on { opacity: 1; }
+  .sides canvas { position: absolute; top: 0; height: 100%; width: var(--gw, 200px); }
+  .sides canvas:first-of-type {
+    left: 0;
+    -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent);
+    mask-image: linear-gradient(90deg, #000 55%, transparent);
+  }
+  .sides canvas:last-of-type {
+    right: 0;
+    -webkit-mask-image: linear-gradient(270deg, #000 55%, transparent);
+    mask-image: linear-gradient(270deg, #000 55%, transparent);
+  }
+  /* Two slow washes of colour, moved by transform only */
+  .sides__glow {
+    position: absolute; width: 520px; height: 520px; border-radius: 50%;
+    will-change: transform; animation: sideDrift 26s ease-in-out infinite alternate;
+  }
+  .sides__glow--l { left: -300px; top: 12%; background: radial-gradient(circle, rgba(79, 227, 193, .05), transparent 65%); }
+  .sides__glow--r { right: -300px; top: 48%; background: radial-gradient(circle, rgba(64, 120, 230, .06), transparent 65%); animation-delay: -13s; }
+  @keyframes sideDrift {
+    from { transform: translate3d(0, -90px, 0) scale(1); }
+    to { transform: translate3d(0, 110px, 0) scale(1.18); }
+  }
+}
+
+/* ---- Phones and tablets: the same network, kept to the sides. Two thin strips in the page's own side gaps,
+   fading out before the text starts. Nothing runs behind the reading column. ---- */
+@media (max-width: 1359px) and (prefers-reduced-motion: no-preference) {
+  .sides { display: block; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity .9s ease; }
+  .sides.is-on { opacity: .7; }
+  .sides canvas { position: absolute; top: 0; width: var(--gw, 30px); height: 100vh; height: 100lvh; }
+  .sides canvas:first-of-type { left: 0; -webkit-mask-image: linear-gradient(90deg, #000 45%, transparent); mask-image: linear-gradient(90deg, #000 45%, transparent); }
+  .sides canvas:last-of-type { right: 0; -webkit-mask-image: linear-gradient(270deg, #000 45%, transparent); mask-image: linear-gradient(270deg, #000 45%, transparent); }
+  .sides__glow { display: none; }
+}
+
+/* ============ Desktop content motion: cards arrive one after another, skill pills follow ============ */
+@media (min-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  /* The delay lives only until the card has landed, so the hover tilt stays instant. */
+  html.js .cascade > .reveal.is-visible:not(.is-settled) { transition-delay: calc(var(--i, 0) * 90ms); }
+  html.js .cascade > .reveal { transition-timing-function: cubic-bezier(.2, .7, .2, 1); }
+
+  html.js .cards-3--skills .card:not(.is-visible) .pill { opacity: 0; }
+  html.js .cards-3--skills .card.is-visible .pill {
+    animation: pillIn .5s cubic-bezier(.2, .7, .2, 1) both;
+    animation-delay: calc(260ms + var(--i, 0) * 90ms + var(--pi, 0) * 32ms);
+  }
+  @keyframes pillIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+/* The mouse-follow glow stays off the skills cards. */
+.cards-3--skills .card.glow::before { display: none; }
+
+/* ============ Flagship project: click to open the walkthrough ============ */
+@media (min-width: 1280px) {
+  .project--flagship.has-lab { cursor: pointer; transition: border-color .3s ease, transform .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease; }
+  .project--flagship.has-lab:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 22px 60px rgba(0, 0, 0, .35); }
+  .project--flagship.has-lab p, .project--flagship.has-lab li { cursor: text; }
+}
+
+.lab {
+  padding: 0; border: 1px solid var(--accent-line); border-radius: 18px;
+  background: var(--bg-raise); color: var(--text);
+  width: min(1320px, 94vw); height: min(840px, 90vh); max-width: none; max-height: none;
+  overflow: hidden; box-shadow: 0 40px 120px rgba(0, 0, 0, .6);
+  opacity: 0; transform: translateY(18px) scale(.985);
+  transition: opacity .32s ease, transform .42s cubic-bezier(.2, .7, .2, 1);
+}
+.lab[open] { display: grid; grid-template-columns: 60fr 40fr; }
+.lab.is-open { opacity: 1; transform: none; }
+.lab::backdrop { background: rgba(4, 8, 13, .74); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: labFade .35s ease both; }
+.lab.is-closing::backdrop { animation: labFade .26s ease reverse both; }
+@keyframes labFade { from { opacity: 0; } to { opacity: 1; } }
+
+.lab__close {
+  position: absolute; top: 14px; right: 16px; z-index: 2; width: 38px; height: 38px;
+  display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+  background: rgba(148, 180, 220, .07); border: 1px solid var(--line); color: var(--text-dim);
+  font: 400 22px/1 var(--font-body); transition: color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.lab__close:hover { color: var(--accent); border-color: var(--accent-line); transform: rotate(90deg); }
+
+.lab__left {
+  min-width: 0; padding: 38px 28px 30px 32px; overflow-y: auto; border-right: 1px solid var(--line);
+  background: radial-gradient(ellipse 70% 50% at 0% 0%, rgba(79, 227, 193, .05), transparent 65%);
+}
+.lab__left h3 { font-size: 24px; }
+.lab__left .project__oneliner { font-size: 14.5px; margin-bottom: 0; }
+.lab__left { display: flex; flex-direction: column; }
+.lab__right:focus:not(:focus-visible) { outline: none; }
+.lab__right:focus-visible { outline: 2px solid var(--accent-line); outline-offset: -4px; }
+.lab__stage.diagram { margin: auto 0; padding: 22px 14px; overflow: visible; }
+.lab__steps { padding-top: 18px; }
+.lab__stage.diagram svg { min-width: 0; }
+
+/* The diagram lights the part being talked about. */
+.lab__stage [data-k] { transition: opacity .45s ease; }
+.lab__stage [data-k] rect { transition: stroke .45s ease, fill .45s ease; }
+.lab__stage.has-focus [data-k] { opacity: .22; }
+.lab__stage.has-focus [data-k].is-lit { opacity: 1; }
+.lab__stage.has-focus .dia-node.is-lit rect, .lab__stage.has-focus .dia-chip.is-lit rect { stroke: var(--accent); fill: rgba(79, 227, 193, .1); }
+.lab__stage.has-focus .dia-host.is-lit rect { stroke: var(--accent); }
+
+.lab__steps { display: flex; flex-wrap: wrap; gap: 8px; }
+.lab__steps button {
+  font: 500 12px/1.3 var(--font-mono); letter-spacing: .04em; color: var(--text-dim); cursor: pointer;
+  background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px;
+  transition: color .25s ease, border-color .25s ease, background .25s ease;
+}
+.lab__steps button:hover { color: var(--text); }
+.lab__steps button.is-active { color: var(--accent); border-color: var(--accent-line); background: var(--accent-soft); }
+
+.lab__right { min-width: 0; padding: 44px 40px 60px 36px; overflow-y: auto; overscroll-behavior: contain; scroll-behavior: smooth; }
+.lab__right .case-block { margin-bottom: 30px; scroll-margin-top: 30px; }
+.lab__right .case-block li {
+  list-style: none; position: relative; margin: 0 0 4px -20px; padding: 8px 12px 8px 16px; border-radius: 8px;
+  transition: background .25s ease, color .25s ease;
+}
+.lab__right .case-block li::before {
+  content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; border-radius: 2px;
+  background: var(--line); transition: background .25s ease, box-shadow .25s ease;
+}
+.lab__right .case-block li.is-on { background: rgba(79, 227, 193, .05); color: var(--text); }
+.lab__right .case-block li.is-on::before { background: var(--accent); box-shadow: 0 0 8px rgba(79, 227, 193, .6); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .lab.is-open .lab__stage [data-k] { animation: labNode .5s cubic-bezier(.2, .7, .2, 1) backwards; animation-delay: calc(.22s + var(--o, 0) * 65ms); }
+  .lab.is-open .lab__right > * { animation: labRise .55s cubic-bezier(.2, .7, .2, 1) backwards; animation-delay: calc(.18s + var(--o, 0) * 70ms); }
+  .lab.is-open .lab__left > :not(.lab__stage) { animation: labRise .55s cubic-bezier(.2, .7, .2, 1) backwards; animation-delay: .08s; }
+}
+@keyframes labNode { from { opacity: 0; transform: translateY(10px); } }
+@keyframes labRise { from { opacity: 0; transform: translateY(16px); } }
+
+/* ---- 3D: the panel lifts out of the card, the diagram rises from flat and floats above its board ---- */
+.lab { transform: none; transform-origin: 50% 50%; will-change: transform, opacity; backface-visibility: hidden;
+  transition: opacity .34s ease, transform .68s cubic-bezier(.16, .84, .24, 1); }
+.lab.is-closing { transition: opacity .3s ease .1s, transform .42s cubic-bezier(.5, 0, .75, .4); }
+.lab__left { perspective: 1300px; }
+.lab__stage.diagram {
+  transform-style: preserve-3d; transform: rotateX(var(--srx, 0deg)) rotateY(var(--sry, 0deg));
+  transition: transform .5s cubic-bezier(.2, .7, .2, 1); will-change: transform;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .45);
+}
+.lab__stage.diagram svg { transform: translateZ(46px); filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .45)); }
+@media (prefers-reduced-motion: no-preference) {
+  .lab.is-open .lab__stage.diagram { animation: labBoard 1s cubic-bezier(.16, .84, .24, 1) .18s backwards; }
+}
+@keyframes labBoard { from { opacity: 0; transform: rotateX(64deg) translateY(70px) scale(.84); } }
+@media (prefers-reduced-motion: reduce) { .lab { transition: opacity .2s ease; } .lab__stage.diagram, .lab__stage.diagram svg { transform: none; } }
+
+/* ---- The real 3D model in the panel (stage3d.js). The flat diagram stays as the fallback. ---- */
+.lab__scene { flex: 1; min-height: 0; display: flex; flex-direction: column; margin: 14px 0 0; opacity: 0; transition: opacity .8s ease; }
+.lab__scene[hidden], .lab__stage.diagram[hidden] { display: none; }
+.lab__scene:not(.is-ready) { position: absolute; left: 32px; right: 40%; height: 380px; visibility: hidden; pointer-events: none; }
+.lab__scene.is-ready { opacity: 1; }
+.lab__canvas { position: relative; flex: 1; min-height: 300px; }
+.lab__canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.lab__legend { display: flex; flex-wrap: wrap; gap: 6px 18px; padding: 4px 2px 0; }
+.lab__legend span {
+  font: 500 11.5px/1.4 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-dim);
+  opacity: .8; transition: color .35s ease, opacity .35s ease;
+}
+.lab__legend span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 8px; background: currentColor; vertical-align: 1px; }
+.lab__legend span.is-active { color: var(--accent); opacity: 1; }
+
+/* ---- Every card that has a model opens the same way; the model's edges fade instead of ending in a line ---- */
+@media (min-width: 1280px) {
+  .project.has-lab { cursor: pointer; transition: border-color .3s ease, transform .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease; }
+  .project.has-lab:hover { border-color: var(--accent-line); transform: translateY(-3px); box-shadow: 0 22px 60px rgba(0, 0, 0, .35); }
+  .project.has-lab p, .project.has-lab li { cursor: text; }
+}
+.lab__canvas canvas {
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 14%, #000 90%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 14%, #000 90%, transparent);
+}
+.lab__right .project__summary p { max-width: none; }
+.lab__right .project__summary { margin-bottom: 26px; }
+
+/* ---- Drag the model to turn it; click a layer's name to pick it out ---- */
+.lab__canvas canvas { cursor: grab; touch-action: none; }
+.lab__canvas canvas:active { cursor: grabbing; }
+.lab__legend span { cursor: pointer; }
+.lab__legend span:hover { opacity: 1; }
+.lab__legend span.is-pinned { color: var(--accent); opacity: 1; text-decoration: underline; text-underline-offset: 5px; }
+
+/* ============ Phone and tablet: the walkthrough as a full-screen sheet, model on top, text below ============ */
+.project--flagship.has-lab { cursor: pointer; }
+@media (max-width: 1279px) {
+  .lab {
+    width: 100vw; height: 100vh; height: 100dvh; margin: 0; border: 0; border-radius: 0; inset: 0;
+    padding-top: env(safe-area-inset-top, 0px); overscroll-behavior: contain;
+  }
+  .lab[open] { display: flex; flex-direction: column; }
+  .lab__close { top: calc(10px + env(safe-area-inset-top, 0px)); right: 12px; width: 44px; height: 44px; }
+  .lab__left {
+    flex: none; overflow: visible; padding: 14px 16px 10px; border-right: 0; border-bottom: 1px solid var(--line);
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .lab__left .project__badge, .lab__left .project__oneliner { display: none; }
+  .lab__left h3 { font-size: 19px; margin: 6px 52px 0 0; }
+  .lab__scene { flex: none; margin: 4px 0 0; }
+  .lab__scene:not(.is-ready) { left: 16px; right: 16px; height: 32vh; }
+  .lab__canvas { flex: none; height: 32vh; height: 32dvh; min-height: 190px; }
+  .lab__canvas canvas { touch-action: pan-y; }
+  .lab__legend, .lab__steps { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .lab__legend::-webkit-scrollbar, .lab__steps::-webkit-scrollbar { display: none; }
+  .lab__legend { gap: 0 16px; padding-block: 8px 2px; }
+  .lab__legend span { flex: none; white-space: nowrap; padding-block: 6px; }
+  .lab__steps { padding-top: 8px; }
+  .lab__steps button { flex: none; white-space: nowrap; padding: 9px 14px; }
+  .lab__stage.diagram { margin: 8px 0 0; padding: 10px; box-shadow: none; }
+  .lab__stage.diagram svg { transform: none; filter: none; width: auto; height: 30vh; max-width: 100%; margin-inline: auto; }
+  .lab__right {
+    flex: 1; min-height: 0; padding: 20px 16px calc(48px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .lab__right .case-block li { margin-left: -20px; }
+}
+
+/* ---- Phone: the model sits in a framed stage a fifth of the screen tall, with only the active layer's name
+   shown inside it, so the reading area gets most of the screen. */
+@media (max-width: 1279px) {
+  .lab__close { top: calc(8px + env(safe-area-inset-top, 0px)); right: 10px; width: 40px; height: 40px; font-size: 20px; }
+  .lab__left { padding-top: 12px; padding-bottom: 10px; background: none; }
+  .lab__left h3 { font-size: 16px; line-height: 1.25; margin: 0 50px 0 0; }
+  .lab__scene {
+    position: relative; margin: 10px 0 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+    background: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(79, 227, 193, .06), transparent 70%), rgba(8, 13, 20, .6);
+  }
+  .lab__scene:not(.is-ready) { height: 20vh; border-color: transparent; background: none; }
+  .lab__canvas { height: 20vh; height: 20dvh; min-height: 140px; }
+  .lab__canvas canvas { -webkit-mask-image: none; mask-image: none; }
+  .lab__legend { position: absolute; left: 12px; top: 9px; margin: 0; padding: 0; overflow: visible; pointer-events: none; }
+  .lab__legend span { display: none; padding: 0; font-size: 10.5px; }
+  .lab__legend span.is-active { display: inline; }
+  .lab__legend span.is-active ~ span.is-active { display: none; }
+  .lab__steps { padding-top: 10px; }
+  .lab__steps button { padding: 8px 13px; font-size: 11.5px; }
+  .lab__right { padding-top: 18px; }
+}
+
+@media (max-width: 1279px) {
+  /* The title row is as tall as the close button, so the stage below never sits under it. */
+  .lab__left h3 { min-height: 38px; display: flex; align-items: center; }
+}
+
+/* ---- Phone: wider side gaps everywhere, and a calmer sheet ---- */
+@media (max-width: 620px) {
+  /* The page: a wider gap outside the cards and a little more room inside. */
+  .container { padding-inline: 22px; }
+  .nav__inner { padding-inline: 22px; }
+  .project { padding: 26px 22px; }
+  .card { padding: 24px 22px; }
+  .mini { padding: 20px 20px; }
+}
+@media (max-width: 1279px) {
+  .lab { background: var(--bg); }
+  .lab__left {
+    padding: 14px 22px 12px; border-bottom: 0;
+    padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px));
+  }
+  .lab__left h3 { font-size: 16px; letter-spacing: 0; margin-right: 44px; }
+  /* A plain cross, no ring round it. */
+  .lab__close { top: calc(10px + env(safe-area-inset-top, 0px)); right: 12px; width: 44px; height: 44px; background: transparent; border-color: transparent; font-size: 24px; color: var(--text-dim); }
+  .lab__close:hover { border-color: transparent; transform: none; }
+  .lab__scene { margin-top: 8px; border-radius: 18px; border-color: rgba(148, 180, 220, .1); }
+  .lab__scene:not(.is-ready) { left: 22px; right: 22px; }
+  .lab__legend { left: 14px; top: 11px; }
+  .lab__legend span { letter-spacing: .1em; }
+  /* Section buttons: one quiet row that fades out at the right edge instead of ending in a cut-off word. */
+  .lab__steps {
+    margin-inline: -22px; padding: 12px 22px 0; gap: 8px;
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent);
+    mask-image: linear-gradient(90deg, #000 calc(100% - 44px), transparent);
+  }
+  .lab__steps button { padding: 8px 14px; font-size: 11.5px; letter-spacing: .02em; background: rgba(148, 180, 220, .05); border-color: transparent; }
+  .lab__steps button.is-active { background: var(--accent-soft); border-color: var(--accent-line); }
+  .lab__steps button:last-child { margin-right: 30px; }
+  /* The reading column: same side gap as the page, even rhythm, lighter rules. */
+  .lab__right {
+    padding: 22px 22px calc(56px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line);
+    padding-left: max(22px, env(safe-area-inset-left, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px));
+  }
+  .lab__right .case-block { margin-bottom: 34px; scroll-margin-top: 16px; }
+  .lab__right .case-block h4 { font-size: 12px; margin-bottom: 12px; }
+  .lab__right .case-block p, .lab__right .case-block li { font-size: 15px; line-height: 1.62; }
+  .lab__right .case-block ul { padding-left: 0; }
+  .lab__right .case-block li { margin: 0 0 6px; padding: 8px 10px 8px 14px; border-radius: 10px; }
+  .lab__right .case-block li::before { top: 12px; bottom: 12px; width: 2px; background: rgba(148, 180, 220, .14); }
+  .lab__right .pills--tags { margin-top: 6px; }
+}
+
+@media (max-width: 1279px) {
+  /* Title on one line at phone width; the layer label gets its own dark chip so it never sits on the model. */
+  .lab__left h3 { font-size: 15px; }
+  .lab__legend span.is-active { background: rgba(8, 13, 20, .78); padding: 4px 10px 4px 9px; border-radius: 999px; }
+  .lab__legend { left: 10px; top: 10px; }
+}
+
+/* ---- Every project card with a model: same panel on desktop, same full-screen sheet on phones ---- */
+.project.has-lab { cursor: pointer; }
+.lab--model .lab__left .project__links { margin: 10px 0 0; font-size: 13.5px; }
+.lab--model .lab__scene[hidden] { display: none; }
+/* The model's frame keeps its place while the model loads, so nothing jumps when it arrives. */
+.lab--model .lab__scene:not(.is-ready) { position: relative; left: auto; right: auto; height: auto; visibility: hidden; }
+@media (max-width: 1279px) {
+  .lab__left .project__links, .lab__tag { display: none; }
+  .lab--model .lab__left h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; line-height: 38px; }
+  /* No section row to show when a card has a single section. */
+  .lab--model .lab__steps:empty { display: none; }
+  .lab--model .lab__right .project__summary { margin-bottom: 30px; }
+  .lab--model .lab__right .project__summary p { font-size: 15px; line-height: 1.62; }
+}
+
+/* ---- Each project's panel carries its own colour in the glow behind its model ---- */
+.lab--model .lab__left { background: radial-gradient(ellipse 80% 60% at 30% 55%, color-mix(in srgb, var(--lab-tint, #4fe3c1) 9%, transparent), transparent 70%); }
+@media (max-width: 1279px) {
+  .lab--model .lab__left { background: none; }
+  .lab--model .lab__scene { background: radial-gradient(ellipse 80% 100% at 50% 60%, color-mix(in srgb, var(--lab-tint, #4fe3c1) 13%, transparent), transparent 72%), rgba(8, 13, 20, .6); }
+  .lab--model .lab__scene:not(.is-ready) { background: none; }
+}
+
+/* ---- Smoothness: no live blur behind the panel, nothing animating behind it, no mask on a 3D canvas ---- */
+.lab::backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(4, 8, 13, .88); }
+html.lab-open main *, html.lab-open .hero * { animation-play-state: paused !important; }
+.lab--model .lab__canvas canvas { -webkit-mask-image: none; mask-image: none; }
+.lab--model .lab__scene { transition: opacity .7s ease, transform .9s cubic-bezier(.16, .84, .24, 1); transform: scale(.94); }
+.lab--model .lab__scene.is-ready { transform: none; }
+
+/* ---- Accessibility and polish: room for the section buttons' focus ring, no smooth scrolling under reduced
+   motion, a close button that text cannot run under on desktop, and a thin scrollbar in the reading column ---- */
+.lab__right { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+@media (prefers-reduced-motion: reduce) { .lab__right { scroll-behavior: auto; } }
+@media (min-width: 1280px) { .lab__close { background: var(--bg-raise); } }
+@media (max-width: 1279px) { .lab__steps { padding-bottom: 6px; } }
