@@ -14,16 +14,6 @@
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 
-  /* ---------- Scroll progress bar ---------- */
-  var progress = document.getElementById("progress");
-  function updateProgress() {
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    /* handled by the transform pass below */
-  }
-  window.addEventListener("scroll", updateProgress, { passive: true });
-  window.addEventListener("resize", updateProgress, { passive: true });
-  updateProgress();
-
   /* ---------- Card glow + 3D tilt ---------- */
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var interactive = document.querySelectorAll(".card, .mini, .project");
