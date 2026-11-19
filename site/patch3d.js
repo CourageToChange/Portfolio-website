@@ -1,9 +1,9 @@
 // Patchwork: a cork pinboard on a wooden easel, seen almost face on. Photos, notes and a star get pinned up one at
 // a time. A ball of yarn sits on the rug in front with its needles, the thread trailing off across the floor.
-import { kit, TINT, sm } from './kit3d.js';
+import { kit, TINT, sm } from './kit3d.js?v=20261118e';
 
 export async function create(holder) {
-  const K = await kit(holder, { az: 12, el: 9, sway: 6, fit: 1.72, lookY: 1.2, lead: 7 });
+  const K = await kit(holder, { az: 12, el: 9, sway: 6, fit: 1.72, lookY: 1.2, lead: 7, loop: 22 });
   const { T } = K;
   K.add(new T.CylinderGeometry(1.95, 1.95, 0.04, 64), K.std(0x4a3550, { roughness: 0.95, metalness: 0 }), 0, 0.02, 0.2); // the rug
   K.add(new T.CylinderGeometry(1.6, 1.6, 0.045, 64), K.std(0x5d4366, { roughness: 0.95, metalness: 0 }), 0, 0.022, 0.2);

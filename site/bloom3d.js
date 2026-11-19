@@ -1,10 +1,10 @@
 // Bloom: a portrait of one flower in a pot on a round pastel stand, seen from low down. Seventeen puzzle tiles
 // (the page's own number of puzzle types) drift round it in a slow ring and light up one after another, with no
 // hurry. When all are lit the flower opens.
-import { kit, TINT, sm } from './kit3d.js';
+import { kit, TINT, sm } from './kit3d.js?v=20261118e';
 
 export async function create(holder) {
-  const K = await kit(holder, { az: 18, el: 15, sway: 5, fit: 1.72, lookY: 1.08, lead: 5 });
+  const K = await kit(holder, { az: 18, el: 15, sway: 5, fit: 1.72, lookY: 1.08, lead: 5, loop: 21 });
   const { T } = K;
   // The stand: two soft round steps.
   K.add(new T.CylinderGeometry(1.5, 1.56, 0.12, 64), K.std(0xe6dcf7, { roughness: 0.85, metalness: 0 }), 0, 0.06, 0);

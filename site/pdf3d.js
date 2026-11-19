@@ -1,9 +1,9 @@
 // LocalPhotoPDF: a bright desk seen from the side. Three photos ride a belt, one after another, into a chunky white
 // box with a red lid, and one finished document comes out of the other end and stands up. The photos never leave the desk.
-import { kit, TINT, sm, pop } from './kit3d.js';
+import { kit, TINT, sm, pop } from './kit3d.js?v=20261118e';
 
 export async function create(holder) {
-  const K = await kit(holder, { az: -10, el: 21, sway: 5, fit: 2.08, lookY: 0.5, lead: 2 });
+  const K = await kit(holder, { az: -10, el: 21, sway: 5, fit: 2.08, lookY: 0.5, lead: 2, loop: 11.6 });
   const { T } = K;
   const flat = (c) => K.std(c, { roughness: 0.8, metalness: 0 });
   K.add(K.slab(4.7, 2.3, 0.07, 0.6), flat(0xdfe7f3), 0, 0, 0);          // desk mat

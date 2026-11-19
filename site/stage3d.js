@@ -1,4 +1,5 @@
 // The home server as a lit model: the layers a request passes on its way to this website, played on a clock inside the walkthrough panel. three.js (vendor/three, MIT).
+import { cloud, gather, margin, distance, slabHull } from './frame3d.js?v=20261118e';
 const root = document.documentElement;
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -88,7 +89,7 @@ export async function create(holder, names, onLayer) {
     const g = new T.ExtrudeGeometry(s, { depth: h - 2 * b, bevelEnabled: true, bevelThickness: b, bevelSize: b, bevelSegments: 4, curveSegments: 14 });
     g.rotateX(-Math.PI / 2);
     g.translate(0, b, 0);
-    return g;
+    return slabHull(g, w, d, h, r, b);
   }
   const solid = (hex, rough, metal) => new T.MeshStandardMaterial({ color: hex, roughness: rough, metalness: metal });
   const mesh = (g, m, cast = true) => { const o = new T.Mesh(g, m); o.castShadow = cast; o.receiveShadow = true; return o; };
@@ -140,7 +141,7 @@ export async function create(holder, names, onLayer) {
       const o = 0.012, sh = new T.Shape(), hx = MW / 2 - 0.03, hz = MD / 2 - 0.03, r = 0.085, hole = new T.Path();
       const rr = (path, a, b, q) => { path.moveTo(-a + q, -b); path.lineTo(a - q, -b); path.absarc(a - q, -b + q, q, -Math.PI / 2, 0); path.lineTo(a, b - q); path.absarc(a - q, b - q, q, 0, Math.PI / 2); path.lineTo(-a + q, b); path.absarc(-a + q, b - q, q, Math.PI / 2, Math.PI); path.lineTo(-a, -b + q); path.absarc(-a + q, -b + q, q, Math.PI, Math.PI * 1.5); };
       rr(sh, hx, hz, r); rr(hole, hx - o, hz - o, r - o); sh.holes.push(hole);
-      edge = new T.Mesh(new T.ShapeGeometry(sh, 16), new T.MeshBasicMaterial({ color: mint, transparent: true, opacity: 0, toneMapped: false, depthWrite: false, side: T.DoubleSide }));
+      edge = new T.Mesh(new T.ShapeGeometry(sh, 16), new T.MeshBasicMaterial({ color: mint, transparent: true, opacity: 0, toneMapped: false, depthWrite: false, side: T.DoubleSide, forceSinglePass: true }));
       edge.rotation.x = -Math.PI / 2; edge.position.y = MH + 0.006;
       g.add(edge);
     }
@@ -192,7 +193,7 @@ export async function create(holder, names, onLayer) {
   const pane = mesh(slab(CW, CD, H_CF, 0.26), cfMat);
   pane.position.set(CX, 0, CZ); pane.receiveShadow = false;
   cf.add(pane);
-  const ringMat = new T.MeshBasicMaterial({ color: 0xcfe0f2, transparent: true, opacity: 0.1, depthWrite: false, toneMapped: false, side: T.DoubleSide });
+  const ringMat = new T.MeshBasicMaterial({ color: 0xcfe0f2, transparent: true, opacity: 0.1, depthWrite: false, toneMapped: false, side: T.DoubleSide, forceSinglePass: true });
   for (const r of [0.3, 0.56, 0.82]) {
     const ring = new T.Mesh(new T.RingGeometry(r - 0.006, r + 0.006, 72), ringMat);
     ring.rotation.x = -Math.PI / 2; ring.position.set(TX, H_CF + 0.004, TZ);
@@ -246,6 +247,16 @@ export async function create(holder, names, onLayer) {
   const M = new T.Matrix4(), Q = new T.Quaternion(), S = new T.Vector3(), P = new T.Vector3(), C = new T.Color();
   const lit = [0, 0, 0, 0, 0]; // how strongly each layer is picked out: internet, cloudflare, firewall, tunnel, host
   let W_px = 1, H_px = 1, px = 0, activeCaption = -2, focus = null, focusName = '', sway = 0;
+  const cl = cloud(), aimAt = { x: 0, y: 0, z: 0 }, dir = { x: 0, y: 0, z: 1 };
+  // Left out of the framing: the thread and its glow (rising past the top at the end is part of the story), the falling
+  // requests, and once the ending starts, the layers lifting away. Kept in, those layers pulled the camera back and
+  // then let it snap in by 46% in one frame as they faded out (measured 2026-11-18).
+  let lifting = false;
+  const loose = (o) => o === thread || o === glow || o === balls || (lifting && (o === net || o.parent === fw || o.parent === cf));
+  // The framing only changes when the story moves, the reader picks a service, or the canvas changes; between those
+  // it is reused. Any extra distance it adds is let go over about 0.2 s, never in one frame.
+  const fitMemo = { p: -1, f: '', W: 0, H: 0, need: 0 };
+  let extra = 0, frameMs = 16.7;
 
   function pose(p) {
     const open = inOut(BEAT.open[0], BEAT.open[1], p);
@@ -345,15 +356,28 @@ export async function create(holder, names, onLayer) {
     const tx = lerp(0, TX * 0.35, reveal), tz = lerp(0, 0.2, reveal);
     const radius = lerp(lerp(2.55, 3.05, open), tall ? 2.25 : 1.95, reveal) * (tall ? 0.94 : 1);
     const half = rad(camera.fov / 2);
-    const fit = radius * (H_px < 230 ? 0.9 : 1) / Math.sin(Math.atan(Math.tan(half) * Math.min(1, camera.aspect)));
+    let fit = radius * (H_px < 230 ? 0.9 : 1) / Math.sin(Math.atan(Math.tan(half) * Math.min(1, camera.aspect)));
+    if (p !== fitMemo.p || focusName !== fitMemo.f || W_px !== fitMemo.W || H_px !== fitMemo.H) {
+      lifting = reveal > 0;
+      cl.n = 0; gather(T, scene, cl, loose);
+      aimAt.x = tx; aimAt.y = ty; aimAt.z = tz;
+      // Fitted at the story's own angle, without the slow turn or the reader's drag, so turning it never moves the camera.
+      const azStory = rad(lerp(lerp(26, 40, open), 16, reveal));
+      dir.x = Math.sin(azStory) * Math.cos(el); dir.y = Math.sin(el); dir.z = Math.cos(azStory) * Math.cos(el);
+      fitMemo.need = distance(cl.a, camera.fov, camera.aspect, W_px, H_px, margin(W_px, H_px), aimAt, dir, aimAt, fit, 0.55, cl.n);
+      fitMemo.p = p; fitMemo.f = focusName; fitMemo.W = W_px; fitMemo.H = H_px;
+    }
+    const gap = Math.max(0, fitMemo.need - fit);
+    extra = gap >= extra ? gap : extra + (gap - extra) * (1 - Math.exp(-frameMs / 200));
+    fit += extra;
     camera.position.set(tx + fit * Math.sin(az) * Math.cos(el), ty + fit * Math.sin(el), tz + fit * Math.cos(az) * Math.cos(el));
     camera.lookAt(tx, ty, tz);
     key.target.position.set(0, ty, 0);
   }
 
+  // Sized from the layout box, not getBoundingClientRect, which includes the panel's lift-out scale (see kit3d.js).
   function resize() {
-    const r = holder.getBoundingClientRect();
-    W_px = Math.max(1, Math.round(r.width)); H_px = Math.max(1, Math.round(r.height));
+    W_px = Math.max(1, holder.clientWidth); H_px = Math.max(1, holder.clientHeight);
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     renderer.setSize(W_px, H_px, false);
     camera.aspect = W_px / H_px;
@@ -372,6 +396,7 @@ export async function create(holder, names, onLayer) {
     shown = Math.abs(d) <= step ? target : shown + Math.sign(d) * step;
     drag += (dragAim - drag) * (1 - Math.exp(-ms / (dragging ? 70 : 900)));
     sway = Math.sin((now - t0) / 2600) * 5 + drag; // a slow turn, so the model always reads as solid
+    frameMs = ms;
     pose(shown);
     renderer.render(scene, camera);
     frame = requestAnimationFrame(update);

@@ -1,5 +1,6 @@
 // Retro Snake Arena, as a small lit model: one board, the player's snake in mint, bot snakes around it.
 // It runs on its own clock while its panel is open. three.js (vendor/three, MIT).
+import { cloud, gather, rings, margin, distance, slabHull } from './frame3d.js?v=20261118e';
 const rad = (d) => (d * Math.PI) / 180;
 
 export async function create(holder) {
@@ -47,7 +48,7 @@ export async function create(holder) {
     const b = Math.min(0.03, h / 3);
     const g = new T.ExtrudeGeometry(s, { depth: h - 2 * b, bevelEnabled: true, bevelThickness: b, bevelSize: b, bevelSegments: 4, curveSegments: 12 });
     g.rotateX(-Math.PI / 2); g.translate(0, b, 0);
-    return g;
+    return slabHull(g, w, d, h, r, b);
   }
   const N = 14, CELL = 0.3, SIZE = N * CELL + 0.5, TOP = 0.26;
   const at = (i) => (i - (N - 1) / 2) * CELL;
@@ -97,6 +98,7 @@ export async function create(holder) {
   const dark = new T.MeshStandardMaterial({ color: 0x1a1f2b, roughness: 0.15, metalness: 0.1 });
   const blush = new T.MeshBasicMaterial({ color: 0xff8fb0, transparent: true, opacity: 0.8, toneMapped: false });
   const HR = R * 1.62;
+  const bodyDepth = new T.MeshDepthMaterial({ depthPacking: T.RGBADepthPacking });
   const snakes = loops.map((l, n) => {
     const legs = l.pts.map((p, i) => { const q = l.pts[(i + 1) % l.pts.length]; return { a: p, b: q, d: Math.abs(q[0] - p[0]) + Math.abs(q[1] - p[1]) }; });
     const total = legs.reduce((s, g) => s + g.d, 0);
@@ -105,9 +107,11 @@ export async function create(holder) {
     const count = l.len * PER;
     const mesh = new T.InstancedMesh(bead, mat, count);
     mesh.castShadow = true; mesh.receiveShadow = true; mesh.instanceMatrix.setUsage(T.DynamicDrawUsage);
+    mesh.customDepthMaterial = bodyDepth; // the bodies' shadows get their own depth material, for the same reason
     scene.add(mesh);
     const face = new T.Group();
-    const skull = new T.Mesh(new T.SphereGeometry(HR, 32, 24), mat); skull.scale.set(1.04, 0.94, 1.04); skull.castShadow = true;
+    const headMat = mat.clone();
+    const skull = new T.Mesh(new T.SphereGeometry(HR, 32, 24), headMat); skull.scale.set(1.04, 0.94, 1.04); skull.castShadow = true;
     face.add(skull);
     const look = new T.Group(); look.rotation.x = -0.62; // tip the face up towards the viewer
     for (const sx of [-1, 1]) {
@@ -121,7 +125,7 @@ export async function create(holder) {
     look.add(smile);
     face.add(look);
     scene.add(face);
-    return { ...l, legs, total, mesh, count, face, turn: null, phase: n * 3.7 };
+    return { ...l, legs, total, mesh, headMat, count, face, turn: null, phase: n * 3.7 };
   });
   const A1 = new T.Vector3(), A2 = new T.Vector3();
   function corner(s, d, out) {
@@ -158,17 +162,23 @@ export async function create(holder) {
   ground.rotation.x = -Math.PI / 2; ground.position.y = -0.18; ground.receiveShadow = true;
   scene.add(ground);
 
+  // Sized from the layout box, not getBoundingClientRect, which includes the panel's lift-out scale (see kit3d.js).
+  let W = 1, H = 1;
   function resize() {
-    const r = holder.getBoundingClientRect();
+    W = Math.max(1, holder.clientWidth); H = Math.max(1, holder.clientHeight);
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-    renderer.setSize(Math.max(1, Math.round(r.width)), Math.max(1, Math.round(r.height)), false);
-    camera.aspect = Math.max(1, r.width) / Math.max(1, r.height);
+    renderer.setSize(W, H, false);
+    camera.aspect = W / H;
     camera.updateProjectionMatrix();
   }
+  const O = { x: 0, y: 0.2, z: 0 }, L = { x: 0, y: 0.15, z: 0 }, u = { x: 0, y: 0, z: 1 };
+  let reach = null; // the board and everything on it (frame3d.js); the snakes never leave the board
 
   let frame = 0, running = false, t0 = 0, zoom = 0, zoomAim = 0, last = 0;
   function draw(now) {
     const t = (now - t0) / 1000;
+    const ms = last ? Math.min(60, now - last) : 16.7; last = now;
+    const steer = 1 - Math.pow(1 - 0.22, ms / 16.67); // the same turn per second on a 60 Hz or a 240 Hz screen
     snakes.forEach((s, n) => {
       const dir = Math.sign(s.speed), d0 = s.phase + t * s.speed;
       for (let k = 0; k < s.count; k++) {
@@ -184,7 +194,7 @@ export async function create(holder) {
       const want = Math.atan2(A1.x - P.x, A1.z - P.z);
       if (s.turn === null) s.turn = want;
       let diff = want - s.turn; diff = Math.atan2(Math.sin(diff), Math.cos(diff));
-      s.turn += diff * 0.22;
+      s.turn += diff * steer;
       s.face.position.set(P.x, TOP + 0.03 + HR * 0.9 + 0.012 * Math.sin(t * 3 + n), P.z);
       s.face.rotation.y = s.turn;
       s.face.rotation.z = 0.09 * Math.sin(t * 2.2 + n * 2); // a slight happy tilt
@@ -197,12 +207,15 @@ export async function create(holder) {
       f.scale.setScalar(Math.max(0.001, back * back * (3 - 2 * back)));
       f.rotation.y = t * 1.6 + i; f.position.y = TOP + 0.26 + 0.035 * Math.sin(t * 2.4 + i * 1.7);
     });
-    player.mesh.material.emissiveIntensity = 0.16 + 0.6 * Math.max(0, 1 - (t - ate) / 0.6); // a flash down its length when it eats
-    const ms = last ? Math.min(60, now - last) : 16.7; last = now;
+    player.mesh.material.emissiveIntensity = player.headMat.emissiveIntensity = 0.16 + 0.6 * Math.max(0, 1 - (t - ate) / 0.6); // a flash down its length when it eats
     zoom += (zoomAim - zoom) * (1 - Math.exp(-ms / 700));
     if (!dragging && vel) { spin += vel * ms / 1000; vel *= Math.exp(-ms / 1500); if (Math.abs(vel) < 2) vel = 0; }
     const az = rad(34 + Math.sin(t / 2.6) * 7 + spin), el = rad(36 - zoom * 6);
-    const fit = (2.95 - zoom * 0.5) / Math.sin(Math.atan(Math.tan(rad(camera.fov / 2)) * Math.min(1, camera.aspect)));
+    let fit = (2.95 - zoom * 0.5) / Math.sin(Math.atan(Math.tan(rad(camera.fov / 2)) * Math.min(1, camera.aspect)));
+    if (reach) { // rings round the spin axis: the same answer from every side, so spinning the board never moves the camera
+      u.x = 0; u.y = Math.sin(el); u.z = Math.cos(el);
+      fit = Math.max(fit, distance(reach, camera.fov, camera.aspect, W, H, margin(W, H, zoom), O, u, L, fit));
+    }
     camera.position.set(fit * Math.sin(az) * Math.cos(el), 0.2 + fit * Math.sin(el), fit * Math.cos(az) * Math.cos(el));
     camera.lookAt(0, 0.15, 0);
     renderer.render(scene, camera);
@@ -217,6 +230,8 @@ export async function create(holder) {
   try { await renderer.compileAsync(scene, camera); } catch (e) { /* compiles on first paint instead */ }
   await new Promise((r) => setTimeout(r, 0));
   t0 = performance.now(); draw(t0);
+  reach = rings(gather(T, scene, cloud()));
+  last = 0; draw(t0);
   return {
     start() { if (lost || dead || running) return; running = true; last = 0; resize(); frame = requestAnimationFrame(update); },
     stop() { running = false; if (frame) cancelAnimationFrame(frame); frame = 0; },

@@ -1,5 +1,6 @@
 // Shared plumbing for the small project models: renderer, light, rounded boxes and the fidget-spinner drag.
 // It shares a palette and the drag, nothing else: each model builds its own stage and camera angle, and runs on its own clock. three.js (vendor/three, MIT).
+import { cloud, gather, rings, margin, distance, slabHull } from './frame3d.js?v=20261118e';
 const rad = (d) => (d * Math.PI) / 180;
 export const TINT = { mint: 0x3fd9b5, blue: 0x6fa8ff, lav: 0xb48cff, peach: 0xff9d6b, pink: 0xff7fae, sun: 0xffd257, red: 0xff5d6c };
 export const sm = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
@@ -42,7 +43,7 @@ export async function kit(holder, o = {}) {
     const b = Math.min(0.03, h / 3);
     const g = new T.ExtrudeGeometry(s, { depth: h - 2 * b, bevelEnabled: true, bevelThickness: b, bevelSize: b, bevelSegments: 4, curveSegments: 12 });
     g.rotateX(-Math.PI / 2); g.translate(0, b, 0);
-    return g;
+    return slabHull(g, w, d, h, r, b);
   }
   const std = (color, extra = {}) => new T.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0.1, ...extra });
   const soft = (color, glow = 0.16) => { const c = new T.Color(color); return new T.MeshStandardMaterial({ color: c, roughness: 0.42, metalness: 0, emissive: c, emissiveIntensity: glow }); };
@@ -83,17 +84,23 @@ export async function kit(holder, o = {}) {
   const release = () => { if (!dragging) return; dragging = false; if (performance.now() - dragT > 90) vel = 0; vel = Math.max(-1400, Math.min(1400, vel)); };
   canvas.addEventListener('pointerup', release); canvas.addEventListener('pointercancel', release);
 
+  // Sized from the layout box, never getBoundingClientRect: that includes the panel's scale while it lifts out, and a
+  // canvas sized from it stays at 94% and gets stretched (measured 2026-11-18). A transform fires no resize to fix it.
+  let W = 1, H = 1;
   function resize() {
-    const r = holder.getBoundingClientRect();
+    W = Math.max(1, holder.clientWidth); H = Math.max(1, holder.clientHeight);
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
-    renderer.setSize(Math.max(1, Math.round(r.width)), Math.max(1, Math.round(r.height)), false);
-    camera.aspect = Math.max(1, r.width) / Math.max(1, r.height);
+    renderer.setSize(W, H, false);
+    camera.aspect = W / H;
     camera.updateProjectionMatrix();
   }
 
   // run(draw): draw(t, az) moves the model; the kit moves the camera and paints.
   async function run(draw) {
     let frame = 0, running = false, t0 = 0, zoom = 0, zoomAim = 0, last = 0, lost = false, dead = false, began = -1e9;
+    const O = { x: 0, y: 0.2, z: 0 }, L = { x: 0, y: o.lookY ?? 0.15, z: 0 }, u = { x: 0, y: 0, z: 1 };
+    let reach = null; // every place the model gets to over one loop, as rings round its axis (frame3d.js)
+    const memo = { el: NaN, px: NaN, W: 0, H: 0, d: 0 };
     function paint(now) {
       const t = (now - t0) / 1000;
       const ms = last ? Math.min(60, now - last) : 16.7; last = now;
@@ -102,7 +109,20 @@ export async function kit(holder, o = {}) {
       const intro = 1 - sm(0, 1.6, (now - began) / 1000); // 1 as the panel opens, easing to 0
       const az = rad((o.az ?? 34) + Math.sin(t / 2.6) * (o.sway ?? 7) + spin - 42 * intro), el = rad((o.el ?? 36) - zoom * 6 + 9 * intro);
       draw(t, az);
-      const fit = ((o.fit ?? 2.95) - zoom * 0.5) * (1 + 0.2 * intro) / Math.sin(Math.atan(Math.tan(rad(camera.fov / 2)) * Math.min(1, camera.aspect)));
+      // The model's own distance, then moved back only if that would bring any part of it near an edge.
+      let fit = ((o.fit ?? 2.95) - zoom * 0.5) / Math.sin(Math.atan(Math.tan(rad(camera.fov / 2)) * Math.min(1, camera.aspect)));
+      if (reach) {
+        // Rings look the same from every side, so the spin and the sway never change the answer: it is worked out
+        // facing one fixed way, and only again when the height of the view, the zoom or the canvas changes.
+        const px = margin(W, H, zoom);
+        if (Math.abs(el - memo.el) > 1e-6 || Math.abs(px - memo.px) > 1e-4 || W !== memo.W || H !== memo.H) {
+          u.x = 0; u.y = Math.sin(el); u.z = Math.cos(el);
+          memo.d = distance(reach, camera.fov, camera.aspect, W, H, px, O, u, L, 0.6);
+          memo.el = el; memo.px = px; memo.W = W; memo.H = H;
+        }
+        fit = Math.max(fit, memo.d);
+      }
+      fit *= 1 + 0.2 * intro;
       camera.position.set(fit * Math.sin(az) * Math.cos(el), 0.2 + fit * Math.sin(el), fit * Math.cos(az) * Math.cos(el));
       camera.lookAt(0, o.lookY ?? 0.15, 0);
       renderer.render(scene, camera);
@@ -111,6 +131,19 @@ export async function kit(holder, o = {}) {
     const ro = new ResizeObserver(resize); ro.observe(holder);
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); if (dead) return; lost = true; running = false; holder.dispatchEvent(new Event('stage3d:lost')); });
     resize(); await tick();
+    // Walk the model through one loop (o.loop seconds from its starting point) and keep where every part goes.
+    {
+      // 48 samples a loop, or o.samples: Signal Room asks for 96 because its ring is in view for under a second.
+      const cl = cloud(), n = o.samples ?? 48, from = o.lead || 0, span = o.loop ?? 20;
+      // In slices of about 8 ms. Nothing in the panel moves yet, and each yield costs a whole frame, so not every sample.
+      let slice = performance.now();
+      for (let i = 0; i < n; i++) {
+        draw(from + (span * i) / n, rad(o.az ?? 34));
+        gather(T, scene, cl);
+        if (performance.now() - slice > 8) { await tick(); slice = performance.now(); }
+      }
+      reach = rings(cl);
+    }
     // Shaders compile in the background where the browser allows it, so the first picture does not freeze the page.
     try { await renderer.compileAsync(scene, camera); } catch (e) { /* compiles on first paint instead */ }
     await tick();

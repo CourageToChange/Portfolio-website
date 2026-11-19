@@ -1,10 +1,10 @@
 // Signal Room: one dark server tower on a six-sided deck, ten lit bands round it for the ten things on that one
 // machine. A small drone circles at a distance with a reading beam on the tower and never lands. When the machine
 // goes, all ten bands turn red at once and a single amber ring drops round the tower: one incident, not ten alerts.
-import { kit, TINT, sm, pop } from './kit3d.js';
+import { kit, TINT, sm, pop } from './kit3d.js?v=20261118e';
 
 export async function create(holder) {
-  const K = await kit(holder, { az: 30, el: 17, sway: 5, fit: 1.78, lookY: 1.12, lead: 1 });
+  const K = await kit(holder, { az: 30, el: 17, sway: 5, fit: 1.78, lookY: 1.12, lead: 1, loop: 15, samples: 96 });
   const { T } = K;
   const metal = (c) => K.std(c, { roughness: 0.35, metalness: 0.6 });
   K.add(new T.CylinderGeometry(1.75, 1.85, 0.14, 6), metal(0x121a28), 0, 0.07, 0);

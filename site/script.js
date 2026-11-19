@@ -55,8 +55,11 @@
     var ctx = canvas.getContext("2d");
     var nodes = [];
     var mouse = { x: -9999, y: -9999 };
-    var running = true;
+    var running = false, raf = 0, last = 0, seen = true;
     var W = 0, H = 0, DPR = 1;
+    // The same colour string for the same alpha, built once instead of on every line of every frame.
+    var mint = [];
+    function mintAt(a) { var k = Math.round(a * 1000); return mint[k] || (mint[k] = "rgba(79,227,193," + (k / 1000).toFixed(3) + ")"); }
 
     function sizeCanvas() {
       DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -78,13 +81,17 @@
     }
 
     var LINK = 130, MOUSE_LINK = 170;
-    function frame() {
+    function frame(t) {
+      raf = 0;
       if (!running) return;
+      // Each step is scaled by the time since the last frame, so the dots drift at the speed they were designed
+      // for on any screen. They used to move a fixed amount per frame: four times too fast at 240 Hz.
+      var k = Math.min(50, t - (last || t)) / 16.67; last = t;
       ctx.clearRect(0, 0, W, H);
       var i, j, a, b, dx, dy, d2;
       for (i = 0; i < nodes.length; i++) {
         a = nodes[i];
-        a.x += a.vx; a.y += a.vy;
+        a.x += a.vx * k; a.y += a.vy * k;
         if (a.x < 0 || a.x > W) a.vx *= -1;
         if (a.y < 0 || a.y > H) a.vy *= -1;
       }
@@ -95,19 +102,25 @@
           b = nodes[j];
           dx = a.x - b.x; dy = a.y - b.y; d2 = dx * dx + dy * dy;
           if (d2 < LINK * LINK) {
-            ctx.strokeStyle = "rgba(79,227,193," + (0.10 * (1 - Math.sqrt(d2) / LINK)).toFixed(3) + ")";
+            ctx.strokeStyle = mintAt(0.10 * (1 - Math.sqrt(d2) / LINK));
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
         dx = a.x - mouse.x; dy = a.y - mouse.y; d2 = dx * dx + dy * dy;
         if (d2 < MOUSE_LINK * MOUSE_LINK) {
-          ctx.strokeStyle = "rgba(79,227,193," + (0.22 * (1 - Math.sqrt(d2) / MOUSE_LINK)).toFixed(3) + ")";
+          ctx.strokeStyle = mintAt(0.22 * (1 - Math.sqrt(d2) / MOUSE_LINK));
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
         }
         ctx.fillStyle = "rgba(143,163,184,0.5)";
         ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2); ctx.fill();
       }
-      requestAnimationFrame(frame);
+      raf = requestAnimationFrame(frame);
+    }
+    // It runs only while the hero is on screen and no panel is open, the way the side network does.
+    function sync() {
+      var want = seen && !document.hidden && !document.documentElement.classList.contains("lab-open");
+      if (want && !running) { last = 0; if (!raf) raf = requestAnimationFrame(frame); }
+      running = want;
     }
 
     var hero = canvas.parentElement;
@@ -117,14 +130,12 @@
       mouse.y = e.clientY - r.top;
     });
     hero.addEventListener("pointerleave", function () { mouse.x = -9999; mouse.y = -9999; });
-    document.addEventListener("visibilitychange", function () {
-      var wasRunning = running;
-      running = !document.hidden;
-      if (running && !wasRunning) requestAnimationFrame(frame);
-    });
+    document.addEventListener("visibilitychange", sync);
+    document.addEventListener("lab:toggle", sync);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (es) { seen = es[es.length - 1].isIntersecting; sync(); }).observe(hero);
     window.addEventListener("resize", sizeCanvas, { passive: true });
     sizeCanvas();
-    requestAnimationFrame(frame);
+    sync();
   }
 
   /* ---------- Nav: scrolled state ---------- */
@@ -461,6 +472,10 @@
     });
   }
 
+  // One colour string per alpha, built once; the same strings toFixed made every frame, so the same pixels.
+  var tint = [], grey = [], links = [];
+  function tintAt(a) { var k = Math.round(a * 1000); return tint[k] || (tint[k] = "rgba(79,227,193," + (k / 1000).toFixed(3) + ")"); }
+  function greyAt(a) { var k = Math.round(a * 100); return grey[k] || (grey[k] = "rgba(160,182,205," + (k / 100).toFixed(2) + ")"); }
   function frame(t) {
     raf = 0;
     if (!on) return;
@@ -481,7 +496,7 @@
         a.sy = y - (WORLD - H) / 2;
       }
       ctx.lineWidth = 1;
-      var links = [];
+      links.length = 0;
       for (i = 0; i < n.length; i++) {
         a = n[i];
         if (a.sy < -LINK || a.sy > H + LINK) continue;
@@ -489,17 +504,17 @@
           b = n[j];
           dx = a.x - b.x; dy = a.sy - b.sy; d = dx * dx + dy * dy;
           if (d < LINK * LINK) {
-            ctx.strokeStyle = "rgba(79,227,193," + (0.17 * (1 - Math.sqrt(d) / LINK) * Math.min(a.z, b.z)).toFixed(3) + ")";
+            ctx.strokeStyle = tintAt(0.17 * (1 - Math.sqrt(d) / LINK) * Math.min(a.z, b.z));
             ctx.beginPath(); ctx.moveTo(a.x, a.sy); ctx.lineTo(b.x, b.sy); ctx.stroke();
             links.push(i, j);
           }
         }
         dx = a.x + ox - mouse.x; dy = a.sy - mouse.y; d = dx * dx + dy * dy;
         if (!narrow && d < MOUSE * MOUSE) {
-          ctx.strokeStyle = "rgba(79,227,193," + (0.26 * (1 - Math.sqrt(d) / MOUSE)).toFixed(3) + ")";
+          ctx.strokeStyle = tintAt(0.26 * (1 - Math.sqrt(d) / MOUSE));
           ctx.beginPath(); ctx.moveTo(a.x, a.sy); ctx.lineTo(mouse.x - ox, mouse.y); ctx.stroke();
         }
-        ctx.fillStyle = "rgba(160,182,205," + (0.28 + 0.4 * a.z).toFixed(2) + ")";
+        ctx.fillStyle = greyAt(0.28 + 0.4 * a.z);
         ctx.beginPath(); ctx.arc(a.x, a.sy, 0.8 + 1.5 * a.z, 0, 6.2832); ctx.fill();
       }
       // Now and then one mint signal runs along a link.
@@ -517,9 +532,9 @@
           var e = p.t * p.t * (3 - 2 * p.t);
           var px = p.a.x + (p.b.x - p.a.x) * e, py = p.a.sy + (p.b.sy - p.a.sy) * e;
           var al = Math.sin(Math.PI * p.t);
-          ctx.strokeStyle = "rgba(79,227,193," + (0.5 * al).toFixed(3) + ")";
+          ctx.strokeStyle = tintAt(0.5 * al);
           ctx.beginPath(); ctx.moveTo(p.a.x, p.a.sy); ctx.lineTo(px, py); ctx.stroke();
-          ctx.fillStyle = "rgba(79,227,193," + al.toFixed(3) + ")";
+          ctx.fillStyle = tintAt(al);
           ctx.shadowColor = "rgba(79,227,193,.9)"; ctx.shadowBlur = 10;
           ctx.beginPath(); ctx.arc(px, py, 2.4, 0, 6.2832); ctx.fill();
           ctx.shadowBlur = 0;
@@ -536,7 +551,7 @@
     if (want && !on) { on = true; last = 0; scrollEase = scrollNow = window.scrollY; if (!raf) raf = requestAnimationFrame(frame); }
     else if (!want && on) { on = false; }
   }
-  new IntersectionObserver(function (es) { pastHero = !es[0].isIntersecting; sync(); }, { threshold: 0.3 }).observe(hero);
+  new IntersectionObserver(function (es) { pastHero = !es[es.length - 1].isIntersecting; sync(); }, { threshold: 0.3 }).observe(hero);
   window.addEventListener("scroll", function () { scrollNow = window.scrollY; }, { passive: true });
   window.addEventListener("pointermove", function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
   document.addEventListener("pointerleave", function () { mouse.x = mouse.y = -9999; });
@@ -593,7 +608,7 @@
       if (!es[0].isIntersecting) return;
       warm.disconnect();
       // Build the panel now, while idle, so a tap on a slow phone only has to open it.
-      (window.requestIdleCallback || setTimeout)(function () { if (!dlg) build(); import("./vendor/three/three.module.min.js").then(function () { return import("./stage3d.js"); }).catch(function () {}); });
+      (window.requestIdleCallback || setTimeout)(function () { if (!dlg) build(); import("./vendor/three/three.module.min.js").then(function () { return import("./stage3d.js?v=20261118e"); }).catch(function () {}); });
     }, { rootMargin: "700px 0px" });
     warm.observe(card);
   }
@@ -638,7 +653,7 @@
     var names = chips.filter(function (n) { return n.indexOf("this website") === 0; }).concat(chips.filter(function (n) { return n.indexOf("this website") !== 0; }));
     var holder = scene3d.querySelector(".lab__canvas");
     scene3d.hidden = false; // it needs a size to be built at; it stays invisible until it is ready
-    import("./stage3d.js").then(function (m) {
+    import("./stage3d.js?v=20261118e").then(function (m) {
       return m.create(holder, names, function (layers) {
         legend.forEach(function (el, i) { el.classList.toggle("is-active", layers.indexOf(i) > -1); });
       });
@@ -841,11 +856,11 @@
   "use strict";
   if (typeof HTMLDialogElement === "undefined") return;
   var MODELS = [
-    { title: "Retro Snake Arena", file: "./snake3d.js", tint: "#4fe3c1" },
-    { title: "Bloom", file: "./bloom3d.js", tint: "#ff8fb8" },
-    { title: "Patchwork", file: "./patch3d.js", tint: "#f0a868" },
-    { title: "Signal Room", file: "./signal3d.js", tint: "#6fa8ff" },
-    { title: "LocalPhotoPDF", file: "./pdf3d.js", tint: "#ff6b78" }
+    { title: "Retro Snake Arena", file: "./snake3d.js?v=20261118e", tint: "#4fe3c1" },
+    { title: "Bloom", file: "./bloom3d.js?v=20261118e", tint: "#ff8fb8" },
+    { title: "Patchwork", file: "./patch3d.js?v=20261118e", tint: "#f0a868" },
+    { title: "Signal Room", file: "./signal3d.js?v=20261118e", tint: "#6fa8ff" },
+    { title: "LocalPhotoPDF", file: "./pdf3d.js?v=20261118e", tint: "#ff6b78" }
   ];
   var mq = window.matchMedia("(min-width: 1280px)");
   var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
